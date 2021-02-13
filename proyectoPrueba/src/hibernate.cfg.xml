@@ -50,5 +50,6 @@ Contributor(s):
     <mapping class="Modelo.Cuenta"/>
     <mapping class="Modelo.Persona"/>
     <mapping class="Modelo.Rol"/>
+    <mapping class="Modelo.Mascota"/>
   </session-factory>
 </hibernate-configuration>

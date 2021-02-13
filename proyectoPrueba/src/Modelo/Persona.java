@@ -6,11 +6,15 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -22,11 +26,12 @@ public class Persona implements Serializable {
     private String nombre;
     private String apellido;
     private String telefono;
+    private String correo;
+    private String direccion;
     private String estado; // 1 activo // 0 eliminado A O P
     
     private Rol rol;
-
-   
+    private List<Mascota> mascota = new ArrayList<Mascota>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,5 +93,32 @@ public class Persona implements Serializable {
         this.rol = rol;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    
+     //un Persona puede tener muchas mascotas
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    public List<Mascota> getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(List<Mascota> mascota) {
+        this.mascota = mascota;
+    }
+    
+    
     
 }

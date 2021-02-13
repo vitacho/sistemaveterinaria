@@ -302,7 +302,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void jCheckRegistrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRegistrarCuentaActionPerformed
         // TODO add your handling code here:
-        frmPersona rp = new frmPersona(this, false,true,false,"");
+        frmPersona rp = new frmPersona(this, false,false,false,"");
         rp.setVisible(true);
     }//GEN-LAST:event_jCheckRegistrarCuentaActionPerformed
 

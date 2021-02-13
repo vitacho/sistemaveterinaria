@@ -58,7 +58,7 @@ public class PersonaDB {
             st.save(cliente);
             st.getTransaction().commit();
             
-             JOptionPane.showMessageDialog(null, "Cliente Guardado");
+             
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al guardar "+e.getMessage());
@@ -78,7 +78,7 @@ public class PersonaDB {
         return lis;
     }
     
-    //traer a lso clientes por el ID
+    //traer a los clientes por el ID
     public Persona traeClientesId(int idPersona){
         
         Persona per = null;
