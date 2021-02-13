@@ -6,9 +6,11 @@
 package Vista;
 
 //import Controlador.MascotaDB;
+import Controlador.MascotaDB;
 import Controlador.PersonaDB;
 import Controlador.Validaciones;
 import Modelo.Cuenta;
+import Modelo.Mascota;
 //import Modelo.Mascota;
 import Modelo.Persona;
 import java.util.ArrayList;
@@ -25,8 +27,10 @@ public class frmMascota extends javax.swing.JDialog {
     /**
      * Creates new form frmMascota
      */
-    PersonaDB personaDB = new PersonaDB();
+    PersonaDB persona = new PersonaDB();
+    MascotaDB mascotaDB = new MascotaDB();
     Validaciones validar = new Validaciones();
+    DefaultTableModel model;
     public frmMascota(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -292,7 +296,7 @@ public class frmMascota extends javax.swing.JDialog {
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
         // TODO add your handling code here:
-        //registrarMascota();
+        registrarMascota();
         
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
     
@@ -325,7 +329,7 @@ public class frmMascota extends javax.swing.JDialog {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-        //buscarMascota();
+        buscarMascota();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
     
     
@@ -334,62 +338,60 @@ public class frmMascota extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-    /*
+    
     public void buscarMascota(){
         if(validar.esNumerico(jTextBuscarCedula.getText())){
-            int cont =0;
-            ArrayList<Mascota> lista;
-            String buscadaN="";
-            for (int i = 0; i < listPersonas.size(); i++) {
-                if(listPersonas.get(i).getCedula().equals(jTextBuscarCedula.getText())){
-                    cont++;
-                    buscadaN=listPersonas.get(i).getNombre().toUpperCase()+" "+listPersonas.get(i).getApellido().toUpperCase();
-                }
-            }
-            if(cont!=0){//si se encotro la cedula
-                jTextPresentarNombrePersona.setText(buscadaN);
-                jTextPresentarCedulaPersona.setText(jTextBuscarCedula.getText());
-                lista=listaMascotas.buscarMascotas(jTextBuscarCedula.getText());
-                llenarTabla(lista);
-                habititalJtext();
-                actualizarJtext();
-                jTextBuscarCedula.setText("");
+            Persona p = persona.traeClientesCedula(jTextBuscarCedula.getText());
+            if(p!=null){
+                 jTextPresentarNombrePersona.setText(p.getNombre()+" "+p.getApellido());
+                    jTextPresentarCedulaPersona.setText(p.getCedula());
+                    habititalJtext();
             }else{
-                JOptionPane.showMessageDialog(null, "PERSONA NO ENCONTRADA");
-                limpiarTabla();
+                JOptionPane.showMessageDialog(null, "Persona no encontrada");
                 jTextBuscarCedula.setText("");
-                jTextPresentarNombrePersona.setText("");
-                jTextPresentarCedulaPersona.setText("");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "INGRESE SOLO NUMEROS");
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
             jTextBuscarCedula.setText("");
             jTextPresentarNombrePersona.setText("");
             jTextPresentarCedulaPersona.setText("");
-            limpiarTabla();
+            //limpiarTabla();
         }
     }
+     private void tablaModel() {
+        // metodo sirve para llamar a los campos que se hayan guardado en la base de datos
+
+        jTableMascotas.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableMascotas.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableMascotas.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTableMascotas.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTableMascotas.getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTableMascotas.getColumnModel().getColumn(3).setPreferredWidth(300);
+        jTableMascotas.getColumnModel().getColumn(4).setPreferredWidth(300);
+        model = (DefaultTableModel) jTableMascotas.getModel();
+        model.setNumRows(0);
+    }
+    
     public void registrarMascota(){
-        habititalJtext();
         System.out.println(jTextPresentarCedulaPersona.getText());
         if(!jTextPresentarCedulaPersona.getText().equals("")){//verifico si se ha buscado una persona
             if(!jTextNombreMascota.getText().equals("")&&!jTextEspecie.getText().equals("")&&!jTextRaza.getText().equals("")
                &&!jTextEdad.getText().equals("")&&!jTextColorPelaje.getText().equals("")){//verifico si se a llenado los campos
-                if(esNumerico(jTextEdad.getText())){//verifico si la edad se ha ingresado solo numeros
-                    int i =0;
-                    boolean encontrado = false;
-                    while (i< listPersonas.size()||encontrado==false ) {                        
-                        if(listPersonas.get(i).getCedula().equals(jTextPresentarCedulaPersona.getText())){
-                            encontrado=true;
-                        }
-                        i++;
-                    }
+                if(validar.esNumerico(jTextEdad.getText())){//verifico si la edad se ha ingresado solo numeros
+                    Persona p = persona.traeClientesCedula(jTextPresentarCedulaPersona.getText());
+                    Mascota m = new Mascota();
+                    m.setColorPelaje(jTextColorPelaje.getText().trim());
                     int edad = Integer.parseInt(jTextEdad.getText().trim());
-                    String nombreMascota = jTextNombreMascota.getText().trim();
-                    listaMascotas.agregarMacota("MT01",nombreMascota , edad, jTextRaza.getText().trim(), jTextEspecie.getText().trim(), jComboBoxTamaño.getSelectedItem().toString(), 
-                                               jComboBoxSexo.getSelectedItem().toString(), jTextColorPelaje.getText().trim(), listPersonas.get(i-1));
-                    limpiarTabla();
-                    llenarTabla(listaMascotas.getListaMascota());
+                    m.setEdad(edad);
+                    m.setEspecie(jTextEspecie.getText().trim());
+                    m.setNombre(jTextNombreMascota.getText().trim());
+                    m.setPersona(p);
+                    m.setRaza(jTextRaza.getText().trim());
+                    m.setSexo(jComboBoxSexo.getSelectedItem().toString());
+                    m.setTamanio(jComboBoxTamaño.getSelectedItem().toString());
+                    mascotaDB.nuevaMascota(m);
+                    JOptionPane.showMessageDialog(null, "Mascota registrada");
                     limpiarJtext();
                     jTextPresentarCedulaPersona.setText("");
                     jTextPresentarNombrePersona.setText("");
@@ -430,7 +432,7 @@ public class frmMascota extends javax.swing.JDialog {
         jComboBoxSexo.enable();
         jTextEspecie.enable();
     }
-    
+    /*
     public void modificarMascota(){
         if(!jTextPresentarCedulaPersona.getText().equals("")){
             if(jTableMascotas.getSelectedRow()>=0){

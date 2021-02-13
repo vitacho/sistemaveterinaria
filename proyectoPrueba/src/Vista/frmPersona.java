@@ -174,7 +174,7 @@ public class frmPersona extends javax.swing.JDialog {
         jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 20, -1));
         jPanel2.add(jTextPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 186, 30));
 
-        jComboRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Segretaria", "Veterinario" }));
+        jComboRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Secretaria", "Veterinario" }));
         jPanel2.add(jComboRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 190, 30));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -258,9 +258,11 @@ public class frmPersona extends javax.swing.JDialog {
                                 String rolNombre = jComboRol.getSelectedItem().toString();
                                 String estado;
                                 rol = rolDB.traeRol(rolNombre);
+                                System.out.println(rolNombre);
+                                System.out.println(rol.getId_rol());
+                                per.setRol(rol); // importante
                                 if(jComboEstado.getSelectedItem().toString().equals("Activada"))estado="A";
                                 else estado="D";
-                                per.setRol(rol); // importante
                                 per.setApellido(jTexApellido.getText());
                                 per.setNombre(jTextNombre.getText());
                                 per.setCedula(jTexCedula.getText());
