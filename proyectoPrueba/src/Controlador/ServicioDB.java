@@ -42,7 +42,7 @@ public class ServicioDB {
         try{
             st.clear();
             st.beginTransaction();
-            st.saveOrUpdate(servicio);
+            st.update(servicio);
             st.getTransaction().commit();
            
         }catch(Exception e){

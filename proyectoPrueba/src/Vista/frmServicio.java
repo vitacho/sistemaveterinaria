@@ -22,10 +22,11 @@ import org.hibernate.Session;
  * @author Personal
  */
 public class frmServicio extends javax.swing.JDialog {
-   ServicioDB servicioDB  = new ServicioDB();
-      DefaultTableModel model = new DefaultTableModel();
+
+    ServicioDB servicioDB = new ServicioDB();
+    DefaultTableModel model = new DefaultTableModel();
     Validaciones val = new Validaciones();
-    
+
     /**
      * Creates new form ListaServicio
      */
@@ -150,7 +151,7 @@ public class frmServicio extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CÓDIGO", "NOMBRE", "COSTO", "ESTADO"
+                "ID", "NOMBRE", "COSTO"
             }
         ));
         tablaServicios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -197,14 +198,16 @@ public class frmServicio extends javax.swing.JDialog {
     private void txtCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCostoActionPerformed
-
+//falta cargar costo
     private void tablaServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaServiciosMouseClicked
- int selectRow = tablaServicios.getSelectedRow();
-//        int idServ = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
-//        Servicio serv = servicioDB.traeServicio(idServ);
-//        txtNombre.setText(serv.getNombre_servicio());
-//        txtDescripcion.setText(serv.getDescripcion());
-//        //falta
+        int selectRow = tablaServicios.getSelectedRow();
+        int idServ = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
+        Servicio serv = servicioDB.traeServicio(idServ);
+        txtNombre.setText(serv.getNombre_serv());
+        txtDescripcion.setText(serv.getDesc_serv());
+//        txtCosto.setText();
+//         serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));
+      
 
         Bloquear(true);    }//GEN-LAST:event_tablaServiciosMouseClicked
 
@@ -218,7 +221,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
  Editar();    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-  tablaServicios.setEnabled(true);
+        tablaServicios.setEnabled(true);
         activa_Desac_Panel(false);
         inicio();    }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -230,7 +233,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         activa_Desac_Panel(true);
         txtNombre.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
-     private void Editar() {
+    private void Editar() {
         activa_Desac_Panel(true);
         btnNuevo.setEnabled(false);
         btnCancelar.setEnabled(true);
@@ -239,7 +242,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         btnEditar.setEnabled(false);
 
     }
-    
+
     private void Bloquear(boolean flag) {
 
         if (flag == true) {
@@ -252,6 +255,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
             btnCancelar.setEnabled(true);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -329,29 +333,34 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         tablaModel();
         llenarTablaServico("A");
         activa_Desac_Panel(false);
-        tablaServicios.setEnabled(true);    }
-    
-     private void tablaModel() {
+        tablaServicios.setEnabled(true);
+    }
+
+    private void tablaModel() {
+        // metodo sirve para llamar a los campos que se hayan guardado en la base de datos
         tablaServicios.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaServicios.getColumnModel().getColumn(0).setMinWidth(0);
-        tablaServicios.getColumnModel().getColumn(0).setMaxWidth(0);
-        tablaServicios.getColumnModel().getColumn(1).setMaxWidth(230);
-        tablaServicios.getColumnModel().getColumn(2).setMaxWidth(230);
+        tablaServicios.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tablaServicios.getColumnModel().getColumn(1).setMaxWidth(350);
+        tablaServicios.getColumnModel().getColumn(2).setMaxWidth(300);
+
         model = (DefaultTableModel) tablaServicios.getModel();
         model.setNumRows(0);
     }
-     private void llenarTablaServico(String estado) {
-//        tablaModel();
-//        List<Servicio> listaServ = null;
-//        listaServ = servicioDB .cargaServicio(estado, listaServ);
-//
-//        for (Servicio lista : listaServ) {
-//            model.addRow(new Object[]{
-//                lista.getCodigo_serv(),lista.getNombre_servicio(),lista.getPrecio()
-//            });
-//        }
+
+    private void llenarTablaServico(String estado) {
+        tablaModel();
+        List<Servicio> listaServ = null;
+        listaServ = servicioDB.cargaServicio(estado, listaServ);
+
+        for (Servicio lista : listaServ) {
+            model.addRow(new Object[]{
+                lista.getId_serv(), lista.getNombre_serv(), lista.getPrecio_serv()
+            });
+        }
     }
-      private void activa_Desac_Panel(Boolean flag) {
+
+    private void activa_Desac_Panel(Boolean flag) {
 
         txtNombre.setEnabled(flag);
         txtDescripcion.setEnabled(flag);
@@ -360,12 +369,12 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         if (flag == false) {
             txtNombre.setText(null);
             txtNombre.setText(null);
-             txtCosto.setText(null);
+            txtCosto.setText(null);
         }
     }
-      
-     private void guardar() {
-   Servicio serv = null;
+
+    private void guardar() {
+        Servicio serv = null;
 
         if (btnGuardar.getText().equals("Guardar")) {
             serv = servicioDB.traeNombreServicio(txtNombre.getText());
@@ -377,9 +386,9 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
                     serv.setDesc_serv(txtDescripcion.getText());
                     serv.setEstado_serv("A");
                     serv.setCantidad_serv(1);
-                     serv.setPrecio_serv(Double.parseDouble(txtCosto.getText())  );
+                    serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));
                     servicioDB.nuevoServicio(serv);
-                     inicio();
+                    inicio();
                 } else {
                     JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
                     activa_Desac_Panel(false);
@@ -392,17 +401,17 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         } else {
             if (btnGuardar.getText().equals("Actualizar")) {
                 if (ValidarCampos() == true) {
-                    
+
                     int idServicio = Integer.parseInt(txtId.getText());
                     serv = servicioDB.traeServicioId(idServicio);
                     int selectRow = tablaServicios.getSelectedRow();
                     int idEspecial = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
-                    serv= servicioDB.traeServicio(idEspecial);
-                   
+                    serv = servicioDB.traeServicio(idEspecial);
+
                     serv.setNombre_serv(txtNombre.getText());
                     serv.setDesc_serv(txtDescripcion.getText());
                     serv.setEstado_serv("A");
-                    serv.setPrecio_serv(Double.parseDouble(txtCosto.getText())  );                    //falta float
+                    serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));                    //falta float
                     servicioDB.actualizaServicio(serv);
 
                     JOptionPane.showMessageDialog(null, "DATOS ACTUALIZADOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
@@ -418,10 +427,11 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         inicio();
 
     }
-      private boolean ValidarCampos() {
+
+    private boolean ValidarCampos() {
         boolean lleno = true;
 
-        if (txtNombre.getText().equals("") || txtDescripcion.getText().equals("")||txtCosto.getText().equals("")) {
+        if (txtNombre.getText().equals("") || txtDescripcion.getText().equals("") || txtCosto.getText().equals("")) {
             lleno = false;
         } else {
             lleno = true;
@@ -429,4 +439,3 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         return lleno;
     }
 }
-
