@@ -6,7 +6,9 @@
 package Vista;
 
 //import Controlador.ServicioDB;
+import Controlador.ServicioDB;
 import Controlador.Validaciones;
+import Modelo.Servicio;
 //import Modelo.Servicio;
 //import controlador.validaciones;
 import java.util.List;
@@ -20,7 +22,7 @@ import org.hibernate.Session;
  * @author Personal
  */
 public class frmServicio extends javax.swing.JDialog {
-////    ServicioDB servicioDB  = new ServicioDB();
+   ServicioDB servicioDB  = new ServicioDB();
       DefaultTableModel model = new DefaultTableModel();
     Validaciones val = new Validaciones();
     
@@ -52,22 +54,15 @@ public class frmServicio extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
-        txtCodigo = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         txtCosto = new javax.swing.JTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
         btnEditar = new javax.swing.JButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaServicios = new javax.swing.JTable();
-        jRadioButton4 = new javax.swing.JRadioButton();
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtId = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -114,30 +109,12 @@ public class frmServicio extends javax.swing.JDialog {
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 108, 420, 151));
 
-        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 120, -1));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Código:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Estado:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
-
         txtCosto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCostoActionPerformed(evt);
             }
         });
         jPanel1.add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 70, 133, -1));
-
-        jRadioButton3.setOpaque(false);
-        jPanel1.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, -1));
 
@@ -149,17 +126,6 @@ public class frmServicio extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 630, 98, -1));
-
-        jRadioButton2.setOpaque(false);
-        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Nombre");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, -1, 30));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Código");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, 30));
 
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton6.setText("Salir");
@@ -196,9 +162,6 @@ public class frmServicio extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 470, 130));
 
-        jRadioButton4.setOpaque(false);
-        getContentPane().add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, -1, -1));
-
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,6 +179,9 @@ public class frmServicio extends javax.swing.JDialog {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 630, 98, -1));
 
+        txtId.setText("txtId");
+        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -227,10 +193,6 @@ public class frmServicio extends javax.swing.JDialog {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void txtCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoActionPerformed
         // TODO add your handling code here:
@@ -343,25 +305,18 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaServicios;
-    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCosto;
     private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JLabel txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
@@ -410,66 +365,68 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
     }
       
      private void guardar() {
-//        Servicio serv = null;
-//
-//        if (btnGuardar.getText().equals("Guardar")) {
-//            serv = servicioDB.traeNombreServicio(txtNombre.getText());
-//
-//            if (serv == null) {
-//                if (ValidarCampos() == true) {
-//                    serv = new Servicio();
-//                    serv.setNombre_servicio(txtNombre.getText());
-//                    serv.setDescripcion(txtDescripcion.getText());
-//                    serv.setEstado("A");
-//                   // serv.setCodigo_serv(txtCodigo.getText());
-//                   //  serv.setPrecio(txtCosto.getText());
-//
-//                    servicioDB.nuevoServicio(serv);
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
-//                    activa_Desac_Panel(false);
-//                    inicio();
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "EL NOMBRE DE LA ESPECIALIDAD YA EXISTE EN EL SISTEMA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//
-//        } else {
-//            if (btnGuardar.getText().equals("Actualizar")) {
-//                if (ValidarCampos() == true) {
-//                    int selectRow = tablaServicios.getSelectedRow();
-//                    int idEspecial = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
-//                    serv= servicioDB.traeServicio(idEspecial);
-//                   
-//                    serv.setNombre_servicio(txtNombre.getText());
-//                    serv.setDescripcion(txtDescripcion.getText());
-//                    serv.setEstado("A");
-//                    //falta float
-//                    servicioDB.actualizaServicio(serv);
-//
-//                    JOptionPane.showMessageDialog(null, "DATOS ACTUALIZADOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-//                    activa_Desac_Panel(false);
-//
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
-//                    activa_Desac_Panel(false);
-//                    inicio();
-//                }
-//            }
-//        }
-//        inicio();
-//    }
-//
-//
-//      private boolean ValidarCampos() {
-//        boolean lleno = true;
-//
-//        if (txtNombre.getText().equals("") || txtDescripcion.getText().equals("")|| txtCodigo.getText().equals("")) {
-//            lleno = false;
-//        } else {
-//            lleno = true;
-//        }
-//        return lleno;
+   Servicio serv = null;
+
+        if (btnGuardar.getText().equals("Guardar")) {
+            serv = servicioDB.traeNombreServicio(txtNombre.getText());
+
+            if (serv == null) {
+                if (ValidarCampos() == true) {
+                    serv = new Servicio();
+                    serv.setNombre_serv(txtNombre.getText());
+                    serv.setDesc_serv(txtDescripcion.getText());
+                    serv.setEstado_serv("A");
+                    serv.setCantidad_serv(1);
+                     serv.setPrecio_serv(Double.parseDouble(txtCosto.getText())  );
+                    servicioDB.nuevoServicio(serv);
+                     inicio();
+                } else {
+                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                    activa_Desac_Panel(false);
+                    inicio();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "EL NOMBRE DE LA ESPECIALIDAD YA EXISTE EN EL SISTEMA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } else {
+            if (btnGuardar.getText().equals("Actualizar")) {
+                if (ValidarCampos() == true) {
+                    
+                    int idServicio = Integer.parseInt(txtId.getText());
+                    serv = servicioDB.traeServicioId(idServicio);
+                    int selectRow = tablaServicios.getSelectedRow();
+                    int idEspecial = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
+                    serv= servicioDB.traeServicio(idEspecial);
+                   
+                    serv.setNombre_serv(txtNombre.getText());
+                    serv.setDesc_serv(txtDescripcion.getText());
+                    serv.setEstado_serv("A");
+                    serv.setPrecio_serv(Double.parseDouble(txtCosto.getText())  );                    //falta float
+                    servicioDB.actualizaServicio(serv);
+
+                    JOptionPane.showMessageDialog(null, "DATOS ACTUALIZADOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                    activa_Desac_Panel(false);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                    activa_Desac_Panel(false);
+                    inicio();
+                }
+            }
+        }
+        inicio();
+
+    }
+      private boolean ValidarCampos() {
+        boolean lleno = true;
+
+        if (txtNombre.getText().equals("") || txtDescripcion.getText().equals("")||txtCosto.getText().equals("")) {
+            lleno = false;
+        } else {
+            lleno = true;
+        }
+        return lleno;
     }
 }
 
