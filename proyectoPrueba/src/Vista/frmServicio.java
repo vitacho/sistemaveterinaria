@@ -64,6 +64,7 @@ public class frmServicio extends javax.swing.JDialog {
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtId = new javax.swing.JLabel();
+        btnDesactivar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,7 +136,7 @@ public class frmServicio extends javax.swing.JDialog {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 630, 88, -1));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 630, 88, -1));
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -178,10 +179,18 @@ public class frmServicio extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 630, 98, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 630, 98, -1));
 
         txtId.setText("txtId");
         getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+
+        btnDesactivar.setText("Desactivar");
+        btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnDesactivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 630, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
@@ -203,6 +212,7 @@ public class frmServicio extends javax.swing.JDialog {
         int selectRow = tablaServicios.getSelectedRow();
         int idServ = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
         Servicio serv = servicioDB.traeServicio(idServ);
+         txtId.setText(String.valueOf(serv.getId_serv()));
         txtNombre.setText(serv.getNombre_serv());
         txtDescripcion.setText(serv.getDesc_serv());
 //        txtCosto.setText();
@@ -233,6 +243,9 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         activa_Desac_Panel(true);
         txtNombre.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
+ desactivar();    }//GEN-LAST:event_btnDesactivarActionPerformed
     private void Editar() {
         activa_Desac_Panel(true);
         btnNuevo.setEnabled(false);
@@ -303,6 +316,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnDesactivar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
@@ -398,15 +412,15 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
                 JOptionPane.showMessageDialog(null, "EL NOMBRE DE LA ESPECIALIDAD YA EXISTE EN EL SISTEMA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             }
 
-        } else {
+        } else {//se actualiza bien
             if (btnGuardar.getText().equals("Actualizar")) {
                 if (ValidarCampos() == true) {
 
                     int idServicio = Integer.parseInt(txtId.getText());
                     serv = servicioDB.traeServicioId(idServicio);
                     int selectRow = tablaServicios.getSelectedRow();
-                    int idEspecial = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
-                    serv = servicioDB.traeServicio(idEspecial);
+//                    int idEspecial = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
+//                    serv = servicioDB.traeServicio(idEspecial);
 
                     serv.setNombre_serv(txtNombre.getText());
                     serv.setDesc_serv(txtDescripcion.getText());
@@ -437,5 +451,25 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
             lleno = true;
         }
         return lleno;
+    }
+      private void desactivar(){
+        
+       //int seleccionar = Tabla1.getSelectedRow();
+        int si = JOptionPane.showConfirmDialog(this, "esta seguro de eliminar al servicio","Desactivar" ,JOptionPane.YES_NO_OPTION);
+        
+        if(si == JOptionPane.NO_OPTION){
+            JOptionPane.showMessageDialog(null, "no se ha podido eliminar el servicio", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+              int seleccionar = tablaServicios.getSelectedRow();
+              
+             int id = Integer.parseInt(String.valueOf(model.getValueAt(seleccionar, 0))); 
+             Servicio serv = servicioDB.traeServicioId(id);
+             serv.setEstado_serv("P");
+             servicioDB.actualizaServicio(serv);
+             
+              JOptionPane.showMessageDialog(null, "SERVICIO DESACTIVADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+              inicio();
+              
+        }
     }
 }
