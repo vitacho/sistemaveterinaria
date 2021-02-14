@@ -33,8 +33,16 @@ public class FacturaDB {
         }
     
     }
-    public  void traerFactura(){
-    
-   
+    //traemos el ultmo id de la factura ingresada en la base
+    public  Factura traerFactura(){
+        Factura fac = null;
+        try {
+            //select top 1 *from tbl order by id desc;
+            //debemos tare el ulto id de factura 
+            fac=(Factura)st.createQuery("");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer la ultima factura"+e.getMessage());
+        }
+        return fac;
     }
 }

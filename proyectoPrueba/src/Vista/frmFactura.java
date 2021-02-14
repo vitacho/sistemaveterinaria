@@ -40,7 +40,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     }
    
 
-    public static String fechaactual() {
+    private static String fechaactual() {
         Date fecha = new Date();
         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -64,7 +64,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
     }
 
-    public void escoderAparecer(boolean bl) {
+    private void escoderAparecer(boolean bl) {
         jPanel4.setVisible(bl);
         metodopago.setVisible(bl);
         jButtonbuscar.setVisible(bl);
@@ -75,11 +75,11 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
     }
 
-    public void guardar() {
+    private void guardar() {
 
     }
 
-    public void imprimir() {
+   private void imprimir() {
         try {
             PrinterJob g = PrinterJob.getPrinterJob();
             g.setPrintable(this);
@@ -93,7 +93,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         }
     }
 
-    public void controldescuento() {
+    private void controldescuento() {
         if (Integer.parseInt(txtdecuento.getText()) <= 100) {
             return;
         } else {

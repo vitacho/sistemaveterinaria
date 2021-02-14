@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.Detallefactura;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import utilidades.HibernateUtil;
@@ -25,14 +26,34 @@ public class DetallefacturaDB {
     public void sessionHibernate() {
         st = HibernateUtil.getSessionFactory().openSession();
     }
-    
-    public void nuevodetallefactura(Detallefactura detallefactura){
-    try {
+
+    public void nuevodetallefactura(Detallefactura detallefactura) {
+        try {
             st.beginTransaction();
             st.save(detallefactura);
             st.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Eror a guadra factura"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Eror a guadra factura" + e.getMessage());
         }
     }
+
+    public List<Detallefactura> caragarDetallefactura(int id_factura, List<Detallefactura> list) {
+        try {
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer detalle factura");
+        }
+        return list;
+    }
+
+    public Detallefactura traerdetallefactura(int idDetalleFactura) {
+        Detallefactura det = null;
+        try {
+            det = (Detallefactura) st.load(Detallefactura.class, idDetalleFactura);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos de la factura " + e.getMessage());
+        }
+        return det;
+    }
+
 }
