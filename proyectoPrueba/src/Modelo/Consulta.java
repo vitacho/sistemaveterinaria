@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -96,7 +96,7 @@ public class Consulta implements Serializable {
         this.fecha = fecha;
     }
     
-    @OneToMany
+    @ManyToOne
     public Mascota getMascota() {
         return mascota;
     }

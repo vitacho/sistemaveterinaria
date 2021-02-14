@@ -21,16 +21,17 @@ import javax.persistence.OneToMany;
  * @author Personal
  */
 @Entity
-    public class Receta {
+public class Receta {
+
     private int id_receta;
     private Calendar fecha_receta;
     private String medicam_receta;
     private String indicac_receta;
     private int num_receta;
     private List<Consulta> ListaConsultas = new ArrayList<Consulta>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
     public int getId_receta() {
         return id_receta;
     }
@@ -70,13 +71,14 @@ import javax.persistence.OneToMany;
     public void setNum_receta(int num_receta) {
         this.num_receta = num_receta;
     }
-  @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
+
+    /*@OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
     public List<Consulta> getListaConsultas() {
         return ListaConsultas;
     }
 
     public void setListaConsultas(List<Consulta> ListaConsultas) {
         this.ListaConsultas = ListaConsultas;
-    }
+    }*/
 
 }
