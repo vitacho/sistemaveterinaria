@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.Persona;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Query;
@@ -25,7 +26,7 @@ public class PersonaDB {
      * el mapeo de atributos entre una base de datos relacional 
      * tradicional y el modelo de objetos de una aplicación
      */
-    public void sessionHibernate(){
+     public void sessionHibernate(){
         st = HibernateUtil.getSessionFactory().openSession();
     }
     
@@ -57,8 +58,6 @@ public class PersonaDB {
             st.beginTransaction();
             st.save(cliente);
             st.getTransaction().commit();
-            
-             
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al guardar "+e.getMessage());
@@ -107,10 +106,10 @@ public class PersonaDB {
     }
     
     //buscar persona por la cedula
-     public List<Persona> buscarPersonaCed(String ced , List<Persona>lis){
-         
+     public List<Persona> buscarPersonaCed(String ced){
+         List<Persona>lis = new ArrayList<>();
          try {
-             lis = (List<Persona>)st.createQuery("From Persona where cedula LIKE '%"+ced+"%'").list();
+             lis = (List<Persona>)st.createQuery("From Persona where cedula = '"+ced+"'").list();
               
          } catch (Exception e) {
              JOptionPane.showMessageDialog(null, "Error al BUSCAR AL CLIENTE "+e.getMessage());
@@ -118,5 +117,31 @@ public class PersonaDB {
          
          return lis;
      }
+     
+     public List<Persona> listarPersonas() {
+        List<Persona> list = new ArrayList<>();
+        try {
+            list = (List<Persona>) st.createQuery("From Persona order by id_persona").list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer la lista " + e.getMessage());
+        }
+        return list;
+    }
+     
+    public Persona traerPorCedula(String ced) {
+        Persona p = new Persona();
+        List<Persona> list = new ArrayList<>();
+        try {
+            list = (List<Persona>) st.createQuery("From Persona where cedula = '"+ced+"'").list();
+            for (Persona persona : list) {
+                if(persona.getCedula().equals(ced)){
+                    p=persona;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer persona con cedula " + e.getMessage());
+        }
+        return p;
+    }
     
 }

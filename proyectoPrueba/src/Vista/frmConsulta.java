@@ -54,7 +54,7 @@ public class frmConsulta extends javax.swing.JDialog {
             String presentar = "";
 
             cedula = jTextFieldDueno.getText();
-            listaP = perDB.buscarPersonaCed(cedula, listaP);
+            listaP = perDB.buscarPersonaCed(cedula);
             listaM = listaP.get(0).getMascota();
 
             for (int i = 0; i < listaM.size(); i++) {

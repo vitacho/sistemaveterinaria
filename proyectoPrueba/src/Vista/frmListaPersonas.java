@@ -10,6 +10,7 @@ import Modelo.Cuenta;
 import Modelo.Persona;
 import Modelo.Rol;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -23,15 +24,14 @@ public class frmListaPersonas extends javax.swing.JDialog {
     /**
      * Creates new form BuscarPersona
      */
-    PersonaDB listaPersonas;
+    PersonaDB personaDB = new PersonaDB();
+    
     boolean esCliente;
     public frmListaPersonas(java.awt.Frame parent, boolean modal,boolean esCli) {
         super(parent, modal);
         initComponents();
         esCliente=esCli;
-        //quemarDatosPrueba();//datos para pruebas sin bd
-        jRBuscarCedula.setToolTipText("Seleccione para buscar por cedula");
-        jRBuscarNombre.setToolTipText("Seleccione para buscar por nombre");
+        inicializar();
     }
 
     /**
@@ -48,9 +48,6 @@ public class frmListaPersonas extends javax.swing.JDialog {
         jLTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePersonas = new javax.swing.JTable();
-        jRBuscarNombre = new javax.swing.JRadioButton();
-        jRBuscarCedula = new javax.swing.JRadioButton();
-        jLabel3 = new javax.swing.JLabel();
         jTextIngresarBusqueda = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -81,7 +78,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
 
         jLTitulo.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLTitulo.setText("LISTA DE PERSONAS");
-        getContentPane().add(jLTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 380, -1));
+        getContentPane().add(jLTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 380, -1));
 
         jTablePersonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,7 +87,15 @@ public class frmListaPersonas extends javax.swing.JDialog {
             new String [] {
                 "CEDULA", "NOMBRE", "APELLIDO", "DIRECCION", "TELÉFONO"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTablePersonas);
         if (jTablePersonas.getColumnModel().getColumnCount() > 0) {
             jTablePersonas.getColumnModel().getColumn(4).setResizable(false);
@@ -98,32 +103,12 @@ public class frmListaPersonas extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 844, 325));
 
-        jRBuscarNombre.setOpaque(false);
-        jRBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBuscarNombreActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jRBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, 30, 30));
-
-        jRBuscarCedula.setOpaque(false);
-        jRBuscarCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBuscarCedulaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jRBuscarCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 30, 30));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Nombre");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, -1, 30));
-
         jTextIngresarBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextIngresarBusquedaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextIngresarBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 310, 30));
+        getContentPane().add(jTextIngresarBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 310, 30));
 
         jButtonBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonBuscar.setText("Buscar");
@@ -132,11 +117,11 @@ public class frmListaPersonas extends javax.swing.JDialog {
                 jButtonBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, 90, 30));
+        getContentPane().add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 90, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Número de Cédula");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, -1, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, 30));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         fondo.setText("jLabel1");
@@ -150,85 +135,57 @@ public class frmListaPersonas extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextIngresarBusquedaActionPerformed
 
-    private void jRBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBuscarCedulaActionPerformed
-        // TODO add your handling code here:
-        jRBuscarNombre.setSelected(false);
-        jRBuscarNombre.disable();
-        
-    }//GEN-LAST:event_jRBuscarCedulaActionPerformed
-
-    private void jRBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBuscarNombreActionPerformed
-        // TODO add your handling code here:
-        jRBuscarCedula.setSelected(false);
-        jRBuscarCedula.disable();
-    }//GEN-LAST:event_jRBuscarNombreActionPerformed
-
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-        //buscarPersona();
+        buscarPersona();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         // TODO add your handling code here:
-        //modificarPersona();
+        modificarPersona();
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jButtonAtrasActionPerformed
- /*   
+  
     public void buscarPersona(){
-        limpiarTabla();
         if(!jTextIngresarBusqueda.getText().equals("")){
-            if(jRBuscarCedula.isSelected()==true){
-                if(listaPersonas.validarBusquedaPorCedula(jTextIngresarBusqueda.getText())){
-                    ArrayList<Persona> lista = new ArrayList<>();
-                    Persona p = listaPersonas.buscarPersonaPorCedula(jTextIngresarBusqueda.getText());
-                    lista.add(p);
-                    llenarTabla(lista);
-                    lista.clear();
-                }else{
-                     JOptionPane.showMessageDialog(null, "PERSONA NO ENCONTRADA");
-                }  
-            }else if(jRBuscarNombre.isSelected()==true){
-                if(listaPersonas.validarBusquedaPorNombre(jTextIngresarBusqueda.getText())){
-                    ArrayList<Persona> lista = new ArrayList<>();
-                    lista.clear();
-                    for (Persona persona : listaPersonas.buscarPersonaPorNombre(jTextIngresarBusqueda.getText())) {
-                        lista.add(persona);
-                    }
+            if(esCliente==true){
+                List<Persona> lista = personaDB.buscarPersonaCed(jTextIngresarBusqueda.getText());
+                boolean encontrado=false;
+                for (Persona persona : lista) {
+                    if(persona.getCedula().equals(jTextIngresarBusqueda.getText()))encontrado=true;
+                }
+                if(encontrado==true){
                     llenarTabla(lista);
                 }else{
-                     JOptionPane.showMessageDialog(null, "PERSONA NO ENCONTRADA");
-                } 
-                
+                     JOptionPane.showMessageDialog(null, "Cliente no encontrado");
+                }
             }else{
-                JOptionPane.showMessageDialog(null, "SELECCIONE UNA OPCION DE BUSQUEDA");
+                List<Persona> lista = personaDB.buscarPersonaCed(jTextIngresarBusqueda.getText());
+                boolean encontrado=false;
+                for (Persona persona : lista) {
+                    if(persona.getCedula().equals(jTextIngresarBusqueda.getText())
+                       &&!persona.getRol().getNombre_rol().equals("Cliente")){
+                        encontrado=true;
+                    }
+                }
+                if(encontrado==true){
+                    llenarTabla(lista);
+                }else{
+                     JOptionPane.showMessageDialog(null, "Cuenta no encontrada");
+                }
             }
+                
         }else{
-            JOptionPane.showMessageDialog(null, "INGRECE EL DATO DE BUSQUEDA");
+            JOptionPane.showMessageDialog(null, "Llene el cuadro de busqueda");
         }
-        jRBuscarCedula.enable();
-        jRBuscarNombre.enable();
                           
     }
     
-    public void modificarPersona(){
-        if(jTablePersonas.getSelectedRow()>=0){
-            DefaultTableModel modelo = (DefaultTableModel) jTablePersonas.getModel();
-            String cedula = (String) modelo.getValueAt(jTablePersonas.getSelectedRow(), 0);
-            String a="";
-            if(esCliente)a=" true";
-            System.out.println(cedula+" "+a);
-            frmPersona modificarP = new frmPersona(new javax.swing.JFrame(), false, esCliente, true, cedula);
-            this.setVisible(false);
-            modificarP.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
-        }
-    }
-    public void llenarTabla(ArrayList<Persona> lista){
+    public void llenarTabla(List<Persona> lista){
         DefaultTableModel modelo = new DefaultTableModel(new String[]{"CEDULA","NOMBRE","APELLIDO","DIRECCION","TELEFONO"},lista.size());
         jTablePersonas.setModel(modelo);
         TableModel modeloDatos = jTablePersonas.getModel();
@@ -248,23 +205,37 @@ public class frmListaPersonas extends javax.swing.JDialog {
         jTablePersonas.updateUI();
     }
     
-    public void quemarDatosPrueba(){
-         if(listaPersonas==null){
-            listaPersonas = new PersonaDB();
-            listaPersonas.crearLista();
+    public void inicializar(){
+        jTextIngresarBusqueda.setToolTipText("Ingrese la cedula de la persona");
+        if(esCliente==true){
+             llenarTabla(personaDB.listarPersonas());
+             jLTitulo.setText("LISTA CLIENTES");
+        }else{
+            jLTitulo.setText("LISTA CUENTAS");
+            List<Persona> l = personaDB.listarPersonas();
+             List<Persona> lista = new ArrayList<>();
+            for (Persona persona : l) {
+                if(!persona.getRol().getNombre_rol().equals("Cliente")){
+                    lista.add(persona);
+                }
+            }
+            llenarTabla(lista);
         }
-        Rol rol = new Rol("Cliente");
-        Cuenta cuenta = new Cuenta("CTA1", true);
-        String nombre = "Carlos";
-        String apellido = "Lopez";
-        String correo = "@";
-        String telefono = "1324242";
-        String direccion = "loja";
-        listaPersonas.agregarPersona("P01",nombre, "Perez", correo, "01", telefono, direccion, rol, cuenta);
-        listaPersonas.agregarPersona("P02","Carlos", apellido, correo, "02", telefono, direccion, rol, cuenta);
-        listaPersonas.agregarPersona("P01",nombre, apellido, correo, "03", telefono, direccion, rol, cuenta);
+       
     }
-    */
+    
+    public void modificarPersona(){
+        if(jTablePersonas.getSelectedRow()>=0){
+            DefaultTableModel modelo = (DefaultTableModel) jTablePersonas.getModel();
+            String cedula = (String) modelo.getValueAt(jTablePersonas.getSelectedRow(), 0);;
+            frmPersona modificarP = new frmPersona(new javax.swing.JFrame(), false, esCliente, true, cedula);
+            modificarP.setVisible(true);
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -320,10 +291,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JLabel jLTitulo;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JRadioButton jRBuscarCedula;
-    private javax.swing.JRadioButton jRBuscarNombre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePersonas;
     private javax.swing.JTextField jTextIngresarBusqueda;

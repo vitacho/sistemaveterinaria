@@ -38,6 +38,17 @@ public class CuentaDB {
         }
     }
     
+    public void actualizarCuenta(Cuenta cuenta){
+        
+        try {
+            st.beginTransaction();
+            st.update(cuenta);
+            st.getTransaction().commit();
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al Modificar el cliente "+e.getMessage());
+        }
+    }
     public Cuenta traeCuenta(int idCuenta){
         Cuenta cuenta = null;
         
@@ -48,6 +59,24 @@ public class CuentaDB {
         }
         
         return cuenta;
+    }
+    
+    public Cuenta traeCuentaIdPersona(int idPersona){
+        Cuenta c = new Cuenta();
+        List<Cuenta> list = new ArrayList<>();
+        
+        try {
+            list = (List<Cuenta>) st.createQuery("From Cuenta where persona_id_persona = "+idPersona).list();
+            for (Cuenta cuenta : list) {
+                if(cuenta.getPersona().getId_persona()==idPersona){
+                    c=cuenta;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer persona "+e.getMessage());
+        }
+        
+        return c;
     }
     
 }

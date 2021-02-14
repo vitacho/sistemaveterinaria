@@ -6,6 +6,8 @@
 package Controlador;
 
 import Modelo.Mascota;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import utilidades.HibernateUtil;
@@ -34,4 +36,50 @@ public class MascotaDB {
             JOptionPane.showMessageDialog(null, "Error al guardar "+e.getMessage());
         }
     }
+    
+    public void actualizarMascota(Mascota mascota){
+        try {
+            st.beginTransaction();
+            st.update(mascota);
+            st.getTransaction().commit();
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al Modificar el cliente "+e.getMessage());
+        }
+    }
+    public List<Mascota> listarMascotas() {
+        List<Mascota> list = new ArrayList<Mascota>();
+        try {
+            list = (List<Mascota>) st.createQuery("From Mascota order by id").list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer la lista " + e.getMessage());
+        }
+        return list;
+    } 
+    
+     public List<Mascota> listarMascotasId(int idPersona) {
+        List<Mascota> list = new ArrayList<Mascota>();
+        try {
+            list = (List<Mascota>) st.createQuery("From Mascota where persona_id_persona='"+idPersona+"'").list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer la lista " + e.getMessage());
+        }
+        return list;
+    } 
+     
+    public Mascota traerMascota(int idPersona,String nombre) {
+        Mascota m = new Mascota();
+        List<Mascota> list = new ArrayList<Mascota>();
+        try {
+            list = (List<Mascota>) st.createQuery("From Mascota where persona_id_persona='"+idPersona+"'").list();
+            for (Mascota mascota : list) {
+                if (mascota.getNombre().equalsIgnoreCase(nombre)) {
+                    m=mascota;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer la lista " + e.getMessage());
+        }
+        return m;
+    } 
 }

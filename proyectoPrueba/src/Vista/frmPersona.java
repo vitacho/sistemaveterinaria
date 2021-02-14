@@ -227,9 +227,9 @@ public class frmPersona extends javax.swing.JDialog {
         }else if(esCliente==false&&modificacion==false){
             registrarCuenta();
         }else if(esCliente==false&&modificacion==true){
-           // modificarCuenta();
+           modificarCuenta();
         }else if(esCliente==true&&modificacion==true){
-           //modificarCliente();
+           modificarCliente();
         }
     }//GEN-LAST:event_jBGuardarActionPerformed
 
@@ -342,92 +342,66 @@ public class frmPersona extends javax.swing.JDialog {
         }
     }
     
-    /*
     public void modificarCliente(){
-        for (Persona persona : listaPersonas.getListaPersonas()) {
-            if(cedModificar.equals(persona.getCedula())){
-                jTextCorreo.setText(persona.getCorreoElectronico());
-                jTextDireccion.setText(persona.getDireccion());
-                jTextTelefono.setText(persona.getTelefono());
-                ////////////////////
-                if(!jTextCorreo.getText().equals("")&&!jTextDireccion.getText().equals("")
-                   &&!jTextTelefono.getText().equals("")){
-                    if(esNumerico(jTextTelefono.getText().trim())){
-                            persona.setDireccion(jTextDireccion.getText());
-                            persona.setTelefono(jTextTelefono.getText());
-                            persona.setCorreoElectronico(jTextCorreo.getText());
-                            limpiarJText();
-                    }else{
-                        JOptionPane.showMessageDialog(null, "TELEFONO NO VALIDO");
-                        jTextTelefono.setText("");
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "LLENE TODOS LOS CAMPOS");
-                }
+        Persona persona =perDB.traerPorCedula(cedModificar);
+        if(!jTextCorreo.getText().equals("")&&!jTextDireccion.getText().equals("")
+           &&!jTextTelefono.getText().equals("")){
+            if(validar.esNumerico(jTextTelefono.getText().trim())){
+                persona.setDireccion(jTextDireccion.getText());
+                persona.setTelefono(jTextTelefono.getText());
+                persona.setCorreo(jTextCorreo.getText());
+                perDB.actualizarCliente(persona);
+                JOptionPane.showMessageDialog(null, "Cliente Actualizo");
+                limpiarJText();
+            }else{
+                JOptionPane.showMessageDialog(null, "TELEFONO NO VALIDO");
+                jTextTelefono.setText("");
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "LLENE TODOS LOS CAMPOS");
         }
+            
+        
     }
     public void modificarCuenta(){
-        for (Persona persona : listaPersonas.getListaPersonas()) {
-            if(cedModificar.equals(persona.getCedula())){
-                if(!jTextCorreo.getText().equals("")&&!jTextDireccion.getText().equals("")&&!jTextPasword.getText().equals("")
-                   &&!jTextTelefono.getText().equals("")&&!jTextValPasword.getText().equals("")){
-                    if(esNumerico(jTextTelefono.getText().trim())){
-                        if(listaPersonas.validarPasword(jTextPasword.getText().trim(), jTextValPasword.getText().trim())){
-                            persona.setDireccion(jTextDireccion.getText());
-                            persona.setTelefono(jTextTelefono.getText());
-                            persona.setCorreoElectronico(jTextCorreo.getText());
-                            String clave=jTextPasword.getText();
-                            String r = jComboRol.getSelectedItem().toString();
-                            Rol rol = new Rol(r);
-                            persona.setRol(rol);
-                            boolean etd;
-                            if(jComboEstado.getSelectedItem().toString().equals("Activada"))etd=true;
-                            else etd=false;
-                            Cuenta cuenta = new Cuenta(persona.getCuenta().getExternal_cuenta(), etd);
-                            persona.setCuenta(cuenta);
-                            limpiarJText();
-                        }else{
-                            JOptionPane.showMessageDialog(null, "LAS CONTRASEÑAS NO COINCIDEN");
-                            jTextPasword.setText("");
-                            jTextValPasword.setText("");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "TELEFONO NO VALIDO");
-                        jTextTelefono.setText("");
-                    }
+        Persona persona =perDB.traerPorCedula(cedModificar);
+        if(!jTextCorreo.getText().equals("")&&!jTextDireccion.getText().equals("")&&!jTextPasword.getText().equals("")
+           &&!jTextTelefono.getText().equals("")&&!jTextValPasword.getText().equals("")){
+            if(validar.esNumerico(jTextTelefono.getText().trim())){
+                if(jTextPasword.getText().trim().equals(jTextValPasword.getText().trim())){
+                    Cuenta cuenta = cuentaDB.traeCuentaIdPersona(persona.getId_persona());
+                    cuenta.setContra(jTextPasword.getText());
+                    Rol rol = new Rol();
+                    String rolNombre = jComboRol.getSelectedItem().toString();
+                    String estado;
+                    rol = rolDB.traeRol(rolNombre);;
+                    persona.setRol(rol); // importante
+                    if(jComboEstado.getSelectedItem().toString().equals("Activada"))estado="A";
+                    else estado="D";
+                    persona.setCorreo(jTextCorreo.getText());
+                    persona.setDireccion(jTextDireccion.getText());
+                    persona.setTelefono(jTextTelefono.getText());
+                    persona.setEstado(estado);
+                    perDB.actualizarCliente(persona);
+                    cuentaDB.actualizarCuenta(cuenta);
+                    JOptionPane.showMessageDialog(null, "Cuenta Actualiza");
+                    limpiarJText();
                 }else{
-                    JOptionPane.showMessageDialog(null, "LLENE TODOS LOS CAMPOS");
+                    JOptionPane.showMessageDialog(null, "LAS CONTRASEÑAS NO COINCIDEN");
+                    jTextPasword.setText("");
+                    jTextValPasword.setText("");
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Telefono no valido");
+                jTextTelefono.setText("");
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "LLlene todos los campos");
         }
-    }
-    public void quemarDatosPrueba(){
-         if(listaPersonas==null){
-            listaPersonas = new PersonaDB();
-            listaPersonas.crearLista();
-        }
-        Rol rol = new Rol("Cliente");
-        Cuenta cuenta = new Cuenta("CTA1", true);
-        String nombre = "Carlos";
-        String apellido = "Lopez";
-        String correo = "@";
-        String telefono = "1324242";
-        String direccion = "loja";
-        listaPersonas.agregarPersona("P01",nombre, "Perez", correo, "01", telefono, direccion, rol, cuenta);
-        listaPersonas.agregarPersona("P02","Carlos", apellido, correo, "02", telefono, direccion, rol, cuenta);
-        listaPersonas.agregarPersona("P01",nombre, apellido, correo, "03", telefono, direccion, rol, cuenta);
+        
+        
     }
     
-    private static boolean esNumerico(String cadena){
-	try {
-		Integer.parseInt(cadena);
-		return true;
-	} catch (NumberFormatException nfe){
-		return false;
-	}
-    }
-    */
     public void limpiarJText(){
         jTexApellido.setText("");
         jTexCedula.setText("");
@@ -456,14 +430,36 @@ public class frmPersona extends javax.swing.JDialog {
             jTextNombre.disable();
             bloquearCamposCuenta();
             jLTitulo.setText("MODIFICAR CLIENTE ");
+            Persona p =perDB.traerPorCedula(cedModificar);
+             jTexApellido.setText(p.getApellido());
+            jTexCedula.setText(p.getCedula());
+            jTextCorreo.setText(p.getCorreo());
+            jTextDireccion.setText(p.getDireccion());
+            jTextNombre.setText(p.getNombre());
+            jTextTelefono.setText(p.getTelefono());
         }else if(esCliente==false&&modificacion==true){
             jLTitulo.setText("MODIFICAR CUENTA ");
             jTexCedula.disable();
             jTexApellido.disable();
             jTextNombre.disable();
+            Persona p =perDB.traerPorCedula(cedModificar);
+             jTexApellido.setText(p.getApellido());
+            jTexCedula.setText(p.getCedula());
+            jTextCorreo.setText(p.getCorreo());
+            jTextDireccion.setText(p.getDireccion());
+            jTextNombre.setText(p.getNombre());
+            jTextTelefono.setText(p.getTelefono());
+            Cuenta c = cuentaDB.traeCuentaIdPersona(p.getId_persona());
+            String estado = p.getEstado();
+            if(estado.equals("A"))jComboEstado.setSelectedIndex(0);
+            else jComboEstado.setSelectedIndex(1);
+            String rl = p.getRol().getNombre_rol();
+            if(rl.equals("Administrador"))jComboRol.setSelectedIndex(0);
+            else if(rl.equals("Segretaria"))jComboRol.setSelectedIndex(1);
+            else jComboRol.setSelectedIndex(2);
+            jTextPasword.setText(c.getContra());
         }
     }
-    
     /**
      * @param args the command line arguments
      */

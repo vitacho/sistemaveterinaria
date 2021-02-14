@@ -348,7 +348,7 @@ public class frmPersona extends javax.swing.JDialog {
 
         cedula = txtBuscar.getText();
 
-        listaP = perDB.buscarPersonaCed(cedula, listaP);
+        listaP = perDB.buscarPersonaCed(cedula);
 
         if (listaP.size() > 0) {
             for (Persona perLis : listaP) {
