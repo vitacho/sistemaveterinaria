@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.Factura;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import utilidades.HibernateUtil;
@@ -34,15 +35,21 @@ public class FacturaDB {
     
     }
     //traemos el ultmo id de la factura ingresada en la base
-    public  Factura traerFactura(){
+   public Factura traerFactura(int idFactura) {
         Factura fac = null;
         try {
-            //select top 1 *from tbl order by id desc;
-            //debemos tare el ulto id de factura 
-            fac=(Factura)st.createQuery("");
+            fac = (Factura) st.load(Factura.class, idFactura);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al traer la ultima factura"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al traer la ultima factura" + e.getMessage());
         }
         return fac;
+    }
+
+    public List<Factura> caragarFacturas(List<Factura> lis) {
+        try {
+            lis = (List<Factura>) st.createQuery("From Factura").list();
+        } catch (Exception e) {
+        }
+        return lis;
     }
 }

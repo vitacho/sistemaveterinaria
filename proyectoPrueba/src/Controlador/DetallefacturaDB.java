@@ -39,7 +39,7 @@ public class DetallefacturaDB {
 
     public List<Detallefactura> caragarDetallefactura(int id_factura, List<Detallefactura> list) {
         try {
-
+              list = (List<Detallefactura>) st.createQuery("From Detallefactura").list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al traer detalle factura");
         }
