@@ -104,5 +104,4 @@ public class Consulta implements Serializable {
     public void setMascota(Mascota mascota) {
         this.mascota = mascota;
     }
-
 }

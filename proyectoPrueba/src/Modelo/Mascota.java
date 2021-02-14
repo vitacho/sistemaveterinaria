@@ -8,11 +8,13 @@ package Modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -29,6 +31,8 @@ public class Mascota implements Serializable{
     private String sexo;
     private String colorPelaje;
     private Persona persona;
+    
+    private List<Consulta> lisCon = new ArrayList<Consulta>();
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -106,7 +110,13 @@ public class Mascota implements Serializable{
         this.persona = persona;
     }
     
-    
-    
-    
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
+    public List<Consulta> getLisCon() {
+        return lisCon;
+    }
+
+    public void setLisCon(List<Consulta> lisCon) {
+        this.lisCon = lisCon;
+    }
+   
 }

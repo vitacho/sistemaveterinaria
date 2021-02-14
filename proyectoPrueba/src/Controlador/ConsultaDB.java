@@ -45,7 +45,4 @@ public class ConsultaDB {
         }
         return lis;
     }
-    
-    
-
 }
