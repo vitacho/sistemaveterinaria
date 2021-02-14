@@ -30,18 +30,17 @@ public class frmConsulta extends javax.swing.JDialog {
     /**
      * Creates new form frmConsulta
      */
-    
     ConsultaDB conDB = new ConsultaDB();
     Validaciones validar = new Validaciones();
     PersonaDB perDB = new PersonaDB();
     Mascota mas = null;
-    
+
     public frmConsulta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         iniciar();
     }
-    
+
     private void iniciar() {
         jTextFieldCI.setEditable(false);
         jTextFieldNombreMascota.setEditable(false);
@@ -59,14 +58,17 @@ public class frmConsulta extends javax.swing.JDialog {
             listaM = listaP.get(0).getMascota();
 
             for (int i = 0; i < listaM.size(); i++) {
-                presentar += "Nombre: " + listaM.get(i).getNombre() + "\n"
+                presentar += i + 1 + " Nombre: " + listaM.get(i).getNombre() + "\n"
                         + " Raza: " + listaM.get(i).getRaza() + "\n"
                         + " Sexo: " + listaM.get(i).getSexo() + "\n\n";
             }
 
             int op = Integer.parseInt(JOptionPane.showInputDialog("Elija una mascota:\n" + presentar));
 
-            mas = listaM.get(op);
+            mas = listaM.get(op - 1);
+            
+            jTextFieldNombreMascota.setText(mas.getNombre());
+            jTextFieldSexMas.setText(mas.getSexo());
 
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
@@ -339,7 +341,7 @@ public class frmConsulta extends javax.swing.JDialog {
 
     private void jButtonbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarActionPerformed
         // TODO add your handling code here:
-        
+
         buscarCliente(jTextFieldDueno.getText());
 
     }//GEN-LAST:event_jButtonbuscarActionPerformed
@@ -350,7 +352,7 @@ public class frmConsulta extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:   
-        
+
         registrarConsulta();
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed

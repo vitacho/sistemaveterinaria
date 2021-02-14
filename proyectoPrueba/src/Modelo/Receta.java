@@ -28,7 +28,8 @@ public class Receta {
     private String medicam_receta;
     private String indicac_receta;
     private int num_receta;
-    private List<Consulta> ListaConsultas = new ArrayList<Consulta>();
+    
+    private Consulta consulta;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,13 +73,15 @@ public class Receta {
         this.num_receta = num_receta;
     }
 
-    /*@OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
-    public List<Consulta> getListaConsultas() {
-        return ListaConsultas;
+    @ManyToOne
+    public Consulta getConsulta() {
+        return consulta;
     }
 
-    public void setListaConsultas(List<Consulta> ListaConsultas) {
-        this.ListaConsultas = ListaConsultas;
-    }*/
+    public void setConsulta(Consulta consulta) {
+        this.consulta = consulta;
+    }
+
+    
 
 }
