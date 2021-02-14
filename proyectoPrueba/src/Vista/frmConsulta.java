@@ -7,12 +7,18 @@ package Vista;
 
 //import Controlador.controladorConsulta;
 //import Controlador.MascotaDB;
+import Controlador.ConsultaDB;
+import Controlador.PersonaDB;
+import Controlador.Validaciones;
+import Modelo.Consulta;
 import Modelo.Cuenta;
+import Modelo.Mascota;
 //import Modelo.Mascota;
 import Modelo.Persona;
 import Modelo.Rol;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,34 +27,89 @@ import javax.swing.JOptionPane;
  */
 public class frmConsulta extends javax.swing.JDialog {
 
-//    MascotaDB listaMascotas;
-//    ArrayList<Persona> listPersonas;
-//    ArrayList<Mascota> lista = new ArrayList<>();
-//    int op;
-//
-//    public static controladorConsulta cc = new controladorConsulta();
-//    MascotaDB cm = new MascotaDB();
-//
-//    Mascota mascota = new Mascota();
-
-    //ArrayList<Mascota> listMascota = new ArrayList<>();
     /**
      * Creates new form frmConsulta
      */
+    
+    ConsultaDB conDB = new ConsultaDB();
+    Validaciones validar = new Validaciones();
+    PersonaDB perDB = new PersonaDB();
+    Mascota mas = null;
+    
     public frmConsulta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        iniciar();
+    }
+    
+    private void iniciar() {
         jTextFieldCI.setEditable(false);
         jTextFieldNombreMascota.setEditable(false);
         jTextFieldSexMas.setEditable(false);
     }
 
-    private static boolean esNumerico(String cadena) {
-        try {
-            Integer.parseInt(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
+    private void buscarCliente(String cedula) {
+        if (validar.esNumerico(jTextFieldDueno.getText()) == true) {
+            List<Persona> listaP = null;
+            List<Mascota> listaM = null;
+            String presentar = "";
+
+            cedula = jTextFieldDueno.getText();
+            listaP = perDB.buscarPersonaCed(cedula, listaP);
+            listaM = listaP.get(0).getMascota();
+
+            for (int i = 0; i < listaM.size(); i++) {
+                presentar += "Nombre: " + listaM.get(i).getNombre() + "\n"
+                        + " Raza: " + listaM.get(i).getRaza() + "\n"
+                        + " Sexo: " + listaM.get(i).getSexo() + "\n\n";
+            }
+
+            int op = Integer.parseInt(JOptionPane.showInputDialog("Elija una mascota:\n" + presentar));
+
+            mas = listaM.get(op);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+        }
+    }
+
+    private void registrarConsulta() {
+        if (!jTextFieldDueno.getText().equals("")) {
+            if (!jTextFieldVeterinario.getText().equals("")) {
+                if (validar.esNumerico(jTextFieldDueno.getText()) == true || validar.esNumerico(jTextFieldPresion.getText()) == true
+                        || validar.esNumerico(jTextFieldTemp.getText()) == true || validar.esNumerico(jTextFieldPeso.getText()) == true) {
+                    if (!jTextAreaMotivo.getText().equals("") && !jTextFieldPresion.getText().equals("") && !jTextFieldTemp.getText().equals("")
+                            && !jTextFieldPeso.getText().equals("") && !jTextAreaDiag.getText().equals("")) {
+                        if (!jTextFieldCI.getText().equals("") || !jTextFieldNombreMascota.getText().equals("")) {
+                            java.util.Date fecha = new Date();
+                            Consulta con = new Consulta();
+                            con.setMascota(mas);
+                            con.setVeterinario(jTextFieldVeterinario.getText());
+                            con.setFecha(fecha);
+                            con.setMotivo(jTextAreaMotivo.getText());
+                            con.setPresion(jTextFieldPresion.getText());
+                            con.setTemp(Integer.parseInt(jTextFieldTemp.getText()));
+                            con.setPeso(Integer.parseInt(jTextFieldPeso.getText()));
+                            con.setDiagnostico(jTextAreaDiag.getText());
+                            conDB.nuevaConsulta(con);
+
+                            double peso = Double.parseDouble(jTextFieldPeso.getText());
+
+                            JOptionPane.showMessageDialog(null, "Consulta Guardada");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Falta el cliente o mascota");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Llene todos los datos");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El nombre el veterinario es obligatorio");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Es nesesario escribir un cliente");
         }
     }
 
@@ -278,56 +339,9 @@ public class frmConsulta extends javax.swing.JDialog {
 
     private void jButtonbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarActionPerformed
         // TODO add your handling code here:
-//        if (listaMascotas == null) {
-//            listaMascotas = new MascotaDB();
-//            listaMascotas.crearLista();
-//        }
-//        listPersonas = new ArrayList<>();
-//        Rol r = new Rol("Administrador");
-//        Cuenta c = new Cuenta("CTA1", true);
-//        Persona p1 = new Persona("PSN01", "CARLOS", "ORDOÑES", "GMAIL", "01", "2572220", "MEXICO", r, c);
-//        Persona p2 = new Persona("PSN01", "LUIS", "PEÑA", "GMAIL", "02", "2572220", "MEXICO", r, c);
-//        listPersonas.add(p1);
-//        listPersonas.add(p2);
-//        listaMascotas.getListaMascota().clear();
-//        listaMascotas.agregarMacota("m002", "lucy", 10, "perro", "doverman", "Mediano", "Macho", "Gris", p2);
-//        listaMascotas.agregarMacota("m002", "per", 10, "gato", "doverman", "Grande", "Hembra", "Gris", p2);
-//        listaMascotas.agregarMacota("m002", "lili", 10, "perro", "doverman", "Pequeño", "Macho", "Gris", p2);
-//        listaMascotas.agregarMacota("m002", "sesi", 10, "gato", "doverman", "Mediano", "Hembra", "Gris", p1);
-//        listaMascotas.agregarMacota("m002", "corvi", 10, "perro", "doverman", "Mediano", "Macho", "Gris", p1);
-//
-//        if (esNumerico(jTextFieldDueno.getText()) == true) {
-//            int cont = 0;
-//            for (int i = 0; i < listPersonas.size(); i++) {
-//                if (listPersonas.get(i).getCedula().equals(jTextFieldDueno.getText())) {
-//                    cont++;
-//                }
-//            }
-//            if (cont != 0) {//si se encotro la cedula
-//                jTextFieldCI.setText(jTextFieldDueno.getText());
-//                lista = listaMascotas.buscarMascotas(jTextFieldDueno.getText());
-//
-//                String pre = "";
-//                for (int i = 0; i < lista.size(); i++) {
-//                    pre += (i + 1) + ". " + "Nombre: " + lista.get(i).getNombre() + "\n"
-//                            + "Raza: " + lista.get(i).getRaza() + "\n"
-//                            + "Sexo: " + lista.get(i).getSexo() + "\n\n";
-//                }
-//                op = Integer.parseInt(JOptionPane.showInputDialog(null, "****Mascotas****\n" + pre));
-//                try {
-//                    mascota = lista.get(op - 1);
-//                    jTextFieldNombreMascota.setText(mascota.getNombre());
-//                    jTextFieldSexMas.setText(mascota.getSexo());
-//
-//                } catch (Exception ex) {
-//                    JOptionPane.showMessageDialog(null, "Opcion no valida");
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Persona no encontrada");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
-//        }
+        
+        buscarCliente(jTextFieldDueno.getText());
+
     }//GEN-LAST:event_jButtonbuscarActionPerformed
 
     private void jTextFieldDuenoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDuenoActionPerformed
@@ -335,24 +349,9 @@ public class frmConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldDuenoActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        // TODO add your handling code here:        
-//        if (!jTextFieldDueno.getText().equals("")) {
-//            if (!jTextFieldVeterinario.getText().equals("")) {
-//                if (!jTextAreaMotivo.getText().equals("") && !jTextFieldPresion.getText().equals("") && !jTextFieldTemp.getText().equals("")
-//                        && !jTextFieldPeso.getText().equals("") && !jTextAreaDiag.getText().equals("")) {
-//                    java.util.Date fecha = new Date();
-//                    double peso = Double.parseDouble(jTextFieldPeso.getText());
-//                    cc.registrarConsulta(01, 01, jTextFieldPresion.getText(), Integer.parseInt(jTextFieldTemp.getText()), peso, jTextAreaMotivo.getText(), jTextAreaDiag.getText(), jTextFieldVeterinario.getText(), mascota = lista.get(op - 1), fecha);
-//                    JOptionPane.showMessageDialog(null, "Consulta Guardada");
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Llene todos los datos");
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "El nombre el veterinario es obligatorio");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Es nesesario escribir un cliente");
-//        }
+        // TODO add your handling code here:   
+        
+        registrarConsulta();
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
