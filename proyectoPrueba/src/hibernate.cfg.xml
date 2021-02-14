@@ -51,9 +51,11 @@ Contributor(s):
     <mapping class="Modelo.Persona"/>
     <mapping class="Modelo.Rol"/>
     <mapping class="Modelo.Mascota"/>
+    <mapping class="Modelo.Factura"/>
+    <mapping class="Modelo.Detallefactura"/>
     <mapping class="Modelo.Consulta"/>
-     <mapping class="Modelo.Servicio"/>
-     <mapping class="Modelo.Receta"/>
+    <mapping class="Modelo.Servicio"/>
+    <mapping class="Modelo.Receta"/>
     <mapping class="Modelo.Hospitalizacion"/>
   </session-factory>
 </hibernate-configuration>

@@ -16,7 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 /**
  *
@@ -30,8 +30,9 @@ public class Factura implements Serializable {
     private Date fecha;
     private double iva;
     private Persona persona;
-    private List<Detallefactura> detallefactura = new ArrayList<Detallefactura>(0);
+    private List<Detallefactura> detallefactura = new ArrayList<Detallefactura>();
 
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId_factura() {
@@ -76,7 +77,7 @@ public class Factura implements Serializable {
     }
 
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
-    public List<Detallefactura> getDetallefactura() {
+   public List<Detallefactura> getDetallefactura() {
         return detallefactura;
     }
 
