@@ -52,6 +52,8 @@ Contributor(s):
     <mapping class="Modelo.Rol"/>
     <mapping class="Modelo.Mascota"/>
     <mapping class="Modelo.Consulta"/>
+     <mapping class="Modelo.Servicio"/>
+     <mapping class="Modelo.Receta"/>
     <mapping class="Modelo.Hospitalizacion"/>
   </session-factory>
 </hibernate-configuration>
