@@ -16,10 +16,23 @@ public class frmPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form frmPrincipal
      */
+    int tipo = 0;
     public frmPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
     }
+
+       public frmPrincipal(int tip) {
+        initComponents();
+        tipo = tip;
+        
+         setExtendedState(MAXIMIZED_BOTH);
+         setTitle("Menu Principal");
+         menus();
+    }
+        private void menus() {
+            
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.

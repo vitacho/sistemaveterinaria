@@ -128,37 +128,34 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
        // necesito lo de cuenta y persona
        
-//        List<Cuenta> listCuenta = new java.util.ArrayList<>();
-//       
-//        Cuenta c = new Cuenta();
-////        listCuenta = cueDB.traeUsuarios("A", listCuenta);
-//      
-//        if (listCuenta.size() > 0) {
-//            c = cueDB.traeCuentaUsuario(txtUsuario.getText());
+        List<Cuenta> listCuenta = new java.util.ArrayList<>();
+       
+        Cuenta c = new Cuenta();
+//        listCuenta = cueDB.traeUsuarios("A", listCuenta);
+      
+        if (listCuenta.size() > 0) {
+            c = cueDB.traeCuentaCed(txtUsuario.getText());
             
-//            if (txtUsuario.getText().equals("")||txtcontra.getText().equals("")) {
-//                JOptionPane.showMessageDialog(this, "ACCESO INCORRECTO", "Mensaje", JOptionPane.ERROR_MESSAGE);
-//                txtcontra.setText(null); txtUsuario.setText(null); txtUsuario.requestFocus();
-//            }
-//
-//            if (c.getPersona().getCedula().equals(txtUsuario.getText())
-//                && c.getClave().equals(txtcontra.getText())) {
-//                tipo = c.getPersona().getRol().getNombre();
-//                JOptionPane.showMessageDialog(this, "Acceso Tipo: " + tipo, "ACCESO AL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
+            if (txtUsuario.getText().equals("")||txtcontra.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "ACCESO INCORRECTO", "Mensaje", JOptionPane.ERROR_MESSAGE);
+                txtcontra.setText(null); txtUsuario.setText(null); txtUsuario.requestFocus();
+            }
 
-                //AQUI ENVIAR EL FORMULARIO
+            if (c.getPersona().getCedula().equals(txtUsuario.getText())
+                && c.getContra().equals(txtcontra.getText())) {
+                tipo = c.getPersona().getRol().getNombre_rol();
+                JOptionPane.showMessageDialog(this, "Acceso Tipo: " + tipo, "ACCESO AL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
 
-                //frmPrincipal pricipal = new frmPrincipal(c.getPersona().getRol().getId());
-                //pricipal.setTitle("Menú Principal");
-                //pricipal.setVisible(true);
-//           
-//                this.dispose();
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "NO EXISTEN USUARIOS REGISTRADOS "
-//                + "EN EL SISTEMA ACTUALMENTE", "MENSAJE", JOptionPane.WARNING_MESSAGE);
-//        }
-
+//                AQUI ENVIAR EL FORMULARIO
+                frmPrincipal pricipal = new frmPrincipal(c.getPersona().getRol().getId_rol());
+                pricipal.setTitle("Menú Principal");
+                pricipal.setVisible(true);         
+                this.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO EXISTEN USUARIOS REGISTRADOS "
+                + "EN EL SISTEMA ACTUALMENTE", "MENSAJE", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

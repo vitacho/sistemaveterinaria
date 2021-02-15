@@ -31,7 +31,6 @@ public class RecetaDB {
             st.beginTransaction();
             st.save(rec);
             st.getTransaction().commit();
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR LA RECETA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
         }

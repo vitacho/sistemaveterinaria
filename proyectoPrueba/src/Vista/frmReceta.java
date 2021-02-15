@@ -34,11 +34,12 @@ public class frmReceta extends javax.swing.JFrame {
     Validaciones val = new Validaciones();
     public frmReceta() {
         initComponents();  
-        
+//        txtNro.setText(val.ObtenerCodString(obtenerCodigoReceta()));
+        inicio();
     }
         private void inicio() {
         //TableModelConsulta();      
-        btnNuevo.setEnabled(true);
+//        btnNuevo.setEnabled(true);
         btnImprimir.setText("Imprimir");       
         btnCancelar.setEnabled(true);
 
@@ -74,8 +75,6 @@ public class frmReceta extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
         btnSalir = new javax.swing.JButton();
-        btnBuscarCon = new javax.swing.JButton();
-        btnNuevo = new javax.swing.JButton();
         jDate = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
 
@@ -153,6 +152,11 @@ public class frmReceta extends javax.swing.JFrame {
 
         btnImprimir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, 100, 30));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -169,17 +173,6 @@ public class frmReceta extends javax.swing.JFrame {
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 110, 30));
-
-        btnBuscarCon.setText("Buscar Consulta");
-        btnBuscarCon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarConActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnBuscarCon, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, -1, -1));
-
-        btnNuevo.setText("Nuevo");
-        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, -1, -1));
         getContentPane().add(jDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
@@ -197,18 +190,50 @@ public class frmReceta extends javax.swing.JFrame {
             txtAmedicamentos.setEnabled(false);
         }
     }
-   private void guardar() {
-        Receta rec = null;
+//   private void guardar() {
+//        Receta rec = null;
+//
+//        if (btnImprimir.getText().equals("Imprimir")) {
+//            
+////            rec = recetaDB.traeRecetaID(txtId.getText());
+////            txtCedula.setText(String.valueOf(cedula));
+////          txtId.setText(String.valueOf(rec.getId_serv()));  
+////            txtId.getText(
+//            if (rec == null) {
+// 
+//                if (ValidarCampos() == true) {
+//                    rec = new Receta();                 
+//                    rec.setConsulta(mas);
+//                    rec.setNum_receta(txtNro.getText());
+//                    rec.setFecha_receta(jDate.getCalendar());
+//                    rec.setIndicac_receta(txtAindicaciones.getText());
+//                    rec.setMedicam_receta(txtAmedicamentos.getText());                  
+//                    rec.setEstado("A");                 
+//                    recetaDB.nuevaReceta(rec);
+//                    inicio();
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
+////                    activa_Desac_Panel(false);
+//                    inicio();
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "EL NOMBRE DE LA ESPECIALIDAD YA EXISTE EN EL SISTEMA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//
+//        } 
+//        inicio();
+//
+//    }
+       private void guardar1() {
+         Receta rec = null;
 
-        if (btnImprimir.getText().equals("Imprimir")) {
-            
-//            rec = recetaDB.traeRecetaID(txtId.getText());
-//            txtCedula.setText(String.valueOf(cedula));
-//          txtId.setText(String.valueOf(rec.getId_serv()));  
-//            txtId.getText(
-            if (rec == null) {
- 
-                if (ValidarCampos() == true) {
+        if ( jDate.getCalendar() == null) {
+            JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+         
+            jDate.setCalendar(null);
+
+        } else {
+            if (btnImprimir.getText().equals("Imprimir")) {        
                     rec = new Receta();                 
                     rec.setConsulta(mas);
                     rec.setNum_receta(txtNro.getText());
@@ -216,24 +241,15 @@ public class frmReceta extends javax.swing.JFrame {
                     rec.setIndicac_receta(txtAindicaciones.getText());
                     rec.setMedicam_receta(txtAmedicamentos.getText());                  
                     rec.setEstado("A");                 
-                    recetaDB.nuevaReceta(rec);
-                    inicio();
-                } else {
-                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
-//                    activa_Desac_Panel(false);
-                    inicio();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "EL NOMBRE DE LA ESPECIALIDAD YA EXISTE EN EL SISTEMA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        } 
-        inicio();
-
+                    recetaDB.nuevaReceta(rec);    
+                JOptionPane.showMessageDialog(null, "RECETA REGISTRADA ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            inicio();
+        }
     }
+   
     private boolean ValidarCampos() {
         boolean lleno = true;
-
         if (txtAindicaciones.getText().equals("") || txtAmedicamentos.getText().equals("")) {
             lleno = false;
         } else {
@@ -241,21 +257,23 @@ public class frmReceta extends javax.swing.JFrame {
         }
         return lleno;
     }
-    
-    int num_resp = 0;
-         public int obtenerCodigoCita() {
-        num_resp = 0;
-        List<Receta> lista = null;
-        lista = recetaDB.cargarCodigoReceta(lista);
-        for (Iterator<Receta> it = lista.iterator(); it.hasNext();) {
-            Receta rec = it.next();
-            num_resp = Integer.parseInt(rec.getNum_receta()) + 1;
-        }
-        if (num_resp == 0) {
-            num_resp = 1;
-        }
-        return num_resp;
-    }
+//    
+//    int num_resp = 0;
+//         public int obtenerCodigoReceta() {
+//        num_resp = 0;
+//        List<Receta> lista = null;
+//        lista = recetaDB.cargarCodigoReceta(lista);
+//        for (Iterator<Receta> it = lista.iterator(); it.hasNext();) {
+//            Receta rec = it.next();
+//            num_resp = Integer.parseInt(rec.getNum_receta()) + 1;
+//        }
+//        if (num_resp == 0) {
+//            num_resp = 1;
+//        }
+//        return num_resp;
+//    }
+         
+         
     
     private void txtCiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiActionPerformed
         // TODO add your handling code here:
@@ -273,13 +291,8 @@ public class frmReceta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtClienteActionPerformed
 
-    private void btnBuscarConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarConActionPerformed
-      frmListaConsulta rec = new frmListaConsulta(this, rootPaneCheckingEnabled);         
-      rec.setVisible(true);
-      
-      
-                           // this.dispose();
-    }//GEN-LAST:event_btnBuscarConActionPerformed
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,10 +330,8 @@ public class frmReceta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCon;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnImprimir;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JLabel jLabel1;
