@@ -10,7 +10,10 @@ package Vista;
 //import Modelo.Consulta;
 //import Modelo.Mascota;
 import Controlador.ConsultaDB;
+import Controlador.PersonaDB;
+import Controlador.Validaciones;
 import Modelo.Consulta;
+import Modelo.Mascota;
 import Modelo.Persona;
 //import static Vista.frmConsulta.cc;
 import java.util.ArrayList;
@@ -27,7 +30,9 @@ import javax.swing.table.TableModel;
 public class frmListaConsulta extends javax.swing.JDialog {
 
     DefaultTableModel model;
+    Validaciones validar = new Validaciones();
     ConsultaDB conDB = new ConsultaDB();
+    PersonaDB perDB = new PersonaDB();
 
     /**
      * Creates new form frmListaConsulta
@@ -75,26 +80,30 @@ public class frmListaConsulta extends javax.swing.JDialog {
     }
 
     private void buscarConsulta(String cedula) {
-        model.setNumRows(0);
-        List<Consulta> lista = null;
-        List<Consulta> busca = null;
-        lista = conDB.cargarConsulta(lista);
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
-                busca.add(lista.get(i));
-            }
-        }
-
-        if (busca.size() > 0) {
-            for (Consulta perLis : busca) {
-                model.addRow(new Object[]{perLis.getId(), perLis.getMascota().getNombre(),
-                    perLis.getPresion(), perLis.getTemp(), perLis.getPeso(), perLis.getMascota().getPersona().getCedula(),
-                    perLis.getMascota().getPersona().getNombre(), perLis.getVeterinario(), perLis.getFecha()});
+        if (validar.esNumerico(jTextFieldBuscar.getText()) == true) {
+            model.setNumRows(0);
+            List<Consulta> busca = new ArrayList<>();
+            List<Consulta> lista = null;
+            lista = conDB.cargarConsulta(lista);
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
+                    busca.add(lista.get(i));
+                }
             }
 
+            if (busca.size() > 0) {
+                for (Consulta cons : busca) {
+                    model.addRow(new Object[]{cons.getId(), cons.getMascota().getNombre(),
+                        cons.getPresion(), cons.getTemp(), cons.getPeso(), cons.getMascota().getPersona().getCedula(),
+                        cons.getMascota().getPersona().getNombre(), cons.getVeterinario(), cons.getFecha()});
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                llenarTabla();
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            llenarTabla();
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
         }
     }
 

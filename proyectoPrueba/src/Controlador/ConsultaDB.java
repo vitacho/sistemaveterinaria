@@ -53,7 +53,7 @@ public class ConsultaDB {
     public List<Consulta> cargarConsulta(List<Consulta> lis) {
 
         try {
-            lis = (List<Consulta>) st.createCriteria(Consulta.class).list();
+            lis = (List<Consulta>) st.createQuery("From Consulta order by id").list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos en la tabla " + e.getMessage());
         }
