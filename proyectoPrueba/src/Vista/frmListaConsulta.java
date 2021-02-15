@@ -9,9 +9,12 @@ package Vista;
 //import Controlador.MascotaDB;
 //import Modelo.Consulta;
 //import Modelo.Mascota;
+import Controlador.ConsultaDB;
+import Modelo.Consulta;
 import Modelo.Persona;
 //import static Vista.frmConsulta.cc;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -23,45 +26,75 @@ import javax.swing.table.TableModel;
  */
 public class frmListaConsulta extends javax.swing.JDialog {
 
-//    ArrayList<Consulta> listaConsulta;
-    ArrayList<Persona> listPersonas;
+    DefaultTableModel model;
+    ConsultaDB conDB = new ConsultaDB();
 
     /**
      * Creates new form frmListaConsulta
      */
     public frmListaConsulta(java.awt.Frame parent, boolean modal) {
-//        super(parent, modal);
-//        initComponents();
-//        listaConsulta = cc.getListaConsulta();
-//        llenarTabla(listaConsulta);
+        super(parent, modal);
+        initComponents();
+        iniciar();
     }
 
-    public void llenarTabla() {
-//ArrayList<Consulta> lista//sa en el constructor
-//        DefaultTableModel tabla = new DefaultTableModel(new String[]{"MASCOTA", "SEXO", "PRESIÓN", "TEMPERATURA", "PESO", "CEDULA", "DUEÑO", "VETERINARIO", "FECHA"}, lista.size());
-//        jTableConsultas.setModel(tabla);
-//        TableModel datosTabla = jTableConsultas.getModel();
-//
-//        for (int i = 0; i < lista.size(); i++) {
-//            datosTabla.setValueAt(lista.get(i).getMascota().getNombre(), i, 0);
-//            datosTabla.setValueAt(lista.get(i).getMascota().getSexo(), i, 1);
-//            datosTabla.setValueAt(lista.get(i).getPresion(), i, 2);
-//            datosTabla.setValueAt(lista.get(i).getTemp(), i, 3);
-//            datosTabla.setValueAt(lista.get(i).getPeso(), i, 4);
-//            datosTabla.setValueAt(lista.get(i).getMascota().getPersona().getCedula(), i, 5);
-//            String nombres = lista.get(i).getMascota().getPersona().getNombre() + " " + lista.get(i).getMascota().getPersona().getApellido();
-//            datosTabla.setValueAt(nombres, i, 6);
-//            datosTabla.setValueAt(lista.get(i).getVeterinario(), i, 7);
-//            datosTabla.setValueAt(lista.get(i).getFecha(), i, 8);
-//        }
+    private void iniciar() {
+        jTextAreaMotivo.setEditable(false);
+        jTextAreaDiagnostico.setEditable(false);
+        llenarTabla();
     }
 
-    private static boolean esNumerico(String cadena) {
-        try {
-            Integer.parseInt(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
+    private void llenarTabla() {
+        tableModel();
+        List<Consulta> lista = null;
+        lista = conDB.cargarConsulta(lista);
+        for (Consulta consulta : lista) {
+            model.addRow(new Object[]{consulta.getId(), consulta.getMascota().getNombre(),
+                consulta.getPresion(), consulta.getTemp(), consulta.getPeso(), consulta.getMascota().getPersona().getCedula(),
+                consulta.getMascota().getPersona().getNombre(), consulta.getVeterinario(), consulta.getFecha()});
+        }
+    }
+
+    private void tableModel() {
+
+        jTableConsultas.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableConsultas.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableConsultas.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTableConsultas.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(3).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(4).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(5).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(6).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(7).setPreferredWidth(300);
+        jTableConsultas.getColumnModel().getColumn(8).setPreferredWidth(300);
+
+        model = (DefaultTableModel) jTableConsultas.getModel();
+        model.setNumRows(0);
+    }
+
+    private void buscarConsulta(String cedula) {
+        model.setNumRows(0);
+        List<Consulta> lista = null;
+        List<Consulta> busca = null;
+        lista = conDB.cargarConsulta(lista);
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
+                busca.add(lista.get(i));
+            }
+        }
+
+        if (busca.size() > 0) {
+            for (Consulta perLis : busca) {
+                model.addRow(new Object[]{perLis.getId(), perLis.getMascota().getNombre(),
+                    perLis.getPresion(), perLis.getTemp(), perLis.getPeso(), perLis.getMascota().getPersona().getCedula(),
+                    perLis.getMascota().getPersona().getNombre(), perLis.getVeterinario(), perLis.getFecha()});
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            llenarTabla();
         }
     }
 
@@ -77,7 +110,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableConsultas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldBuscar = new javax.swing.JTextField();
         jButtonbuscarConsulta = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -98,9 +131,14 @@ public class frmListaConsulta extends javax.swing.JDialog {
 
             },
             new String [] {
-                "MASCOTA", "SEXO", "PRESIÓN", "TEMPERATURA", "PESO", "CÉDULA", "DUEÑO", "VETERINARIO", "FECHA"
+                "ID", "MASCOTA", "PRESIÓN", "TEMPERATURA", "PESO", "CÉDULA", "DUEÑO", "VETERINARIO", "FECHA"
             }
         ));
+        jTableConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableConsultasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableConsultas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 1060, 220));
@@ -109,12 +147,12 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jLabel1.setText("LISTA DE CONSULTAS ");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 310, 30));
+        getContentPane().add(jTextFieldBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 310, 30));
 
         jButtonbuscarConsulta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonbuscarConsulta.setText("Buscar por CI");
@@ -173,9 +211,9 @@ public class frmListaConsulta extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -183,26 +221,24 @@ public class frmListaConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonbuscarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarConsultaActionPerformed
-        // TODO add your handling code here:
-//        if (esNumerico(jTextField1.getText()) == true) {
-//            int cont = 0;
-//            for (int i = 0; i < listPersonas.size(); i++) {
-//                if (listPersonas.get(i).getCedula().equals(jTextField1.getText())) {
-//                    cont++;
-//                }
-//            }
-//            if (cont != 0) {
-//                ArrayList<Consulta> listaCon;
-//                listaCon = cc.buscarConsulta(jTextField1.getText());
-//                llenarTabla(listaCon);
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Persona no encontrada");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
-//        }
+        if (jTextFieldBuscar.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "LLENAR CAMPO REQUERIDO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            buscarConsulta(jTextFieldBuscar.getText());
+        }
 
     }//GEN-LAST:event_jButtonbuscarConsultaActionPerformed
+
+    private void jTableConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableConsultasMouseClicked
+        // TODO add your handling code here:
+
+        int seleccionar = jTableConsultas.getSelectedRow();
+        int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
+        Consulta con = conDB.traeConsulta(idConsulta);
+        jTextAreaMotivo.setText(con.getMotivo());
+        jTextAreaDiagnostico.setText(con.getDiagnostico());
+
+    }//GEN-LAST:event_jTableConsultasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -262,6 +298,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
     private javax.swing.JTable jTableConsultas;
     private javax.swing.JTextArea jTextAreaDiagnostico;
     private javax.swing.JTextArea jTextAreaMotivo;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldBuscar;
     // End of variables declaration//GEN-END:variables
 }
