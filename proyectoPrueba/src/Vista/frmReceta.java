@@ -36,6 +36,7 @@ public class frmReceta extends javax.swing.JFrame {
         initComponents();  
 //        txtNro.setText(val.ObtenerCodString(obtenerCodigoReceta()));
         inicio();
+        
     }
         private void inicio() {
         //TableModelConsulta();      
