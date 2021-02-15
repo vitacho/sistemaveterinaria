@@ -365,6 +365,7 @@ public class frmMascota extends javax.swing.JDialog {
         jComboBoxSexo.setSelectedIndex(index1);
         jTextEspecie.setText(m.getEspecie());
         bloquearJtext();
+        actualizarJtext();
     }//GEN-LAST:event_jTableMascotasMouseClicked
     
     public void modificarMascota(){

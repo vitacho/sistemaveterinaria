@@ -6,7 +6,14 @@
 package Vista;
 
 //import Controlador.RecetaDB;
+import Controlador.RecetaDB;
 import Controlador.Validaciones;
+import Modelo.Consulta;
+import Modelo.Receta;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,10 +25,26 @@ public class frmReceta extends javax.swing.JFrame {
      * Creates new form frmReceta
      */
     
-//    RecetaDB recetaDB = new RecetaDB();
+    RecetaDB recetaDB = new RecetaDB();
+    Consulta mas = null;
+    
+   DefaultTableModel model1 = new DefaultTableModel();
+    DefaultTableModel model2 = new DefaultTableModel();
+    DefaultTableModel modelConsulta;
     Validaciones val = new Validaciones();
     public frmReceta() {
-        initComponents();
+        initComponents();  
+//        txtNro.setText(val.ObtenerCodString(obtenerCodigoReceta()));
+        inicio();
+    }
+        private void inicio() {
+        //TableModelConsulta();      
+//        btnNuevo.setEnabled(true);
+        btnImprimir.setText("Imprimir");       
+        btnCancelar.setEnabled(true);
+
+//        Activa_DesactivaCampos(false);
+//        TablaCita.setEnabled(true);   
     }
 
     /**
@@ -38,12 +61,11 @@ public class frmReceta extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
         txtCi = new javax.swing.JTextField();
         txtMascota = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAindicaciones = new javax.swing.JTextArea();
-        jTextField5 = new javax.swing.JTextField();
+        txtNro = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAmedicamentos = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
@@ -53,6 +75,7 @@ public class frmReceta extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
         btnSalir = new javax.swing.JButton();
+        jDate = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,40 +87,33 @@ public class frmReceta extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("CI:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Mascota:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Fecha");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 100, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Nro. de Receta");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
-
-        txtFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 200, 20));
 
         txtCi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCiActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 200, 20));
+        getContentPane().add(txtCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 200, 20));
 
         txtMascota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMascotaActionPerformed(evt);
             }
         });
-        getContentPane().add(txtMascota, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 200, 20));
+        getContentPane().add(txtMascota, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 200, 20));
 
         txtAindicaciones.setColumns(20);
         txtAindicaciones.setLineWrap(true);
@@ -105,14 +121,14 @@ public class frmReceta extends javax.swing.JFrame {
         txtAindicaciones.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtAindicaciones);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 290, 240));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 290, 240));
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txtNro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txtNroActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 80, 20));
+        getContentPane().add(txtNro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 80, 20));
 
         txtAmedicamentos.setColumns(20);
         txtAmedicamentos.setLineWrap(true);
@@ -132,10 +148,15 @@ public class frmReceta extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 110, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 110, 30));
 
         btnImprimir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 470, 100, 30));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -151,7 +172,8 @@ public class frmReceta extends javax.swing.JFrame {
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, 110, 30));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 110, 30));
+        getContentPane().add(jDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel8.setText("jLabel8");
@@ -168,12 +190,91 @@ public class frmReceta extends javax.swing.JFrame {
             txtAmedicamentos.setEnabled(false);
         }
     }
-    
-    
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
+//   private void guardar() {
+//        Receta rec = null;
+//
+//        if (btnImprimir.getText().equals("Imprimir")) {
+//            
+////            rec = recetaDB.traeRecetaID(txtId.getText());
+////            txtCedula.setText(String.valueOf(cedula));
+////          txtId.setText(String.valueOf(rec.getId_serv()));  
+////            txtId.getText(
+//            if (rec == null) {
+// 
+//                if (ValidarCampos() == true) {
+//                    rec = new Receta();                 
+//                    rec.setConsulta(mas);
+//                    rec.setNum_receta(txtNro.getText());
+//                    rec.setFecha_receta(jDate.getCalendar());
+//                    rec.setIndicac_receta(txtAindicaciones.getText());
+//                    rec.setMedicam_receta(txtAmedicamentos.getText());                  
+//                    rec.setEstado("A");                 
+//                    recetaDB.nuevaReceta(rec);
+//                    inicio();
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.WARNING_MESSAGE);
+////                    activa_Desac_Panel(false);
+//                    inicio();
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "EL NOMBRE DE LA ESPECIALIDAD YA EXISTE EN EL SISTEMA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//
+//        } 
+//        inicio();
+//
+//    }
+       private void guardar1() {
+         Receta rec = null;
 
+        if ( jDate.getCalendar() == null) {
+            JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+         
+            jDate.setCalendar(null);
+
+        } else {
+            if (btnImprimir.getText().equals("Imprimir")) {        
+                    rec = new Receta();                 
+                    rec.setConsulta(mas);
+                    rec.setNum_receta(txtNro.getText());
+                    rec.setFecha_receta(jDate.getCalendar());
+                    rec.setIndicac_receta(txtAindicaciones.getText());
+                    rec.setMedicam_receta(txtAmedicamentos.getText());                  
+                    rec.setEstado("A");                 
+                    recetaDB.nuevaReceta(rec);    
+                JOptionPane.showMessageDialog(null, "RECETA REGISTRADA ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            inicio();
+        }
+    }
+   
+    private boolean ValidarCampos() {
+        boolean lleno = true;
+        if (txtAindicaciones.getText().equals("") || txtAmedicamentos.getText().equals("")) {
+            lleno = false;
+        } else {
+            lleno = true;
+        }
+        return lleno;
+    }
+//    
+//    int num_resp = 0;
+//         public int obtenerCodigoReceta() {
+//        num_resp = 0;
+//        List<Receta> lista = null;
+//        lista = recetaDB.cargarCodigoReceta(lista);
+//        for (Iterator<Receta> it = lista.iterator(); it.hasNext();) {
+//            Receta rec = it.next();
+//            num_resp = Integer.parseInt(rec.getNum_receta()) + 1;
+//        }
+//        if (num_resp == 0) {
+//            num_resp = 1;
+//        }
+//        return num_resp;
+//    }
+         
+         
+    
     private void txtCiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCiActionPerformed
@@ -182,13 +283,16 @@ public class frmReceta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMascotaActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtNroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtNroActionPerformed
 
     private void txtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtClienteActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,6 +333,7 @@ public class frmReceta extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnSalir;
+    private com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -240,12 +345,11 @@ public class frmReceta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextArea txtAindicaciones;
     private javax.swing.JTextArea txtAmedicamentos;
-    private javax.swing.JTextField txtCi;
-    private javax.swing.JTextField txtCliente;
-    private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtMascota;
+    public static javax.swing.JTextField txtCi;
+    public static javax.swing.JTextField txtCliente;
+    public static javax.swing.JTextField txtMascota;
+    private javax.swing.JTextField txtNro;
     // End of variables declaration//GEN-END:variables
 }

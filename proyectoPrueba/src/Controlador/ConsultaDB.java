@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.Consulta;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
@@ -36,13 +37,29 @@ public class ConsultaDB {
             JOptionPane.showMessageDialog(null, "Error al guardar " + e.getMessage());
         }
     }
-    
-    public List<Consulta> cargarConsulta(String estado, List<Consulta>lis){        
+
+    public Consulta traeConsulta(int idConsulta) {
+
+        Consulta con = null;
+
         try {
-            lis = (List<Consulta>)st.createQuery("from Persona where estado='"+estado+"'order by nombre").list();
+            con = (Consulta) st.load(Consulta.class, idConsulta);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los datos en la tabla "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos de la consulta " + e.getMessage());
         }
+        return con;
+    }
+
+    public List<Consulta> cargarConsulta(List<Consulta> lis) {
+
+        try {
+            lis = (List<Consulta>) st.createQuery("From Consulta order by id").list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos en la tabla " + e.getMessage());
+        }
+
         return lis;
     }
+    
+    
 }

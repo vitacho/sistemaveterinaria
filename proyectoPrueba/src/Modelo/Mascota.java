@@ -33,6 +33,7 @@ public class Mascota implements Serializable{
     private Persona persona;
     
     private List<Consulta> lisCon = new ArrayList<Consulta>();
+    private List<Hospitalizacion> lisHos = new ArrayList<Hospitalizacion>();
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -118,5 +119,16 @@ public class Mascota implements Serializable{
     public void setLisCon(List<Consulta> lisCon) {
         this.lisCon = lisCon;
     }
+    
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
+    public List<Hospitalizacion> getLisHos() {
+        return lisHos;
+    }
+
+    public void setLisHos(List<Hospitalizacion> lisHos) {
+        this.lisHos = lisHos;
+    }
+    
+    
    
 }

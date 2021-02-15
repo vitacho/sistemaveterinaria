@@ -39,6 +39,7 @@ public class frmConsulta extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         iniciar();
+
     }
 
     private void iniciar() {
@@ -66,7 +67,7 @@ public class frmConsulta extends javax.swing.JDialog {
             int op = Integer.parseInt(JOptionPane.showInputDialog("Elija una mascota:\n" + presentar));
 
             mas = listaM.get(op - 1);
-            
+
             jTextFieldNombreMascota.setText(mas.getNombre());
             jTextFieldSexMas.setText(mas.getSexo());
 
@@ -91,13 +92,19 @@ public class frmConsulta extends javax.swing.JDialog {
                             con.setMotivo(jTextAreaMotivo.getText());
                             con.setPresion(jTextFieldPresion.getText());
                             con.setTemp(Integer.parseInt(jTextFieldTemp.getText()));
-                            con.setPeso(Integer.parseInt(jTextFieldPeso.getText()));
+                            double peso = Double.parseDouble(jTextFieldPeso.getText());
+                            con.setPeso(peso);
                             con.setDiagnostico(jTextAreaDiag.getText());
                             conDB.nuevaConsulta(con);
 
-                            double peso = Double.parseDouble(jTextFieldPeso.getText());
-
+                            frmReceta rec = new frmReceta();
+                            frmReceta.txtCliente.setText(jTextFieldNombreMascota.getText());
+                            frmReceta.txtCi.setText(jTextFieldCI.getText());
+                            frmReceta.txtMascota.setText(jTextFieldNombreMascota.getText());
                             JOptionPane.showMessageDialog(null, "Consulta Guardada");
+                            rec.setVisible(true);
+                            this.dispose();
+
                         } else {
                             JOptionPane.showMessageDialog(null, "Falta el cliente o mascota");
                         }
@@ -352,9 +359,10 @@ public class frmConsulta extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:   
-
-        registrarConsulta();
-
+        int op = JOptionPane.showConfirmDialog(null, "Esta seguro que desea guardar", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
+        if (op == 0) {
+            registrarConsulta();
+        }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jTextFieldCIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCIActionPerformed

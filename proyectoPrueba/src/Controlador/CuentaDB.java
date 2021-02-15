@@ -78,5 +78,21 @@ public class CuentaDB {
         
         return c;
     }
+          public Cuenta traeCuentaCed(String ced){
+         
+        Cuenta u=new Cuenta();
+        try {
+               Query query=st.createQuery("from Cuenta where persona_ced_per=? and est_usu='A'");
+               query.setParameter(0, ced);
+           try{
+               u=(Cuenta)query.uniqueResult();
+           }catch(Exception e){                
+           }  
+           } catch (Exception e) {
+               
+               JOptionPane.showMessageDialog(null, "ERROR AL TRAER AL USUARIO "+e.getMessage(),"Mensaje", JOptionPane.INFORMATION_MESSAGE);
+           }
+        return u;
+     }
     
 }
