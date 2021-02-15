@@ -76,6 +76,8 @@ public class frmReceta extends javax.swing.JFrame {
         txtCliente = new javax.swing.JTextField();
         btnSalir = new javax.swing.JButton();
         jDate = new com.toedter.calendar.JDateChooser();
+        btnBuscarConsulta = new javax.swing.JButton();
+        txtIDConsulta = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,6 +176,17 @@ public class frmReceta extends javax.swing.JFrame {
         btnSalir.setText("Salir");
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 110, 30));
         getContentPane().add(jDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
+
+        btnBuscarConsulta.setText("Buscar Consulta");
+        btnBuscarConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarConsultaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscarConsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, -1, -1));
+
+        txtIDConsulta.setText("txtIDConsulta");
+        getContentPane().add(txtIDConsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 80, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel8.setText("jLabel8");
@@ -292,8 +305,16 @@ public class frmReceta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClienteActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
+//guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
+guardar1();//registra bien lo de receta pero falta consulta  
+  }
 
+    private void btnBuscarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarConsultaActionPerformed
+       frmListaConsulta con = new frmListaConsulta(this, rootPaneCheckingEnabled);
+       con.setVisible(true);
+       // this.dispose();
+    }//GEN-LAST:event_btnBuscarConsultaActionPerformed
+     
     /**
      * @param args the command line arguments
      */
@@ -330,6 +351,7 @@ guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarConsulta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnSalir;
@@ -349,6 +371,7 @@ guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
     private javax.swing.JTextArea txtAmedicamentos;
     public static javax.swing.JTextField txtCi;
     public static javax.swing.JTextField txtCliente;
+    public static javax.swing.JLabel txtIDConsulta;
     public static javax.swing.JTextField txtMascota;
     private javax.swing.JTextField txtNro;
     // End of variables declaration//GEN-END:variables

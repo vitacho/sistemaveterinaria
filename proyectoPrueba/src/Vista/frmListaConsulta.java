@@ -33,6 +33,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
     Validaciones validar = new Validaciones();
     ConsultaDB conDB = new ConsultaDB();
     PersonaDB perDB = new PersonaDB();
+     DefaultTableModel modelConsulta;
 
     /**
      * Creates new form frmListaConsulta
@@ -62,20 +63,20 @@ public class frmListaConsulta extends javax.swing.JDialog {
 
     private void tableModel() {
 
-        jTableConsultas.getColumnModel().getColumn(0).setMaxWidth(0);
-        jTableConsultas.getColumnModel().getColumn(0).setMinWidth(0);
-        jTableConsultas.getColumnModel().getColumn(0).setPreferredWidth(0);
+        TableConsultas.getColumnModel().getColumn(0).setMaxWidth(0);
+        TableConsultas.getColumnModel().getColumn(0).setMinWidth(0);
+        TableConsultas.getColumnModel().getColumn(0).setPreferredWidth(0);
 
-        jTableConsultas.getColumnModel().getColumn(1).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(2).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(3).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(4).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(5).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(6).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(7).setPreferredWidth(300);
-        jTableConsultas.getColumnModel().getColumn(8).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(1).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(2).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(3).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(4).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(5).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(6).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(7).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(8).setPreferredWidth(300);
 
-        model = (DefaultTableModel) jTableConsultas.getModel();
+        model = (DefaultTableModel) TableConsultas.getModel();
         model.setNumRows(0);
     }
 
@@ -117,7 +118,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableConsultas = new javax.swing.JTable();
+        TableConsultas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldBuscar = new javax.swing.JTextField();
         jButtonbuscarConsulta = new javax.swing.JButton();
@@ -130,12 +131,13 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaDiagnostico = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        btnRecetar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTableConsultas.setModel(new javax.swing.table.DefaultTableModel(
+        TableConsultas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -143,12 +145,12 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 "ID", "MASCOTA", "PRESIÓN", "TEMPERATURA", "PESO", "CÉDULA", "DUEÑO", "VETERINARIO", "FECHA"
             }
         ));
-        jTableConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+        TableConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableConsultasMouseClicked(evt);
+                TableConsultasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableConsultas);
+        jScrollPane1.setViewportView(TableConsultas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 1060, 220));
 
@@ -213,6 +215,14 @@ public class frmListaConsulta extends javax.swing.JDialog {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 680, 90, 30));
 
+        btnRecetar.setText("Recetar");
+        btnRecetar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecetarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 220, -1, -1));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -238,16 +248,47 @@ public class frmListaConsulta extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonbuscarConsultaActionPerformed
 
-    private void jTableConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableConsultasMouseClicked
+    private void TableConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableConsultasMouseClicked
         // TODO add your handling code here:
 
-        int seleccionar = jTableConsultas.getSelectedRow();
+        int seleccionar = TableConsultas.getSelectedRow();
         int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
         Consulta con = conDB.traeConsulta(idConsulta);
         jTextAreaMotivo.setText(con.getMotivo());
         jTextAreaDiagnostico.setText(con.getDiagnostico());
 
-    }//GEN-LAST:event_jTableConsultasMouseClicked
+    }//GEN-LAST:event_TableConsultasMouseClicked
+
+    private void btnRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecetarActionPerformed
+         int seleccionar = TableConsultas.getSelectedRow();
+        int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
+        Consulta con = conDB.traeConsulta(idConsulta);
+        
+        int selectRow = TableConsultas.getSelectedRow();
+        try {
+            if (selectRow == -1) {
+                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA DE LA TABLA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                modelConsulta = (DefaultTableModel) TableConsultas.getModel();
+                String id = TableConsultas.getValueAt(selectRow, 0).toString();
+                String mascota = TableConsultas.getValueAt(selectRow, 1).toString();
+                String ci = TableConsultas.getValueAt(selectRow, 5).toString();
+                String nombre = TableConsultas.getValueAt(selectRow, 6).toString();
+                frmReceta rec = new frmReceta();
+                frmReceta.txtMascota.setText(mascota);
+                frmReceta.txtCi.setText(ci);
+                frmReceta.txtCliente.setText(nombre); 
+                frmReceta.txtIDConsulta.setText(id);
+//                frmListaConsulta lc = new frmListaConsulta(rec, rootPaneCheckingEnabled);
+//                lc.setVisible(false);
+                rec.setVisible(true);
+                dispose();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR LA CITA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnRecetarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +334,8 @@ public class frmListaConsulta extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TableConsultas;
+    private javax.swing.JButton btnRecetar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonbuscarConsulta;
     private javax.swing.JLabel jLabel1;
@@ -304,7 +347,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTableConsultas;
     private javax.swing.JTextArea jTextAreaDiagnostico;
     private javax.swing.JTextArea jTextAreaMotivo;
     private javax.swing.JTextField jTextFieldBuscar;
