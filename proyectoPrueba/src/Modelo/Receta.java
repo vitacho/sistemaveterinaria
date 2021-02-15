@@ -29,7 +29,6 @@ public class Receta {
     private String indicac_receta;
     private String estado;
     private String num_receta;
-    
     private Consulta consulta;
 
     @Id

@@ -34,6 +34,7 @@ public class frmReceta extends javax.swing.JFrame {
     Validaciones val = new Validaciones();
     public frmReceta() {
         initComponents();  
+        
     }
         private void inicio() {
         //TableModelConsulta();      
