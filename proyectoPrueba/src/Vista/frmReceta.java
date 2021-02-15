@@ -43,8 +43,7 @@ public class frmReceta extends javax.swing.JFrame {
         btnCancelar.setEnabled(true);
 
 //        Activa_DesactivaCampos(false);
-//        TablaCita.setEnabled(true);
-        
+//        TablaCita.setEnabled(true);   
     }
 
     /**
