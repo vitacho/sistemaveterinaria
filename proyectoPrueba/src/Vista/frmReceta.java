@@ -37,11 +37,9 @@ public class frmReceta extends javax.swing.JFrame {
        
     }
         private void inicio() {
-        //TableModelConsulta();
-       
+        //TableModelConsulta();      
         btnNuevo.setEnabled(true);
-        btnImprimir.setText("Imprimir");
-        
+        btnImprimir.setText("Imprimir");       
         btnCancelar.setEnabled(true);
 
 //        Activa_DesactivaCampos(false);
