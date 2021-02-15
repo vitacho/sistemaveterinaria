@@ -28,7 +28,6 @@ public class Persona implements Serializable {
     private String telefono;
     private String correo;
     private String direccion;
-    private String estado; // 1 activo // 0 eliminado A O P
     
     private Rol rol;
     private List<Mascota> mascota = new ArrayList<Mascota>();
@@ -73,14 +72,6 @@ public class Persona implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     //muchos roles tiene una persona

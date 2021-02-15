@@ -107,7 +107,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         tablaModelCliente();
         List<Persona> lista = null;
 
-        lista = perDB.cargarClientes(estado, lista);
+        lista = perDB.listarPersonas();
 
         for (Persona perLis : lista) {
             model.addRow(new Object[]{

@@ -95,4 +95,19 @@ public class CuentaDB {
         return u;
      }
     
+    public Cuenta traerPorUsuario(String user) {
+        Cuenta p = null;
+        List<Cuenta> list = new ArrayList<>();
+        try {
+            list = (List<Cuenta>) st.createQuery("From Cuenta where user = '"+user+"'").list();
+            for (Cuenta cuenta : list) {
+                if(cuenta.getUser().equals(user)){
+                    p=cuenta;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer persona con cedula " + e.getMessage());
+        }
+        return p;
+    }
 }

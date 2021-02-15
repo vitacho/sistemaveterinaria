@@ -173,7 +173,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
                     }
                 }
                 if(encontrado==true){
-                    llenarTabla(lista);
+                    llenarTablaCuentas(lista);
                 }else{
                      JOptionPane.showMessageDialog(null, "Cuenta no encontrada");
                 }
@@ -199,6 +199,19 @@ public class frmListaPersonas extends javax.swing.JDialog {
         }
     }
     
+    public void llenarTablaCuentas(List<Persona> lista){
+        DefaultTableModel modelo = new DefaultTableModel(new String[]{"CEDULA","NOMBRE","APELLIDO","DIRECCION","ROL"},lista.size());
+        jTablePersonas.setModel(modelo);
+        TableModel modeloDatos = jTablePersonas.getModel();
+        for (int i = 0; i < lista.size(); i++) {
+            Persona persona= lista.get(i);
+            modeloDatos.setValueAt(persona.getCedula(), i, 0);
+            modeloDatos.setValueAt(persona.getNombre(), i, 1);
+            modeloDatos.setValueAt(persona.getApellido(), i, 2);
+            modeloDatos.setValueAt(persona.getDireccion(), i, 3);
+            modeloDatos.setValueAt(persona.getRol().getNombre_rol(), i, 4);
+        }
+    }
     public void limpiarTabla(){
         DefaultTableModel modelo = new DefaultTableModel(new String[]{"CEDULA","NOMBRE","APELLIDO","DIRECCION","TELEFONO"},0);
         jTablePersonas.setModel(modelo);
@@ -219,7 +232,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
                     lista.add(persona);
                 }
             }
-            llenarTabla(lista);
+            llenarTablaCuentas(lista);
         }
        
     }

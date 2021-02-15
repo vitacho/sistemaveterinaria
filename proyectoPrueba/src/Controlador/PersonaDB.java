@@ -66,16 +66,7 @@ public class PersonaDB {
     
     //metodo para cargar los datos en la tabla
     
-    public List<Persona> cargarClientes(String estado, List<Persona>lis){
-        
-        try {
-            lis = (List<Persona>)st.createQuery("from Persona where estado='"+estado+"'order by nombre").list();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los datos en la tabla "+e.getMessage());
-        }
-        
-        return lis;
-    }
+    
     
     //traer a los clientes por el ID
     public Persona traeClientesId(int idPersona){
@@ -143,5 +134,7 @@ public class PersonaDB {
         }
         return p;
     }
+    
+    
     
 }

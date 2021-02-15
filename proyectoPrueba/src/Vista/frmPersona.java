@@ -70,13 +70,15 @@ public class frmPersona extends javax.swing.JDialog {
         jLabel26 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jTextPasword = new javax.swing.JTextField();
         jComboRol = new javax.swing.JComboBox<>();
         jLabel28 = new javax.swing.JLabel();
         jTextValPasword = new javax.swing.JTextField();
         jComboEstado = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextPasword = new javax.swing.JTextField();
+        jTexUsuario = new javax.swing.JTextField();
         jBGuardar = new javax.swing.JButton();
         jLTitulo = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
@@ -157,46 +159,57 @@ public class frmPersona extends javax.swing.JDialog {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Contraseña ");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 20));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, 20));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 0, 0));
         jLabel26.setText("*");
-        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 20, -1));
+        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 20, -1));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("Rol");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, 20));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(255, 0, 0));
         jLabel27.setText("*");
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 20, -1));
-        jPanel2.add(jTextPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 186, 30));
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 20, -1));
 
         jComboRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Secretaria", "Veterinario" }));
-        jPanel2.add(jComboRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 190, 30));
+        jPanel2.add(jComboRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 190, 30));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 0, 0));
         jLabel28.setText("*");
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 20, -1));
-        jPanel2.add(jTextValPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 186, 30));
+        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 20, -1));
+        jPanel2.add(jTextValPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, 30));
 
         jComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activada", "Desactivada" }));
         jComboEstado.setMaximumSize(new java.awt.Dimension(1366, 768));
         jComboEstado.setPreferredSize(new java.awt.Dimension(1366, 768));
-        jPanel2.add(jComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 190, 30));
+        jPanel2.add(jComboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 190, 30));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("Estado:");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, 20));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 20));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel18.setText("Confirmar Contraseña");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, 20));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 20));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 390, 230));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Usuario");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 60, 20));
+        jPanel2.add(jTextPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, 30));
+
+        jTexUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTexUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTexUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 190, 30));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 390, 280));
 
         jBGuardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jBGuardar.setText("Guardar");
@@ -237,52 +250,63 @@ public class frmPersona extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jBAtrasActionPerformed
+
+    private void jTexUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTexUsuarioActionPerformed
     
     public void registrarCuenta(){
         String cedula = jTexCedula.getText().trim();
         if(!jTexApellido.getText().equals("")&&!jTexCedula.getText().equals("")&&!jTextCorreo.getText().equals("")
            &&!jTextDireccion.getText().equals("")&&!jTextNombre.getText().equals("")&&!jTextTelefono.getText().equals("")
-           &&!jTextPasword.getText().equals("")&&!jTextValPasword.getText().equals("")){
+           &&!jTextPasword.getText().equals("")&&!jTextValPasword.getText().equals("")&&!jTexUsuario.getText().equals("")){
             //if(validar.validarCedula(cedula)){
                 Persona per = null; // la entidad persona
                  per = perDB.traeClientesCedula(jTexCedula.getText()); // metodo para validar la cedula al ingresar
                 if(per==null){//si la cedula no existe
-                    if(validar.esNumerico(jTextTelefono.getText().trim())){
-                        if(validar.validarCorreo(jTextCorreo.getText().trim())){
-                            if(jTextPasword.getText().equals(jTextValPasword.getText())){
-                                per = new Persona();
-                                Cuenta cuenta = new Cuenta();
-                                cuenta.setContra(jTextPasword.getText());
-                                cuenta.setUser_ced(jTexCedula.getText());
-                                Rol rol = new Rol();
-                                String rolNombre = jComboRol.getSelectedItem().toString();
-                                String estado;
-                                rol = rolDB.traeRol(rolNombre);
-                                System.out.println(rolNombre);
-                                System.out.println(rol.getId_rol());
-                                per.setRol(rol); // importante
-                                if(jComboEstado.getSelectedItem().toString().equals("Activada"))estado="A";
-                                else estado="D";
-                                per.setApellido(jTexApellido.getText());
-                                per.setNombre(jTextNombre.getText());
-                                per.setCedula(jTexCedula.getText());
-                                per.setCorreo(jTextCorreo.getText());
-                                per.setDireccion(jTextDireccion.getText());
-                                per.setTelefono(jTextTelefono.getText());
-                                per.setEstado(estado);
-                                perDB.nuevoCliente(per);
-                                cuenta.setPersona(per);
-                                cuentaDB.nuevaCuenta(cuenta);
-                                JOptionPane.showMessageDialog(null, "Cuenta Registrada");
-                                limpiarJText();
+                    Cuenta c = null;
+                    c=cuentaDB.traerPorUsuario(jTexUsuario.getText().trim());
+                    if(c==null){//si la cedula no existe
+                        if(validar.esNumerico(jTextTelefono.getText().trim())){
+                            if(validar.validarCorreo(jTextCorreo.getText().trim())){
+                                if(jTextPasword.getText().equals(jTextValPasword.getText())){
+                                    per = new Persona();
+                                    Cuenta cuenta = new Cuenta();
+                                    cuenta.setContra(jTextPasword.getText());
+                                    cuenta.setUser(jTexUsuario.getText());
+                                    Rol rol = new Rol();
+                                    String rolNombre = jComboRol.getSelectedItem().toString();
+                                    String estado;
+                                    rol = rolDB.traeRol(rolNombre);
+                                    System.out.println(rolNombre);
+                                    System.out.println(rol.getId_rol());
+                                    per.setRol(rol); // importante
+                                    if(jComboEstado.getSelectedItem().toString().equals("Activada"))estado="A";
+                                    else estado="D";
+                                    per.setApellido(jTexApellido.getText());
+                                    per.setNombre(jTextNombre.getText());
+                                    per.setCedula(jTexCedula.getText());
+                                    per.setCorreo(jTextCorreo.getText());
+                                    per.setDireccion(jTextDireccion.getText());
+                                    per.setTelefono(jTextTelefono.getText());
+                                    cuenta.setEstado(estado);
+                                    perDB.nuevoCliente(per);
+                                    cuenta.setPersona(per);
+                                    cuentaDB.nuevaCuenta(cuenta);
+                                    JOptionPane.showMessageDialog(null, "Cuenta Registrada");
+                                    limpiarJText();
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Correo no valido");
+                                jTextCorreo.setText("");
                             }
                         }else{
-                            JOptionPane.showMessageDialog(null, "Correo no valido");
-                            jTextCorreo.setText("");
+                            JOptionPane.showMessageDialog(null, "Telefono no valido");
+                            jTextTelefono.setText("");
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, "Telefono no valido");
-                        jTextTelefono.setText("");
+                         JOptionPane.showMessageDialog(null, "Usuario repetido");
+                            jTexUsuario.setText("");
                     }
                 }else{
                      JOptionPane.showMessageDialog(null, "Cedula repetida");
@@ -317,7 +341,6 @@ public class frmPersona extends javax.swing.JDialog {
                             per.setCorreo(jTextCorreo.getText());
                             per.setDireccion(jTextDireccion.getText());
                             per.setTelefono(jTextTelefono.getText());
-                            per.setEstado("A"); // estado Activo
                             perDB.nuevoCliente(per);
                             JOptionPane.showMessageDialog(null, "Cliente Registrado");
                             limpiarJText();
@@ -366,7 +389,7 @@ public class frmPersona extends javax.swing.JDialog {
     public void modificarCuenta(){
         Persona persona =perDB.traerPorCedula(cedModificar);
         if(!jTextCorreo.getText().equals("")&&!jTextDireccion.getText().equals("")&&!jTextPasword.getText().equals("")
-           &&!jTextTelefono.getText().equals("")&&!jTextValPasword.getText().equals("")){
+           &&!jTextTelefono.getText().equals("")&&!jTextValPasword.getText().equals("")&&!jTexUsuario.getText().equals("")){
             if(validar.esNumerico(jTextTelefono.getText().trim())){
                 if(jTextPasword.getText().trim().equals(jTextValPasword.getText().trim())){
                     Cuenta cuenta = cuentaDB.traeCuentaIdPersona(persona.getId_persona());
@@ -381,7 +404,7 @@ public class frmPersona extends javax.swing.JDialog {
                     persona.setCorreo(jTextCorreo.getText());
                     persona.setDireccion(jTextDireccion.getText());
                     persona.setTelefono(jTextTelefono.getText());
-                    persona.setEstado(estado);
+                    cuenta.setEstado(estado);
                     perDB.actualizarCliente(persona);
                     cuentaDB.actualizarCuenta(cuenta);
                     JOptionPane.showMessageDialog(null, "Cuenta Actualiza");
@@ -411,6 +434,7 @@ public class frmPersona extends javax.swing.JDialog {
         jTextPasword.setText("");
         jTextTelefono.setText("");
         jTextValPasword.setText("");
+        jTexUsuario.setText("");
     }
     
     public void bloquearCamposCuenta(){
@@ -418,6 +442,7 @@ public class frmPersona extends javax.swing.JDialog {
         jTextValPasword.disable();
         jComboRol.disable();
         jComboEstado.disable();
+        jTexUsuario.disable();
     }
     
     public void inicializar(){
@@ -442,6 +467,7 @@ public class frmPersona extends javax.swing.JDialog {
             jTexCedula.disable();
             jTexApellido.disable();
             jTextNombre.disable();
+            jTexUsuario.disable();
             Persona p =perDB.traerPorCedula(cedModificar);
              jTexApellido.setText(p.getApellido());
             jTexCedula.setText(p.getCedula());
@@ -450,7 +476,7 @@ public class frmPersona extends javax.swing.JDialog {
             jTextNombre.setText(p.getNombre());
             jTextTelefono.setText(p.getTelefono());
             Cuenta c = cuentaDB.traeCuentaIdPersona(p.getId_persona());
-            String estado = p.getEstado();
+            String estado = c.getEstado();
             if(estado.equals("A"))jComboEstado.setSelectedIndex(0);
             else jComboEstado.setSelectedIndex(1);
             String rl = p.getRol().getNombre_rol();
@@ -458,6 +484,7 @@ public class frmPersona extends javax.swing.JDialog {
             else if(rl.equals("Segretaria"))jComboRol.setSelectedIndex(1);
             else jComboRol.setSelectedIndex(2);
             jTextPasword.setText(c.getContra());
+            jTexUsuario.setText(c.getUser());
         }
     }
     /**
@@ -510,6 +537,7 @@ public class frmPersona extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<String> jComboRol;
     private javax.swing.JLabel jLTitulo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -531,6 +559,7 @@ public class frmPersona extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTexApellido;
     private javax.swing.JTextField jTexCedula;
+    private javax.swing.JTextField jTexUsuario;
     private javax.swing.JTextField jTextCorreo;
     private javax.swing.JTextField jTextDireccion;
     private javax.swing.JTextField jTextNombre;
