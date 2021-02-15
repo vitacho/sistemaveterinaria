@@ -28,7 +28,7 @@ public class Receta {
     private String medicam_receta;
     private String indicac_receta;
     private String estado;
-    private int num_receta;
+    private String num_receta;
     
     private Consulta consulta;
 
@@ -66,13 +66,15 @@ public class Receta {
         this.indicac_receta = indicac_receta;
     }
 
-    public int getNum_receta() {
+    public String getNum_receta() {
         return num_receta;
     }
 
-    public void setNum_receta(int num_receta) {
+    public void setNum_receta(String num_receta) {
         this.num_receta = num_receta;
     }
+
+ 
 
     public String getEstado() {
         return estado;

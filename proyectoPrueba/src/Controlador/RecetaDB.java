@@ -26,7 +26,7 @@ public class RecetaDB {
         st = HibernateUtil.getSessionFactory().openSession();
     }
     
-     public void nuevaCita(Receta rec) {
+     public void nuevaReceta(Receta rec) {
         try {
             st.beginTransaction();
             st.save(rec);
@@ -57,17 +57,14 @@ public class RecetaDB {
         }
         return rec;
     }
-       public void actualizaCita(Receta rec) {
+      public List<Receta> cargarCodigoReceta (List<Receta> list) {
         try {
-//            st.clear();
-            st.beginTransaction();
-            st.update(rec);
-            st.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "DATOS ACTUALIZADOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            st.clear();
+            list = (List<Receta>) st.createQuery("From Receta order by num_cita").list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR AL ACTUALIZAR LOS DATOS DE LA ORDEN " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al traer Equipo " + e.getMessage());
         }
+        return list;
+
     }
     
 }
