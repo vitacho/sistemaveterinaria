@@ -33,8 +33,7 @@ public class frmReceta extends javax.swing.JFrame {
     DefaultTableModel modelConsulta;
     Validaciones val = new Validaciones();
     public frmReceta() {
-        initComponents();
-       
+        initComponents();  
     }
         private void inicio() {
         //TableModelConsulta();      
