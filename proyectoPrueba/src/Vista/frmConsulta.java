@@ -34,11 +34,14 @@ public class frmConsulta extends javax.swing.JDialog {
     Validaciones validar = new Validaciones();
     PersonaDB perDB = new PersonaDB();
     Mascota mas = null;
+      
 
     public frmConsulta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         iniciar();
+       
+       
     }
 
     private void iniciar() {
@@ -95,9 +98,15 @@ public class frmConsulta extends javax.swing.JDialog {
                             con.setDiagnostico(jTextAreaDiag.getText());
                             conDB.nuevaConsulta(con);
 
-                            double peso = Double.parseDouble(jTextFieldPeso.getText());
-
+                            double peso = Double.parseDouble(jTextFieldPeso.getText());                         
+                            frmReceta rec = new frmReceta();
+                            frmReceta.txtCliente.setText(jTextFieldNombreMascota.getText());
+                            frmReceta.txtCi.setText(jTextFieldCI.getText());
+                            frmReceta.txtMascota.setText(jTextFieldNombreMascota.getText());
                             JOptionPane.showMessageDialog(null, "Consulta Guardada");
+                            rec.setVisible(true);
+                            this.dispose();
+        
                         } else {
                             JOptionPane.showMessageDialog(null, "Falta el cliente o mascota");
                         }

@@ -243,9 +243,9 @@ public class frmReceta extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextArea txtAindicaciones;
     private javax.swing.JTextArea txtAmedicamentos;
-    private javax.swing.JTextField txtCi;
-    private javax.swing.JTextField txtCliente;
+    public static javax.swing.JTextField txtCi;
+    public static javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtMascota;
+    public static javax.swing.JTextField txtMascota;
     // End of variables declaration//GEN-END:variables
 }

@@ -27,6 +27,7 @@ public class Receta {
     private Calendar fecha_receta;
     private String medicam_receta;
     private String indicac_receta;
+    private String estado;
     private int num_receta;
     
     private Consulta consulta;
@@ -71,6 +72,14 @@ public class Receta {
 
     public void setNum_receta(int num_receta) {
         this.num_receta = num_receta;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @ManyToOne
