@@ -34,8 +34,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
     Validaciones validar = new Validaciones();
     ConsultaDB conDB = new ConsultaDB();
     PersonaDB perDB = new PersonaDB();
-     DefaultTableModel modelConsulta;
-             
+    DefaultTableModel modelConsulta;
 
     /**
      * Creates new form frmListaConsulta
