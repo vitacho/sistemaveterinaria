@@ -51,8 +51,9 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         lista = hosDB.cargarHospitalizacion(lista);
         for (Hospitalizacion hosp : lista) {
             model.addRow(new Object[]{hosp.getId(), hosp.getMascota().getNombre(),
-                hosp.getMascota().getPersona().getCedula(), hosp.getMascota().getPersona().getNombre(), hosp.getVereterinario(),
-                hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
+                hosp.getMascota().getPersona().getCedula(),
+                hosp.getMascota().getPersona().getNombre() + " " + hosp.getMascota().getPersona().getApellido(),
+                hosp.getVereterinario(), hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
         }
     }
 
@@ -80,9 +81,13 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         List<Hospitalizacion> lista = null;
         lista = hosDB.cargarHospitalizacion(lista);
         for (int i = 0; i < lista.size(); i++) {
+            String nom = lista.get(i).getMascota().getPersona().getNombre() + " " + lista.get(i).getMascota().getPersona().getApellido();
             if (lista.get(i).getMascota().getPersona().getCedula().equals(busqueda)) {
                 busca.add(lista.get(i));
-            } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)) {
+            } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)
+                    || lista.get(i).getMascota().getPersona().getApellido().equalsIgnoreCase(busqueda)) {
+                busca.add(lista.get(i));
+            } else if (nom.equalsIgnoreCase(busqueda)) {
                 busca.add(lista.get(i));
             }
         }
@@ -90,8 +95,9 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         if (busca.size() > 0) {
             for (Hospitalizacion hosp : busca) {
                 model.addRow(new Object[]{hosp.getId(), hosp.getMascota().getNombre(),
-                    hosp.getMascota().getPersona().getCedula(), hosp.getMascota().getPersona().getNombre(), hosp.getVereterinario(),
-                    hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
+                    hosp.getMascota().getPersona().getCedula(),
+                    hosp.getMascota().getPersona().getNombre() + " " + hosp.getMascota().getPersona().getApellido(),
+                    hosp.getVereterinario(), hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
             }
 
         } else {

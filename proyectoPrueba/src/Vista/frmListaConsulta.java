@@ -59,7 +59,8 @@ public class frmListaConsulta extends javax.swing.JDialog {
         for (Consulta consulta : lista) {
             model.addRow(new Object[]{consulta.getId(), consulta.getMascota().getNombre(),
                 consulta.getPresion(), consulta.getTemp(), consulta.getPeso(), consulta.getMascota().getPersona().getCedula(),
-                consulta.getMascota().getPersona().getNombre(), consulta.getVeterinario(), consulta.getFecha()});
+                consulta.getMascota().getPersona().getNombre() + " " + consulta.getMascota().getPersona().getApellido(),
+                consulta.getVeterinario(), consulta.getFecha()});
         }
     }
 
@@ -88,9 +89,13 @@ public class frmListaConsulta extends javax.swing.JDialog {
         List<Consulta> lista = null;
         lista = conDB.cargarConsulta(lista);
         for (int i = 0; i < lista.size(); i++) {
+            String nom = lista.get(i).getMascota().getPersona().getNombre() + " " + lista.get(i).getMascota().getPersona().getApellido();
             if (lista.get(i).getMascota().getPersona().getCedula().equals(busqueda)) {
                 busca.add(lista.get(i));
-            } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)) {
+            } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)
+                    || lista.get(i).getMascota().getPersona().getApellido().equalsIgnoreCase(busqueda)) {
+                busca.add(lista.get(i));
+            } else if (nom.equalsIgnoreCase(busqueda)) {
                 busca.add(lista.get(i));
             }
         }
@@ -99,7 +104,8 @@ public class frmListaConsulta extends javax.swing.JDialog {
             for (Consulta cons : busca) {
                 model.addRow(new Object[]{cons.getId(), cons.getMascota().getNombre(),
                     cons.getPresion(), cons.getTemp(), cons.getPeso(), cons.getMascota().getPersona().getCedula(),
-                    cons.getMascota().getPersona().getNombre(), cons.getVeterinario(), cons.getFecha()});
+                    cons.getMascota().getPersona().getNombre() + " " + cons.getMascota().getPersona().getApellido(),
+                    cons.getVeterinario(), cons.getFecha()});
             }
 
         } else {
