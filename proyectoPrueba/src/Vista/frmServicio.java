@@ -9,6 +9,7 @@ package Vista;
 import Controlador.ServicioDB;
 import Controlador.Validaciones;
 import Modelo.Servicio;
+import static Vista.frmReceta.txtIDConsulta;
 //import Modelo.Servicio;
 //import controlador.validaciones;
 import java.util.List;
@@ -34,6 +35,7 @@ public class frmServicio extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         inicio();
+        txtId.setVisible(false);
     }
 
     /**
@@ -273,7 +275,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (txtBuscar.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "LLENAR CAMPO REQUERIDO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "LLENAR EL NOMBRE ", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
             buscaServicio(txtBuscar.getText());
 //            chkDesactivados.setSelected(false);

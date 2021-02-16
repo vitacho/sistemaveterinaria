@@ -57,6 +57,7 @@ public class frmReceta extends javax.swing.JFrame {
         initComponents();
         txtNro.setText(val.ObtenerCodString(obtenerCodigoReceta()));
         inicio();
+        txtIDConsulta.setVisible(false);
 
     }
 
@@ -64,8 +65,15 @@ public class frmReceta extends javax.swing.JFrame {
         //TableModelConsulta();      
 //        btnNuevo.setEnabled(true);
         btnImprimir.setText("Imprimir");
-        btnCancelar.setEnabled(true);
-
+        btnCancelar.setEnabled(false);
+        btnImprimir.setEnabled(false);
+        txtAindicaciones.setEnabled(false);
+        txtAmedicamentos.setEnabled(false);
+        txtCi.setEnabled(false);
+        txtCliente.setEnabled(false);
+        txtMascota.setEnabled(false);
+        jDate.setEnabled(false);
+        txtNro.setEnabled(false);
 //        Activa_DesactivaCampos(false);
 //        TablaCita.setEnabled(true);   
     }
@@ -263,7 +271,7 @@ public class frmReceta extends javax.swing.JFrame {
                 txtNroActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 80, 20));
+        getContentPane().add(txtNro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 80, 30));
 
         txtAmedicamentos.setColumns(20);
         txtAmedicamentos.setLineWrap(true);
@@ -384,8 +392,8 @@ public class frmReceta extends javax.swing.JFrame {
     private void guardar1() {
         Consulta c = new Consulta();
 
-        if (jDate.getCalendar() == null) {
-            JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        if (jDate.getCalendar() == null ||txtAindicaciones.getText()==null ||txtAmedicamentos.getText()==null ) {
+            JOptionPane.showMessageDialog(null, "LLENAR TODOS LOS CAMPOS ", "Advertencia", JOptionPane.WARNING_MESSAGE);
 
             jDate.setCalendar(null);
 
@@ -549,6 +557,11 @@ guardar1();//registra bien lo de receta pero falta consulta
         jDialog2.setSize(1200, 800);
         jDialog2.setLocationRelativeTo(null);
         jDialog2.setVisible(true);
+        jDate.setEnabled(true);
+        txtAindicaciones.setEnabled(true);
+        txtAmedicamentos.setEnabled(true);
+        btnImprimir.setEnabled(true);
+        btnCancelar.setEnabled(true);
 
         // this.dispose();
 
@@ -614,12 +627,16 @@ guardar1();//registra bien lo de receta pero falta consulta
 
     }//GEN-LAST:event_btnRecetarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        inicio();    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       jDate.setCalendar(null);
+       txtAindicaciones.setText(null);
+       txtAmedicamentos.setText(null);
+//       btnBuscarConsulta.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -665,7 +682,7 @@ guardar1();//registra bien lo de receta pero falta consulta
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonbuscarConsulta;
-    private com.toedter.calendar.JDateChooser jDate;
+    public static com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -696,6 +713,6 @@ guardar1();//registra bien lo de receta pero falta consulta
     public static javax.swing.JTextField txtCliente;
     public static javax.swing.JLabel txtIDConsulta;
     public static javax.swing.JTextField txtMascota;
-    private javax.swing.JTextField txtNro;
+    public static javax.swing.JTextField txtNro;
     // End of variables declaration//GEN-END:variables
 }
