@@ -48,6 +48,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
     private void iniciar() {
         jTextAreaMotivo.setEditable(false);
         jTextAreaDiagnostico.setEditable(false);
+        jTextFieldBuscar.setToolTipText("Ingrese el nombre o la cedula del dueño de la mascota. ");
         llenarTabla();
     }
 
@@ -81,31 +82,29 @@ public class frmListaConsulta extends javax.swing.JDialog {
         model.setNumRows(0);
     }
 
-    private void buscarConsulta(String cedula) {
-        if (validar.esNumerico(jTextFieldBuscar.getText()) == true) {
-            model.setNumRows(0);
-            List<Consulta> busca = new ArrayList<>();
-            List<Consulta> lista = null;
-            lista = conDB.cargarConsulta(lista);
-            for (int i = 0; i < lista.size(); i++) {
-                if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
-                    busca.add(lista.get(i));
-                }
+    private void buscarConsulta(String busqueda) {
+        model.setNumRows(0);
+        List<Consulta> busca = new ArrayList<>();
+        List<Consulta> lista = null;
+        lista = conDB.cargarConsulta(lista);
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getMascota().getPersona().getCedula().equals(busqueda)) {
+                busca.add(lista.get(i));
+            } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)) {
+                busca.add(lista.get(i));
+            }
+        }
+
+        if (busca.size() > 0) {
+            for (Consulta cons : busca) {
+                model.addRow(new Object[]{cons.getId(), cons.getMascota().getNombre(),
+                    cons.getPresion(), cons.getTemp(), cons.getPeso(), cons.getMascota().getPersona().getCedula(),
+                    cons.getMascota().getPersona().getNombre(), cons.getVeterinario(), cons.getFecha()});
             }
 
-            if (busca.size() > 0) {
-                for (Consulta cons : busca) {
-                    model.addRow(new Object[]{cons.getId(), cons.getMascota().getNombre(),
-                        cons.getPresion(), cons.getTemp(), cons.getPeso(), cons.getMascota().getPersona().getCedula(),
-                        cons.getMascota().getPersona().getNombre(), cons.getVeterinario(), cons.getFecha()});
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                llenarTabla();
-            }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+            JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            llenarTabla();
         }
     }
 
@@ -269,7 +268,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
             if (selectRow == -1) {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA DE LA TABLA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                
+
                 modelConsulta = (DefaultTableModel) TableConsultas.getModel();
                 String id = TableConsultas.getValueAt(selectRow, 0).toString();
                 String mascota = TableConsultas.getValueAt(selectRow, 1).toString();
@@ -280,9 +279,8 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 frmReceta.txtCi.setText(ci);
                 frmReceta.txtCliente.setText(nombre);
                 frmReceta.txtIDConsulta.setText(id);
-                
+
 //                recetaDB.nuevaReceta(rec);
-                
                 frmListaConsulta lc = new frmListaConsulta(rec, rootPaneCheckingEnabled);
                 lc.setVisible(false);
                 rec.setVisible(true);

@@ -37,6 +37,7 @@ public class frmListaHospitalización extends javax.swing.JDialog {
     public frmListaHospitalización(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jTextFieldBuscar.setToolTipText("Ingrese el nombre o la cedula del dueño de la mascota. ");
         iniciar();
     }
 
@@ -73,14 +74,16 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         model.setNumRows(0);
     }
 
-    private void buscarHosp(String cedula) {
+    private void buscarHosp(String busqueda) {
         if (validar.esNumerico(jTextFieldBuscar.getText()) == true) {
             model.setNumRows(0);
             List<Hospitalizacion> busca = new ArrayList<>();
             List<Hospitalizacion> lista = null;
             lista = hosDB.cargarHospitalizacion(lista);
             for (int i = 0; i < lista.size(); i++) {
-                if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
+                if (lista.get(i).getMascota().getPersona().getCedula().equals(busqueda)) {
+                    busca.add(lista.get(i));
+                } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)) {
                     busca.add(lista.get(i));
                 }
             }
