@@ -224,7 +224,7 @@ public class frmListaHospitalización extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int op = JOptionPane.showConfirmDialog(null, "Esta seguro que desea Finalizar la Hopitalizacion", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
+        int op = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea Finalizar la Hopitalizacion seleccionada?", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
         if (op == 0) {
             finalizarHosp();
         }
@@ -240,7 +240,7 @@ public class frmListaHospitalización extends javax.swing.JDialog {
             this.setVisible(false);
             frmHos.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una Hospitalizacion");
+            JOptionPane.showMessageDialog(null, "Seleccione una Hospitalizacion en la tabla");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
