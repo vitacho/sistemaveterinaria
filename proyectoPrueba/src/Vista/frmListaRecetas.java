@@ -29,8 +29,7 @@ public class frmListaRecetas extends javax.swing.JFrame {
     RecetaDB recetaBD = new RecetaDB();
 
     public frmListaRecetas() {
-        initComponents();
-       
+        initComponents();  
         iniciar();
 
     }
