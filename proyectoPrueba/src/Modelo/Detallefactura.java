@@ -23,7 +23,7 @@ public class Detallefactura implements Serializable{
 
     private int id_detallefactura;
     private int cantidad;
-    private String detalle;
+//    private String detalle;
     private double precio_unitario;
     private double precio_total;
     private Factura factura;
@@ -47,13 +47,13 @@ public class Detallefactura implements Serializable{
         this.cantidad = cantidad;
     }
 
-    public String getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
-    }
+//    public String getDetalle() {
+//        return detalle;
+//    }
+//
+//    public void setDetalle(String detalle) {
+//        this.detalle = detalle;
+//    }
 
     public double getPrecio_unitario() {
         return precio_unitario;

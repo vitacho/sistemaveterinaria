@@ -28,10 +28,10 @@ public class Persona implements Serializable {
     private String telefono;
     private String correo;
     private String direccion;
-    private String estado; // 1 activo // 0 eliminado A O P
     
     private Rol rol;
     private List<Mascota> mascota = new ArrayList<Mascota>();
+     private List<Factura> factura = new ArrayList<Factura>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,14 +75,6 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     //muchos roles tiene una persona
     @ManyToOne
     public Rol getRol() {
@@ -119,6 +111,13 @@ public class Persona implements Serializable {
         this.mascota = mascota;
     }
     
-    
+     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    public List<Factura> getFactura() {
+        return factura;
+    }
+
+    public void setFactura(List<Factura> factura) {
+        this.factura = factura;
+    }
     
 }

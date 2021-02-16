@@ -50,7 +50,7 @@ public class frmPersona extends javax.swing.JDialog {
         tablaModel();
         List<Persona> lista = null;
 
-        lista = perDB.cargarClientes(estado, lista);
+        lista = perDB.listarPersonas();
 
         for (Persona perLis : lista) {
             model.addRow(new Object[]{
@@ -334,7 +334,6 @@ public class frmPersona extends javax.swing.JDialog {
               
              int id = Integer.parseInt(String.valueOf(model.getValueAt(seleccionar, 0))); 
              Persona per = perDB.traeClientesId(id);
-             per.setEstado("P");
              perDB.actualizarCliente(per);
              
               JOptionPane.showMessageDialog(null, "CLIENTE DESACTIVADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
@@ -383,7 +382,6 @@ public class frmPersona extends javax.swing.JDialog {
                     per.setNombre(txtnombre.getText().trim());
                     per.setApellido(txtape.getText().trim());
                     per.setTelefono(txtTele.getText().trim());
-                    per.setEstado("A"); // estado Activo
 
                     ro.getListPerso().add(per); // guarda el id de la relacion de las tablas
 
@@ -410,8 +408,6 @@ public class frmPersona extends javax.swing.JDialog {
                     per.setNombre(txtnombre.getText().trim());
                     per.setApellido(txtape.getText().trim());
                     per.setTelefono(txtTele.getText().trim());
-                    per.setEstado("A"); // estado Activo
-
                     perDB.actualizarCliente(per);
                     
                     JOptionPane.showMessageDialog(null, "Cliente Modificado");

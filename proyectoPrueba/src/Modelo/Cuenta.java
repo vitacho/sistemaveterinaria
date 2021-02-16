@@ -17,9 +17,10 @@ import javax.persistence.OneToOne;
 public class Cuenta implements Serializable{
     
     private int id_cuenta;
-    private String user_ced;
+    private String user;
     private String contra;
     private Persona persona;
+    private String estado; // 1 activo // 0 eliminado A O D
     
     
     @Id
@@ -32,12 +33,12 @@ public class Cuenta implements Serializable{
         this.id_cuenta = id_cuenta;
     }
 
-    public String getUser_ced() {
-        return user_ced;
+    public String getUser() {
+        return user;
     }
 
-    public void setUser_ced(String user_ced) {
-        this.user_ced = user_ced;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getContra() {
@@ -56,7 +57,16 @@ public class Cuenta implements Serializable{
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
    
+    
     
     
     

@@ -1,8 +1,11 @@
 
 package Controlador;
 
+import Modelo.Mascota;
+import Modelo.Persona;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -199,5 +202,28 @@ public class Validaciones {
             return false;
         }
     }
+    
+    public Mascota buscarMascota(String cedula, PersonaDB perDB){
+            List<Persona> listaP = null;
+            List<Mascota> listaM = null;
+            Mascota mas = null;
+            String presentar = "";
+
+            listaP = perDB.buscarPersonaCed(cedula);
+            listaM = listaP.get(0).getMascota();
+
+            for (int i = 0; i < listaM.size(); i++) {
+                presentar += i + 1 + " Nombre: " + listaM.get(i).getNombre() + "\n"
+                        + " Raza: " + listaM.get(i).getRaza() + "\n"
+                        + " Sexo: " + listaM.get(i).getSexo() + "\n\n";
+            }
+
+            int op = Integer.parseInt(JOptionPane.showInputDialog("Elija una mascota:\n" + presentar));
+
+            mas = listaM.get(op - 1);
+            
+        return mas;
+    }
+    
     
 }

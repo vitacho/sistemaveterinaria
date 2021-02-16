@@ -29,7 +29,7 @@ public class Hospitalizacion implements Serializable{
     private String conbulcion;
     private String intoxicacion;
     private String probleResp;
-    private String inchazon;
+    private String hinchazon;
     private Date ingreso;
     private Date salida;
     private String vereterinario;
@@ -102,12 +102,12 @@ public class Hospitalizacion implements Serializable{
         this.probleResp = probleResp;
     }
 
-    public String getInchazon() {
-        return inchazon;
+    public String getHinchazon() {
+        return hinchazon;
     }
 
-    public void setInchazon(String inchazon) {
-        this.inchazon = inchazon;
+    public void setHinchazon(String hinchazon) {
+        this.hinchazon = hinchazon;
     }
 
     public Date getIngreso() {

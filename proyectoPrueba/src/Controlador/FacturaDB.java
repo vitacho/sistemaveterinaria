@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.Factura;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utilidades.HibernateUtil;
 
@@ -51,5 +52,25 @@ public class FacturaDB {
         } catch (Exception e) {
         }
         return lis;
+    }
+    public Factura traenumfact(String nrofact){
+        Factura fact = null;
+        
+        try {
+            Query query= st.createQuery("from Factura fact Where fact.nro_factura = ?");
+            query.setParameter(0, nrofact); // admin, secretaria, veterinario, cliente
+            
+            try {
+                fact=(Factura)query.uniqueResult();
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al traer el rol"+e.getMessage());
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer el rol"+e.getMessage());
+        }
+        
+        return fact;
     }
 }

@@ -5,10 +5,13 @@
  */
 package Vista;
 
+import Controlador.DetallefacturaDB;
 import Controlador.FacturaDB;
 import Controlador.PersonaDB;
 import Controlador.ServicioDB;
 import Controlador.Validaciones;
+import Modelo.Detallefactura;
+import Modelo.Factura;
 import Modelo.Persona;
 import Modelo.Servicio;
 import java.awt.Graphics;
@@ -24,6 +27,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jdk.internal.org.objectweb.asm.commons.StaticInitMerger;
 
 /**
  *
@@ -36,6 +40,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     PersonaDB perDB = new PersonaDB();
     FacturaDB facturaDB = new FacturaDB();
     ServicioDB servicioDB = new ServicioDB();
+    DetallefacturaDB detalledb= new DetallefacturaDB();
 
     /**
      * parte para la integracion de ls servicios solo
@@ -107,7 +112,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         tablaModelCliente();
         List<Persona> lista = null;
 
-        lista = perDB.cargarClientes(estado, lista);
+        lista = perDB.listarPersonas();
 
         for (Persona perLis : lista) {
             model.addRow(new Object[]{
@@ -120,7 +125,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     private static String fechaactual() {
         Date fecha = new Date();
         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
-
         return formatofecha.format(fecha);
 
     }
@@ -159,6 +163,38 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     }
 
     private void guardar() {
+        int contar = tabladetalle.getRowCount();//filas actules de tabla detalle
+        Date fecha = new Date();
+        Persona pr = new Persona();
+        Servicio ser = new Servicio();
+        pr=perDB.traerPorCedula(txtcedula.getText());
+        Factura ft = new Factura();
+        //generamos los datos de factura
+        ft.setFecha(fecha);
+        ft.setIva(Double.parseDouble(txtiva.getText()));
+        ft.setNro_factura(txtnumfact.getText());
+        ft.setPersona(pr);
+        pr.getFactura().add(ft);
+        facturaDB.nuevaFactura(ft);
+        //Ya se esta creada la factura 
+        // vamos a crea un bucle para que se para recorer todo la tabla para ir gerenado los dettles factura
+        for (int i = 0; i < contar; i++) {
+            ft = facturaDB.traenumfact(txtnumfact.getText());
+            ser = servicioDB.traeServicio(Integer.parseInt((tabladetalle.getValueAt(i, 0).toString())));
+            int id = ser.getId_serv();
+            Detallefactura det = new Detallefactura();
+            det.setCantidad(Integer.parseInt((tabladetalle.getValueAt(i, 1).toString())));//cantidad
+            det.setPrecio_total(Double.parseDouble((tabladetalle.getValueAt(i, 5).toString())));//cantidad
+            det.setPrecio_unitario(Double.parseDouble((tabladetalle.getValueAt(i, 4).toString())));//cantidad
+            det.setFactura(ft);
+            det.setServicio(ser);
+            ser.getListPerso().add(det);
+            ft.getDetallefactura().add(det);
+            detalledb.nuevodetallefactura(det);
+            // detallefactura.set
+//            suma += Double.parseDouble(tabladetalle.getValueAt(i, 5).toString());
+//            System.out.println(suma);
+        }
 
     }
 
@@ -170,8 +206,10 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             // si se pone acpatr se vuelve 1
             if (top) {
                 g.print();
+                escoderAparecer(false);
             }
         } catch (Exception e) {
+            escoderAparecer(false);
             JOptionPane.showMessageDialog(null, "ERRROR DE¨PROGRAMA ", "ERROR" + e, JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -200,17 +238,20 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             suma += Double.parseDouble(tabladetalle.getValueAt(i, 5).toString());
             System.out.println(suma);
         }
-        
+
         //calculamos el iva 
-        double total=suma;
+        double total = suma;
         double iva = Double.parseDouble(txtiva.getText());
         double subtototal;
         double total_a_pagar;
         double cant_des;
-        subtototal=total/((100+iva)/100);
-        total=total*(iva/100);
-        txtsubtotal.setText(String.format("%.2f",subtototal));
-        txttotal.setText(String.format("%.2f",suma));
+        subtototal = total / ((100 + iva) / 100);
+        //total menos el decuento
+
+        total = total * (iva / 100);
+
+        txtsubtotal.setText(String.format("%.2f", subtototal));
+        txttotal.setText(String.format("%.2f", suma));
     }
 
     /**
@@ -263,7 +304,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         jButtonbuscarservicio = new javax.swing.JButton();
         buttoneliminar = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
-        txtnumerofactura = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         metodopago = new javax.swing.JLabel();
         jButtonatras = new javax.swing.JButton();
@@ -278,6 +318,8 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         txtiva = new javax.swing.JTextField();
         txttotal = new javax.swing.JTextField();
         txtidpersona = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JButton();
+        txtnumfact = new javax.swing.JTextField();
 
         buscarcliente.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -696,9 +738,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo" }));
 
-        txtnumerofactura.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtnumerofactura.setText("_________");
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel27.setText("Factura N°:");
 
@@ -793,6 +832,15 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
         txtidpersona.setText("ID");
 
+        btnNuevo.setText("jButton2");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
+        txtnumfact.setText("jTextField2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -803,15 +851,18 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(81, 81, 81)
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtnumerofactura, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(161, 161, 161)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnumfact, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(113, 113, 113)
                             .addComponent(txtidpersona, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(33, 33, 33)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(432, 432, 432)
+                                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButtonimprimir)
                                     .addGap(18, 18, 18)
                                     .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -835,8 +886,8 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
-                    .addComponent(txtnumerofactura)
-                    .addComponent(txtidpersona))
+                    .addComponent(txtidpersona)
+                    .addComponent(txtnumfact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -855,8 +906,9 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonimprimir)
                             .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtoncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 54, Short.MAX_VALUE))))
+                            .addComponent(jButtoncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 51, Short.MAX_VALUE))))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 930, 690));
@@ -876,6 +928,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     private void jButtonimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonimprimirActionPerformed
         //verificamos que la cedula este corecta o si no se hace nada
 
+        guardar();
         controldescuento();
         frmVuelto vuelto = new frmVuelto(new javax.swing.JDialog(), true);
         vuelto.setTotal(txttotal.getText());
@@ -885,23 +938,24 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         //metodo para la impresion de panel 
         imprimir();
         //mostramos otra vez los que se escondio
-        escoderAparecer(false);
+        escoderAparecer(true);
         //neviamos los datos de la factura a jpanel para imprimirlo
 
 
     }//GEN-LAST:event_jButtonimprimirActionPerformed
 
     private void txtdecuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdecuentoKeyTyped
+        vali.valNum(evt, txtdecuento, 3);
 
-        if (txtdecuento.getText().length() >= 5) {
-            evt.consume();
-        }
-        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
-            evt.consume();
-        }
-        if (evt.getKeyChar() == '.' && txtdecuento.getText().contains(".")) {
-            evt.consume();
-        }
+//        if (txtdecuento.getText().length() >= 5) {
+//            evt.consume();
+//        }
+//        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
+//            evt.consume();
+//        }
+//        if (evt.getKeyChar() == '.' && txtdecuento.getText().contains(".")) {
+//            evt.consume();
+//        }
 
     }//GEN-LAST:event_txtdecuentoKeyTyped
 
@@ -1061,9 +1115,8 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     }//GEN-LAST:event_txttotalActionPerformed
 
     private void txtivaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtivaKeyTyped
-       vali.valNum(evt, txtiva, 2);
-        
-        
+        vali.valNum(evt, txtiva, 2);
+
         /*
         if (txtiva.getText().length() >= 4) {
             evt.consume();
@@ -1076,6 +1129,10 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         }
          */
     }//GEN-LAST:event_txtivaKeyTyped
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1106,6 +1163,10 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1128,6 +1189,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     private javax.swing.JButton Cancelarservicio;
     private javax.swing.JTable Tablaclientes;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton buscar_ser;
     private javax.swing.JDialog buscarcliente;
     private javax.swing.JDialog buscarservicio;
@@ -1175,7 +1237,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     private javax.swing.JLabel txtidpersona;
     private javax.swing.JTextField txtiva;
     private javax.swing.JLabel txtnombre;
-    private javax.swing.JLabel txtnumerofactura;
+    private javax.swing.JTextField txtnumfact;
     private javax.swing.JTextField txtsubtotal;
     private javax.swing.JLabel txttelefono;
     private javax.swing.JTextField txttotal;

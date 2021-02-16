@@ -66,16 +66,7 @@ public class PersonaDB {
     
     //metodo para cargar los datos en la tabla
     
-    public List<Persona> cargarClientes(String estado, List<Persona>lis){
-        
-        try {
-            lis = (List<Persona>)st.createQuery("from Persona where estado='"+estado+"'order by nombre").list();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los datos en la tabla "+e.getMessage());
-        }
-        
-        return lis;
-    }
+    
     
     //traer a los clientes por el ID
     public Persona traeClientesId(int idPersona){
@@ -140,6 +131,22 @@ public class PersonaDB {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al traer persona con cedula " + e.getMessage());
+        }
+        return p;
+    }
+    
+     public  List<Persona> traerPorNombre(String nombre) {
+        List<Persona> p = new  ArrayList<>();
+        List<Persona> list = new ArrayList<>();
+        try {
+            list = (List<Persona>) st.createQuery("From Persona where nombre = '"+nombre+"'").list();
+            for (Persona persona : list) {
+                if(persona.getNombre().equalsIgnoreCase(nombre)){
+                    p.add(persona);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer persona con nombre " + e.getMessage());
         }
         return p;
     }
