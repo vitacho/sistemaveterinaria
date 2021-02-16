@@ -62,6 +62,11 @@ public class frmInicioSesion extends javax.swing.JDialog {
         jLabel4.setText("Contraseña:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 120, 40));
 
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyTyped(evt);
@@ -131,18 +136,18 @@ public class frmInicioSesion extends javax.swing.JDialog {
         List<Cuenta> listCuenta = new java.util.ArrayList<>();
        
         Cuenta c = new Cuenta();
-//        listCuenta = cueDB.traeUsuarios("A", listCuenta);
+        listCuenta = cueDB.traeUsuarios("A", listCuenta);
       
         if (listCuenta.size() > 0) {
-            c = cueDB.traeCuentaCed(txtUsuario.getText());
+            c = cueDB.traeCuentaU(txtUsuario.getText());
             
             if (txtUsuario.getText().equals("")||txtcontra.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "ACCESO INCORRECTO", "Mensaje", JOptionPane.ERROR_MESSAGE);
                 txtcontra.setText(null); txtUsuario.setText(null); txtUsuario.requestFocus();
             }
 
-            if (c.getPersona().getCedula().equals(txtUsuario.getText())
-                && c.getContra().equals(txtcontra.getText())) {
+            if (c.getUser().equals(txtUsuario.getText())
+                && c.getContra().equals(txtcontra.getText())) {            
                 tipo = c.getPersona().getRol().getNombre_rol();
                 JOptionPane.showMessageDialog(this, "Acceso Tipo: " + tipo, "ACCESO AL SISTEMA", JOptionPane.INFORMATION_MESSAGE);
 
@@ -169,6 +174,10 @@ public class frmInicioSesion extends javax.swing.JDialog {
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
   val.EnterAJtexFiel(txtcontra, evt);    }//GEN-LAST:event_txtUsuarioKeyTyped
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

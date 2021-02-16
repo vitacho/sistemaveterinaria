@@ -78,11 +78,11 @@ public class CuentaDB {
         
         return c;
     }
-          public Cuenta traeCuentaCed(String ced){
+          public Cuenta traeCuentaU(String ced){
          
         Cuenta u=new Cuenta();
         try {
-               Query query=st.createQuery("from Cuenta where persona_ced_per=? and est_usu='A'");
+               Query query=st.createQuery("from Cuenta where user=? and estado='A'");
                query.setParameter(0, ced);
            try{
                u=(Cuenta)query.uniqueResult();
@@ -109,5 +109,13 @@ public class CuentaDB {
             JOptionPane.showMessageDialog(null, "Error al traer persona con cedula " + e.getMessage());
         }
         return p;
+    }
+     public List<Cuenta> traeUsuarios(String est,List<Cuenta> list){
+     try {
+            list=(List<Cuenta>)st.createQuery("From Cuenta where estado='"+est+"'").list();
+        } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "ERROR AL TRAER A LOS USUARIOS "+e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+        return list;
     }
 }

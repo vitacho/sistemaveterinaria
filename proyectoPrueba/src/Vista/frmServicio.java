@@ -36,6 +36,7 @@ public class frmServicio extends javax.swing.JDialog {
         initComponents();
         inicio();
         txtId.setVisible(false);
+        tablaServicios.getTableHeader().setReorderingAllowed(false); 
     }
 
     /**
