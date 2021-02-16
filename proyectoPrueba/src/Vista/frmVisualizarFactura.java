@@ -57,7 +57,6 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
     public void ocultar(boolean bl) {
         butonimprimir.setVisible(bl);
         jButtonAtras.setVisible(bl);
-        jButtonCancelar.setVisible(bl);
 
     }
 
@@ -138,7 +137,6 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
         txtnumfact = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jButtonAtras = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -258,8 +256,11 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
         jLabel27.setText("Factura N°:");
 
         jButtonAtras.setText("Atrás");
-
-        jButtonCancelar.setText("Cancelar");
+        jButtonAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtrasActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -374,9 +375,7 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(butonimprimir)
-                                    .addGap(30, 30, 30)
-                                    .addComponent(jButtonCancelar)
-                                    .addGap(31, 31, 31)
+                                    .addGap(136, 136, 136)
                                     .addComponent(jButtonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
@@ -396,7 +395,6 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(butonimprimir)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
@@ -417,6 +415,11 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
     private void tabladetalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabladetalleMouseClicked
 
     }//GEN-LAST:event_tabladetalleMouseClicked
+
+    private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
+        this.setModal(false);
+        this.dispose();
+    }//GEN-LAST:event_jButtonAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,7 +487,6 @@ public class frmVisualizarFactura extends javax.swing.JDialog implements Printab
     private javax.swing.JLabel TxtIva;
     private javax.swing.JButton butonimprimir;
     private javax.swing.JButton jButtonAtras;
-    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
