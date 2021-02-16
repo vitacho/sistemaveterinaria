@@ -6,33 +6,108 @@
 package Vista;
 
 //import Modelo.Hospitalizacion;
+import Modelo.Cuenta;
 
 /**
  *
  * @author Personal
  */
 public class frmPrincipal extends javax.swing.JFrame {
-   
+
     /**
      * Creates new form frmPrincipal
      */
     int tipo = 0;
+    Cuenta cuenta = new Cuenta();
+
     public frmPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
     }
 
-       public frmPrincipal(int tip) {
+    public frmPrincipal(int tip) {
         initComponents();
         tipo = tip;
-        
-         setExtendedState(MAXIMIZED_BOTH);
-         setTitle("Menu Principal");
-         menus();
+
+        setExtendedState(MAXIMIZED_BOTH);
+        setTitle("Menu Principal");
+        menus();
     }
-        private void menus() {
-            
+
+    private void menus() {
+        if (tipo == 2) { //administrador
+
+            jMenuAdministrarCuentas.setEnabled(true);
+            jCheckListaCuentas.setEnabled(true);
+            jCheckRegistrarCuenta.setEnabled(true);
+            jMenuBar1.setEnabled(true);
+            jMenuServicios.setEnabled(true);
+            jCheckRegistrarServicios.setEnabled(true);
+         
+            jCheckListaHospita.setEnabled(true);
+            jCheckListaConsultas.setEnabled(true);
+            jMenuClientes.setEnabled(true);
+            jCheckRegistrarCliente.setEnabled(true);
+            jCheckListaClientes.setEnabled(true);
+            jCheckMascotas.setEnabled(true);
+            jMenuFacturas.setEnabled(true);
+            jCheckListaFacturas.setEnabled(true);
+            jMenuRecetas.setEnabled(true);
+            jMenuListaPrincipal.setEnabled(true);
+            jMenuSalir.setEnabled(true);
+            jCheckCerrarSesion.setEnabled(true);    
         }
+                if (tipo == 3) { //secretaria
+
+            jMenuAdministrarCuentas.setEnabled(false);
+            jCheckListaCuentas.setEnabled(false);
+            jCheckRegistrarCuenta.setEnabled(false);
+            jMenuBar1.setEnabled(true);
+            jMenuServicios.setEnabled(true);
+            jCheckRegistrarServicios.setEnabled(false);
+          
+            jCheckListaHospita.setEnabled(false);
+            jCheckListaConsultas.setEnabled(false);
+            jMenuClientes.setEnabled(true);
+            jCheckRegistrarCliente.setEnabled(true);
+            jCheckListaClientes.setEnabled(true);
+            jCheckMascotas.setEnabled(true);
+            jMenuFacturas.setEnabled(true);
+            jCheckListaFacturas.setEnabled(true);
+            jMenuRecetas.setEnabled(false);
+            jMenuListaPrincipal.setEnabled(false);
+            jMenuSalir.setEnabled(true);
+            jCheckCerrarSesion.setEnabled(true);    
+            jMenuServicios.setEnabled(false);
+            btnConsultas.setEnabled(false);
+            btnHospitalizacion.setEnabled(false);
+        }
+                        if (tipo == 4) { //secretaria
+
+            jMenuAdministrarCuentas.setEnabled(false);
+            jCheckListaCuentas.setEnabled(false);
+            jCheckRegistrarCuenta.setEnabled(false);
+            jMenuBar1.setEnabled(true);
+            jMenuServicios.setEnabled(false);
+            jCheckRegistrarServicios.setEnabled(false);
+          
+            jCheckListaHospita.setEnabled(true);
+            jCheckListaConsultas.setEnabled(true);
+            jMenuClientes.setEnabled(false);
+            jCheckRegistrarCliente.setEnabled(false);
+            jCheckListaClientes.setEnabled(false);
+            jCheckMascotas.setEnabled(false);
+            jMenuFacturas.setEnabled(false);
+            jCheckListaFacturas.setEnabled(false);
+            jMenuRecetas.setEnabled(false);
+            jMenuListaPrincipal.setEnabled(true);
+            jMenuSalir.setEnabled(true);
+            jCheckCerrarSesion.setEnabled(true);    
+            jMenuServicios.setEnabled(true);
+            btnFacturacion.setEnabled(false);
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,61 +118,61 @@ public class frmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnHospitalizacion = new javax.swing.JButton();
+        btnConsultas = new javax.swing.JButton();
+        btnFacturacion = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu = new javax.swing.JMenu();
+        jMenuAdministrarCuentas = new javax.swing.JMenu();
         jCheckListaCuentas = new javax.swing.JCheckBoxMenuItem();
         jCheckRegistrarCuenta = new javax.swing.JCheckBoxMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem9 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem11 = new javax.swing.JCheckBoxMenuItem();
+        jMenuServicios = new javax.swing.JMenu();
+        jCheckRegistrarServicios = new javax.swing.JCheckBoxMenuItem();
+        jCheckListaHospita = new javax.swing.JCheckBoxMenuItem();
         jCheckListaConsultas = new javax.swing.JCheckBoxMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMenuClientes = new javax.swing.JMenu();
         jCheckRegistrarCliente = new javax.swing.JCheckBoxMenuItem();
         jCheckListaClientes = new javax.swing.JCheckBoxMenuItem();
         jCheckMascotas = new javax.swing.JCheckBoxMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jCheckBoxMenuItem13 = new javax.swing.JCheckBoxMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jCheckBoxMenuItem10 = new javax.swing.JCheckBoxMenuItem();
+        jMenuFacturas = new javax.swing.JMenu();
+        jCheckListaFacturas = new javax.swing.JCheckBoxMenuItem();
+        jMenuRecetas = new javax.swing.JMenu();
+        jMenuListaPrincipal = new javax.swing.JMenuItem();
+        jMenuSalir = new javax.swing.JMenu();
+        jCheckCerrarSesion = new javax.swing.JCheckBoxMenuItem();
+        jMenuSalir1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Hospitalizacion.jpg"))); // NOI18N
-        jButton2.setText("HOSPITALIZACIÓN");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnHospitalizacion.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
+        btnHospitalizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Hospitalizacion.jpg"))); // NOI18N
+        btnHospitalizacion.setText("HOSPITALIZACIÓN");
+        btnHospitalizacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnHospitalizacionActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 430, 240));
+        getContentPane().add(btnHospitalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 430, 240));
 
-        jButton3.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Consulta.jpg"))); // NOI18N
-        jButton3.setText("CONSULTA");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultas.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
+        btnConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Consulta.jpg"))); // NOI18N
+        btnConsultas.setText("CONSULTA");
+        btnConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnConsultasActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 430, 240));
+        getContentPane().add(btnConsultas, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 430, 240));
 
-        jButton1.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Facturacion.jpg"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnFacturacion.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
+        btnFacturacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Facturacion.jpg"))); // NOI18N
+        btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnFacturacionActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 660, 270));
+        getContentPane().add(btnFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 660, 270));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -106,8 +181,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/administrarcuenta.png"))); // NOI18N
-        jMenu.setText("Administrar Cuentas ");
+        jMenuAdministrarCuentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/administrarcuenta.png"))); // NOI18N
+        jMenuAdministrarCuentas.setText("Administrar Cuentas ");
 
         jCheckListaCuentas.setSelected(true);
         jCheckListaCuentas.setText("Lista de Cuentas");
@@ -117,7 +192,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                 jCheckListaCuentasActionPerformed(evt);
             }
         });
-        jMenu.add(jCheckListaCuentas);
+        jMenuAdministrarCuentas.add(jCheckListaCuentas);
 
         jCheckRegistrarCuenta.setSelected(true);
         jCheckRegistrarCuenta.setText("Registrar Cuenta");
@@ -127,42 +202,32 @@ public class frmPrincipal extends javax.swing.JFrame {
                 jCheckRegistrarCuentaActionPerformed(evt);
             }
         });
-        jMenu.add(jCheckRegistrarCuenta);
+        jMenuAdministrarCuentas.add(jCheckRegistrarCuenta);
 
-        jMenuBar1.add(jMenu);
+        jMenuBar1.add(jMenuAdministrarCuentas);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/administrarservicios.png"))); // NOI18N
-        jMenu2.setText(" Servicios");
+        jMenuServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/administrarservicios.png"))); // NOI18N
+        jMenuServicios.setText(" Servicios");
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Registrar Servicios");
-        jCheckBoxMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrarservicio.png"))); // NOI18N
-        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jCheckRegistrarServicios.setSelected(true);
+        jCheckRegistrarServicios.setText("Registrar Servicios");
+        jCheckRegistrarServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrarservicio.png"))); // NOI18N
+        jCheckRegistrarServicios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem2ActionPerformed(evt);
+                jCheckRegistrarServiciosActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem2);
+        jMenuServicios.add(jCheckRegistrarServicios);
 
-        jCheckBoxMenuItem9.setSelected(true);
-        jCheckBoxMenuItem9.setText("Lista de Servicios");
-        jCheckBoxMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listaconsulta.png"))); // NOI18N
-        jCheckBoxMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jCheckListaHospita.setSelected(true);
+        jCheckListaHospita.setText("Lista de Hospitalización");
+        jCheckListaHospita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listahospitalizacion.png"))); // NOI18N
+        jCheckListaHospita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem9ActionPerformed(evt);
+                jCheckListaHospitaActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem9);
-
-        jCheckBoxMenuItem11.setSelected(true);
-        jCheckBoxMenuItem11.setText("Lista de Hospitalización");
-        jCheckBoxMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listahospitalizacion.png"))); // NOI18N
-        jCheckBoxMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem11ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jCheckBoxMenuItem11);
+        jMenuServicios.add(jCheckListaHospita);
 
         jCheckListaConsultas.setSelected(true);
         jCheckListaConsultas.setText("Lista de Consulta");
@@ -172,12 +237,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                 jCheckListaConsultasActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckListaConsultas);
+        jMenuServicios.add(jCheckListaConsultas);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenuServicios);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listacuenta.png"))); // NOI18N
-        jMenu4.setText(" Clientes");
+        jMenuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listacuenta.png"))); // NOI18N
+        jMenuClientes.setText(" Clientes");
 
         jCheckRegistrarCliente.setSelected(true);
         jCheckRegistrarCliente.setText("Registrar Cliente");
@@ -187,7 +252,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                 jCheckRegistrarClienteActionPerformed(evt);
             }
         });
-        jMenu4.add(jCheckRegistrarCliente);
+        jMenuClientes.add(jCheckRegistrarCliente);
 
         jCheckListaClientes.setSelected(true);
         jCheckListaClientes.setText("Lista de Clientes");
@@ -197,7 +262,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                 jCheckListaClientesActionPerformed(evt);
             }
         });
-        jMenu4.add(jCheckListaClientes);
+        jMenuClientes.add(jCheckListaClientes);
 
         jCheckMascotas.setSelected(true);
         jCheckMascotas.setText("Mascotas");
@@ -207,115 +272,130 @@ public class frmPrincipal extends javax.swing.JFrame {
                 jCheckMascotasActionPerformed(evt);
             }
         });
-        jMenu4.add(jCheckMascotas);
+        jMenuClientes.add(jCheckMascotas);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenuClientes);
 
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura.png"))); // NOI18N
-        jMenu6.setText("Facturas");
+        jMenuFacturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura.png"))); // NOI18N
+        jMenuFacturas.setText("Facturas");
 
-        jCheckBoxMenuItem13.setSelected(true);
-        jCheckBoxMenuItem13.setText("Lista de Facturas");
-        jCheckBoxMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listafactura.png"))); // NOI18N
-        jCheckBoxMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jCheckListaFacturas.setSelected(true);
+        jCheckListaFacturas.setText("Lista de Facturas");
+        jCheckListaFacturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/listafactura.png"))); // NOI18N
+        jCheckListaFacturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem13ActionPerformed(evt);
+                jCheckListaFacturasActionPerformed(evt);
             }
         });
-        jMenu6.add(jCheckBoxMenuItem13);
+        jMenuFacturas.add(jCheckListaFacturas);
 
-        jMenuBar1.add(jMenu6);
+        jMenuBar1.add(jMenuFacturas);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/receta1.png"))); // NOI18N
-        jMenu1.setText("Recetas");
+        jMenuRecetas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/receta1.png"))); // NOI18N
+        jMenuRecetas.setText("Recetas");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/receta.png"))); // NOI18N
-        jMenuItem1.setText("Lista de recetas");
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/x.png"))); // NOI18N
-        jMenu5.setText("Salir");
-
-        jCheckBoxMenuItem10.setSelected(true);
-        jCheckBoxMenuItem10.setText("Cerrar Sesión");
-        jCheckBoxMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrasesion.png"))); // NOI18N
-        jCheckBoxMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        jMenuListaPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/receta.png"))); // NOI18N
+        jMenuListaPrincipal.setText("Lista de recetas");
+        jMenuListaPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem10ActionPerformed(evt);
+                jMenuListaPrincipalActionPerformed(evt);
             }
         });
-        jMenu5.add(jCheckBoxMenuItem10);
+        jMenuRecetas.add(jMenuListaPrincipal);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(jMenuRecetas);
+
+        jMenuSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/x.png"))); // NOI18N
+        jMenuSalir.setText("Salir");
+
+        jCheckCerrarSesion.setSelected(true);
+        jCheckCerrarSesion.setText("Cerrar Sesión");
+        jCheckCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerrasesion.png"))); // NOI18N
+        jCheckCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckCerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenuSalir.add(jCheckCerrarSesion);
+
+        jMenuSalir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Close.png"))); // NOI18N
+        jMenuSalir1.setText("Salir de la Aplicacion");
+        jMenuSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSalir1ActionPerformed(evt);
+            }
+        });
+        jMenuSalir.add(jMenuSalir1);
+
+        jMenuBar1.add(jMenuSalir);
 
         setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
+    private void jCheckRegistrarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRegistrarServiciosActionPerformed
+      frmServicio servicio = new frmServicio(this, rootPaneCheckingEnabled);
+      servicio.setTitle("Registrar Servicio");
+      servicio.setVisible(true);
+    }//GEN-LAST:event_jCheckRegistrarServiciosActionPerformed
 
     private void jCheckRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRegistrarClienteActionPerformed
         // TODO add your handling code here:
-        frmPersona rp = new frmPersona(this, false,true,false,"");
+        frmPersona rp = new frmPersona(this, false, true, false, "");
         rp.setVisible(true);
     }//GEN-LAST:event_jCheckRegistrarClienteActionPerformed
 
     private void jCheckListaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckListaClientesActionPerformed
         // TODO add your handling code here:
-        frmListaPersonas lp = new frmListaPersonas(this, false,true);
+        frmListaPersonas lp = new frmListaPersonas(this, false, true);
         lp.setVisible(true);
     }//GEN-LAST:event_jCheckListaClientesActionPerformed
 
-    private void jCheckBoxMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxMenuItem9ActionPerformed
+    private void jCheckCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckCerrarSesionActionPerformed
+      frmInicioSesion ini= new frmInicioSesion(this, rootPaneCheckingEnabled);
+     dispose();
+      ini.setVisible(true);// TODO add your handling code here:
+        
+    }//GEN-LAST:event_jCheckCerrarSesionActionPerformed
 
-    private void jCheckBoxMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxMenuItem10ActionPerformed
-
-    private void jCheckBoxMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem11ActionPerformed
+    private void jCheckListaHospitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckListaHospitaActionPerformed
         // TODO add your handling code here:
         frmListaHospitalización flh = new frmListaHospitalización(this, false);
         flh.setVisible(true);
-    }//GEN-LAST:event_jCheckBoxMenuItem11ActionPerformed
+    }//GEN-LAST:event_jCheckListaHospitaActionPerformed
 
     private void jCheckListaConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckListaConsultasActionPerformed
         // TODO add your handling code here:
-        
-       frmListaConsulta fc = new frmListaConsulta(this, false);
-       fc.setVisible(true);
-        
+
+        frmListaConsulta fc = new frmListaConsulta(this, false);
+        fc.setVisible(true);
+
     }//GEN-LAST:event_jCheckListaConsultasActionPerformed
 
     private void jCheckListaCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckListaCuentasActionPerformed
         // TODO add your handling code here:
-        frmListaPersonas lp = new frmListaPersonas(this, false,false);
+        frmListaPersonas lp = new frmListaPersonas(this, false, false);
         lp.setVisible(true);
     }//GEN-LAST:event_jCheckListaCuentasActionPerformed
 
-    private void jCheckBoxMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem13ActionPerformed
+    private void jCheckListaFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckListaFacturasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxMenuItem13ActionPerformed
+    }//GEN-LAST:event_jCheckListaFacturasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnHospitalizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHospitalizacionActionPerformed
         // TODO add your handling code here:
 //        frmHospitalizacion fh = new frmHospitalizacion(this, false, false, new Hospitalizacion());
 //        fh.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnHospitalizacionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnFacturacionActionPerformed
 
     private void jCheckRegistrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRegistrarCuentaActionPerformed
         // TODO add your handling code here:
-        frmPersona rp = new frmPersona(this, false,false,false,"");
+        frmPersona rp = new frmPersona(this, false, false, false, "");
         rp.setVisible(true);
     }//GEN-LAST:event_jCheckRegistrarCuentaActionPerformed
 
@@ -325,12 +405,22 @@ public class frmPrincipal extends javax.swing.JFrame {
         m.setVisible(true);
     }//GEN-LAST:event_jCheckMascotasActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
         // TODO add your handling code here:
         frmConsulta vc = new frmConsulta(this, false);
         vc.setVisible(true);
         //this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnConsultasActionPerformed
+
+    private void jMenuListaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuListaPrincipalActionPerformed
+       frmListaRecetas rec = new frmListaRecetas();
+       rec.setVisible(true);
+
+    }//GEN-LAST:event_jMenuListaPrincipalActionPerformed
+
+    private void jMenuSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalir1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuSalir1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,28 +459,32 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem10;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem11;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem13;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem9;
+    private javax.swing.JButton btnConsultas;
+    private javax.swing.JButton btnFacturacion;
+    private javax.swing.JButton btnHospitalizacion;
+    private javax.swing.JCheckBoxMenuItem jCheckCerrarSesion;
     private javax.swing.JCheckBoxMenuItem jCheckListaClientes;
     private javax.swing.JCheckBoxMenuItem jCheckListaConsultas;
     private javax.swing.JCheckBoxMenuItem jCheckListaCuentas;
+    private javax.swing.JCheckBoxMenuItem jCheckListaFacturas;
+    private javax.swing.JCheckBoxMenuItem jCheckListaHospita;
     private javax.swing.JCheckBoxMenuItem jCheckMascotas;
     private javax.swing.JCheckBoxMenuItem jCheckRegistrarCliente;
     private javax.swing.JCheckBoxMenuItem jCheckRegistrarCuenta;
+    private javax.swing.JCheckBoxMenuItem jCheckRegistrarServicios;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenuAdministrarCuentas;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jMenuClientes;
+    private javax.swing.JMenu jMenuFacturas;
+    private javax.swing.JMenuItem jMenuListaPrincipal;
+    private javax.swing.JMenu jMenuRecetas;
+    private javax.swing.JMenu jMenuSalir;
+    private javax.swing.JMenuItem jMenuSalir1;
+    private javax.swing.JMenu jMenuServicios;
     // End of variables declaration//GEN-END:variables
+
+    private frmListaRecetas frmListaRecetas(frmPrincipal aThis, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
