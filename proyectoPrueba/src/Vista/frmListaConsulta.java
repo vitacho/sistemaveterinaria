@@ -35,7 +35,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
     ConsultaDB conDB = new ConsultaDB();
     PersonaDB perDB = new PersonaDB();
      DefaultTableModel modelConsulta;
-     RecetaDB recetaDB=new  RecetaDB();
              
 
     /**
@@ -265,8 +264,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
         int seleccionar = TableConsultas.getSelectedRow();
         int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
         Consulta con = conDB.traeConsulta(idConsulta);
-//          serv = servicioDB.traeNombreServicio(txtNombre.getText());
-//con= conDB.traeConsulta(idConsulta);
+
         int selectRow = TableConsultas.getSelectedRow();
         try {
             if (selectRow == -1) {
