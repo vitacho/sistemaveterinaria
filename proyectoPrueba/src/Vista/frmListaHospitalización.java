@@ -6,9 +6,15 @@
 package Vista;
 
 //import Modelo.Hospitalizacion;
+import Controlador.HospitalizacionDB;
+import Controlador.PersonaDB;
+import Controlador.Validaciones;
+import Modelo.Hospitalizacion;
 import Modelo.Persona;
 //import static Vista.frmHospitalizacion.ch;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -18,45 +24,95 @@ import javax.swing.table.TableModel;
  * @author Personal
  */
 public class frmListaHospitalización extends javax.swing.JDialog {
-//
-//    ArrayList<Hospitalizacion> listaHosp;
-//    Hospitalizacion eleccion;
-//    ArrayList<Persona> listPersonas;
 
     /**
      * Creates new form frmListaHospitalización
      */
+    DefaultTableModel model;
+    Validaciones validar = new Validaciones();
+    HospitalizacionDB hosDB = new HospitalizacionDB();
+    PersonaDB perDB = new PersonaDB();
+    DefaultTableModel modelConsulta;
+
     public frmListaHospitalización(java.awt.Frame parent, boolean modal) {
-//        super(parent, modal);
-//        initComponents();
-//        listaHosp = ch.getListaConsulta();
-//        llenarTabla(listaHosp);
+        super(parent, modal);
+        initComponents();
+        iniciar();
     }
 
-    public void llenarTabla() {
-//ArrayList<Hospitalizacion> lista--va en constructor
-//        DefaultTableModel tabla = new DefaultTableModel(new String[]{"MASCOTA", "SEXO", "CEDULA", "DUEÑO", "VETERINARIO", "FECHA DE INGRESO", "ESTADO"}, lista.size());
-//        jTableHospi.setModel(tabla);
-//        TableModel datosTabla = jTableHospi.getModel();
-
-//        for (int i = 0; i < lista.size(); i++) {
-//            datosTabla.setValueAt(lista.get(i).getMascota().getNombre(), i, 0);
-//            datosTabla.setValueAt(lista.get(i).getMascota().getSexo(), i, 1);
-//            datosTabla.setValueAt(lista.get(i).getMascota().getPersona().getCedula(), i, 2);
-//            String nombres = lista.get(i).getMascota().getPersona().getNombre() + " " + lista.get(i).getMascota().getPersona().getApellido();
-//            datosTabla.setValueAt(nombres, i, 3);
-//            datosTabla.setValueAt(lista.get(i).getVereterinario(), i, 4);
-//            datosTabla.setValueAt(lista.get(i).getIngreso(), i, 5);
-//            datosTabla.setValueAt(lista.get(i).getEstado(), i, 6);
-//        }
+    private void iniciar() {
+        llenarTabla();
     }
 
-    private static boolean esNumerico(String cadena) {
-        try {
-            Integer.parseInt(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
+    private void llenarTabla() {
+        tableModel();
+        List<Hospitalizacion> lista = null;
+        lista = hosDB.cargarHospitalizacion(lista);
+        for (Hospitalizacion hosp : lista) {
+            model.addRow(new Object[]{hosp.getId(), hosp.getMascota().getNombre(),
+                hosp.getMascota().getPersona().getCedula(), hosp.getMascota().getPersona().getNombre(), hosp.getVereterinario(),
+                hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
+        }
+    }
+
+    private void tableModel() {
+
+        jTableHospi.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTableHospi.getColumnModel().getColumn(0).setMinWidth(0);
+        jTableHospi.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTableHospi.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTableHospi.getColumnModel().getColumn(2).setPreferredWidth(300);
+        jTableHospi.getColumnModel().getColumn(3).setPreferredWidth(300);
+        jTableHospi.getColumnModel().getColumn(4).setPreferredWidth(300);
+        jTableHospi.getColumnModel().getColumn(5).setPreferredWidth(300);
+        jTableHospi.getColumnModel().getColumn(6).setPreferredWidth(300);
+        jTableHospi.getColumnModel().getColumn(7).setPreferredWidth(300);
+
+        model = (DefaultTableModel) jTableHospi.getModel();
+        model.setNumRows(0);
+    }
+
+    private void buscarHosp(String cedula) {
+        if (validar.esNumerico(jTextFieldBuscar.getText()) == true) {
+            model.setNumRows(0);
+            List<Hospitalizacion> busca = new ArrayList<>();
+            List<Hospitalizacion> lista = null;
+            lista = hosDB.cargarHospitalizacion(lista);
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
+                    busca.add(lista.get(i));
+                }
+            }
+
+            if (busca.size() > 0) {
+                for (Hospitalizacion hosp : busca) {
+                    model.addRow(new Object[]{hosp.getId(), hosp.getMascota().getNombre(),
+                        hosp.getMascota().getPersona().getCedula(), hosp.getMascota().getPersona().getNombre(), hosp.getVereterinario(),
+                        hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                llenarTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+        }
+    }
+
+    private void finalizarHosp() {
+        if (jTableHospi.getSelectedRow() >= 0) {
+            java.util.Date fecha = new Date();
+            int seleccionar = jTableHospi.getSelectedRow();
+            int idHosp = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
+            Hospitalizacion hosp = hosDB.traeHospitalizacion(idHosp);
+            hosp.setEstado("De Alta");
+            hosp.setSalida(fecha);
+            hosDB.nuevaHospitalizacion(hosp);
+            llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una Hospitalizacion");
         }
     }
 
@@ -72,7 +128,7 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableHospi = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldBuscar = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -88,7 +144,7 @@ public class frmListaHospitalización extends javax.swing.JDialog {
 
             },
             new String [] {
-                "NOMBRE DE LA MASCOTA", "SEXO", "CEDULA DEL DUEÑO", "DUEÑO", "VETERINARIO", "FECHA DE INGRESO", "ESTADO"
+                "ID", "NOMBRE DE LA MASCOTA", "CEDULA DEL DUEÑO", "DUEÑO", "VETERINARIO", "ESTADO", "FECHA DE INGRESO", "FECHA DE SALIDA"
             }
         ));
         jScrollPane1.setViewportView(jTableHospi);
@@ -99,12 +155,12 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         jLabel3.setText("Número de Cédula:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, -1, 30));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 310, 30));
+        getContentPane().add(jTextFieldBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 310, 30));
 
         jButton3.setText("Buscar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -147,66 +203,40 @@ public class frmListaHospitalización extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-//        if (esNumerico(jTextField1.getText()) == true) {
-//            int cont = 0;
-//            for (int i = 0; i < listPersonas.size(); i++) {
-//                if (listPersonas.get(i).getCedula().equals(jTextField1.getText())) {
-//                    cont++;
-//                }
-//            }
-//            if (cont != 0) {
-//                ArrayList<Hospitalizacion> listaCon;
-//                listaCon = ch.buscarConsulta(jTextField1.getText());
-//                llenarTabla(listaCon);
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Persona no encontrada");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
-//        }
-
+        // TODO add your handling code here:                                                      
+        if (jTextFieldBuscar.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "LLENAR CAMPO REQUERIDO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            buscarHosp(jTextFieldBuscar.getText());
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-//        if (jTableHospi.getSelectedRow() >= 0) {
-//            DefaultTableModel table = (DefaultTableModel) jTableHospi.getModel();
-//            String nombreM = (String) table.getValueAt(jTableHospi.getSelectedRow(), 0);
-//            String cedula = (String) table.getValueAt(jTableHospi.getSelectedRow(), 2);
-//            for (int i = 0; i < listaHosp.size(); i++) {
-//                if (listaHosp.get(i).getMascota().getNombre().equals(nombreM)
-//                        && listaHosp.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
-//                    table.setValueAt("Dado de Alta", jTableHospi.getSelectedRow(), 6);
-//                    listaHosp.get(i).setEstado("Dado de Alta");
-//                    JOptionPane.showMessageDialog(null, "Hospitalizacion Finalizada");
-//                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Seleccione una fila");
-//        }
+        int op = JOptionPane.showConfirmDialog(null, "Esta seguro que desea Finalizar la Hopitalizacion", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
+        if (op == 0) {
+            finalizarHosp();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-//        DefaultTableModel table = (DefaultTableModel) jTableHospi.getModel();
-//        String nombreM = (String) table.getValueAt(jTableHospi.getSelectedRow(), 0);
-//        String cedula = (String) table.getValueAt(jTableHospi.getSelectedRow(), 2);
-//        for (int i = 0; i < listaHosp.size(); i++) {
-//            if (listaHosp.get(i).getMascota().getNombre().equals(nombreM)
-//                    && listaHosp.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
-//                eleccion = listaHosp.get(i);
-//            }
-//        }
-//        frmHospitalizacion fh = new frmHospitalizacion(new javax.swing.JFrame(), false, true, eleccion);
-//        fh.setVisible(true);
-
+        if (jTableHospi.getSelectedRow() >= 0) {
+            int seleccionar = jTableHospi.getSelectedRow();
+            int idHosp = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
+            Hospitalizacion hosp = hosDB.traeHospitalizacion(idHosp);
+            frmHospitalizacion frmHos = new frmHospitalizacion(new javax.swing.JFrame(), false, true, hosp);
+            this.setVisible(false);
+            frmHos.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una Hospitalizacion");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -262,6 +292,6 @@ public class frmListaHospitalización extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableHospi;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldBuscar;
     // End of variables declaration//GEN-END:variables
 }

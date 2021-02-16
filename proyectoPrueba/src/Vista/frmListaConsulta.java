@@ -33,7 +33,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
     Validaciones validar = new Validaciones();
     ConsultaDB conDB = new ConsultaDB();
     PersonaDB perDB = new PersonaDB();
-     DefaultTableModel modelConsulta;
+    DefaultTableModel modelConsulta;
 
     /**
      * Creates new form frmListaConsulta
@@ -245,7 +245,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
         } else {
             buscarConsulta(jTextFieldBuscar.getText());
         }
-
     }//GEN-LAST:event_jButtonbuscarConsultaActionPerformed
 
     private void TableConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableConsultasMouseClicked
@@ -260,10 +259,10 @@ public class frmListaConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_TableConsultasMouseClicked
 
     private void btnRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecetarActionPerformed
-         int seleccionar = TableConsultas.getSelectedRow();
+        int seleccionar = TableConsultas.getSelectedRow();
         int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
         Consulta con = conDB.traeConsulta(idConsulta);
-        
+
         int selectRow = TableConsultas.getSelectedRow();
         try {
             if (selectRow == -1) {
@@ -277,7 +276,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 frmReceta rec = new frmReceta();
                 frmReceta.txtMascota.setText(mascota);
                 frmReceta.txtCi.setText(ci);
-                frmReceta.txtCliente.setText(nombre); 
+                frmReceta.txtCliente.setText(nombre);
                 frmReceta.txtIDConsulta.setText(id);
 //                frmListaConsulta lc = new frmListaConsulta(rec, rootPaneCheckingEnabled);
 //                lc.setVisible(false);
@@ -287,7 +286,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR LA CITA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnRecetarActionPerformed
 
     /**

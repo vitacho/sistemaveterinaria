@@ -8,7 +8,12 @@ package Vista;
 //import Controlador.controladorConsulta;
 //import Controlador.controladorHospitalizacion;
 //import Controlador.MascotaDB;
+import Controlador.HospitalizacionDB;
+import Controlador.PersonaDB;
+import Controlador.Validaciones;
 import Modelo.Cuenta;
+import Modelo.Hospitalizacion;
+import Modelo.Mascota;
 //import Modelo.Hospitalizacion;
 //import Modelo.Mascota;
 import Modelo.Persona;
@@ -23,40 +28,114 @@ import javax.swing.JOptionPane;
  */
 public class frmHospitalizacion extends javax.swing.JDialog {
 
-//    MascotaDB listaMascotas;
-//    ArrayList<Persona> listPersonas;
-//    ArrayList<Mascota> lista = new ArrayList<>();
-//    Hospitalizacion datosHos;
-    int op;
-    boolean porLista;
-    int cont = 0;
-
-//    public static controladorHospitalizacion ch = new controladorHospitalizacion();
-//
-//    Mascota mascota = new Mascota();
-
     /**
      * Creates new form frmDetalleListaHospitalizacion
      */
-    public frmHospitalizacion(java.awt.Frame parent, boolean modal, boolean vrf) {
-//        , Hospitalizacion eleccion
+    HospitalizacionDB hosDB = new HospitalizacionDB();
+    Validaciones validar = new Validaciones();
+    PersonaDB perDB = new PersonaDB();
+    Mascota mas = null;
+    Hospitalizacion veriHosp;
+    boolean veri;
+
+    public frmHospitalizacion(java.awt.Frame parent, boolean modal, boolean vrf, Hospitalizacion hosp) {
         super(parent, modal);
         initComponents();
-        jTextFieldCI.setEditable(false);
-        jTextFieldNombreM.setEditable(false);
-        jTextFieldSexM.setEditable(false);
-        porLista = vrf;
-//        datosHos = eleccion;
-//        tipodeEntrada();
-
+        veri = vrf;
+        veriHosp = hosp;
+        iniciar();
     }
 
-    private static boolean esNumerico(String cadena) {
-        try {
-            Integer.parseInt(cadena);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
+    private void iniciar() {
+        jTextFieldNombreM.setEditable(false);
+        jTextFieldCI.setEditable(false);
+        jTextFieldSexM.setEditable(false);
+        if (veri == true) {
+            jLabelTitulo.setText("VER HOSPITALIZACIÓN");
+            jButtonGuardar.setVisible(false);
+            jLabelDue.setVisible(false);
+            jTextFieldCedu.setVisible(false);
+
+            jTextFieldCI.setText(veriHosp.getMascota().getPersona().getCedula());
+            jTextFieldNombreM.setText(veriHosp.getMascota().getNombre());
+            jTextFieldSexM.setText(veriHosp.getMascota().getSexo());
+
+            jButtonBuscar.setVisible(false);
+            jTextFieldVeterinario.setEditable(false);
+            jTextAreaMotivo.setEditable(false);
+            jComboBoxSangrado.setEnabled(false);
+            jComboBoxHincha.setEnabled(false);
+            jComboBoxintox.setEnabled(false);
+            jComboBoxRespira.setEnabled(false);
+            jComboBoxConvulcion.setEnabled(false);
+            jTextFieldTem.setEditable(false);
+            jTextAreaDiagnos.setEditable(false);
+            jTextFieldVeterinario.setText(veriHosp.getVereterinario());
+            jTextAreaMotivo.setText(veriHosp.getMotivo());
+            jComboBoxSangrado.setSelectedItem(veriHosp.getSangrado());
+            jComboBoxHincha.setSelectedItem(veriHosp.getHinchazon());
+            jComboBoxintox.setSelectedItem(veriHosp.getIntoxicacion());
+            jComboBoxRespira.setSelectedItem(veriHosp.getProbleResp());
+            jComboBoxConvulcion.setSelectedItem(veriHosp.getConbulcion());
+            jTextFieldTem.setText(Integer.toString(veriHosp.getTemp()));
+            jTextAreaDiagnos.setText(veriHosp.getDiagnostico());
+            jTextFieldVeterinario.setText(veriHosp.getVereterinario());
+        }
+    }
+
+    private void buscarCliente(String cedula) {
+        if (validar.esNumerico(cedula) == true) {
+
+            mas = validar.buscarMascota(cedula, perDB);
+
+            jTextFieldCI.setText(mas.getPersona().getCedula());
+            jTextFieldNombreM.setText(mas.getNombre());
+            jTextFieldSexM.setText(mas.getSexo());
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+        }
+    }
+
+    private void registrarHosp() {
+        if (!jTextFieldCI.getText().equals("")) {
+            if (!jTextFieldVeterinario.getText().equals("")) {
+                if (validar.esNumerico(jTextFieldCedu.getText()) == true && validar.esNumerico(jTextFieldTem.getText()) == true) {
+                    if (!jTextAreaMotivo.getText().equals("") && !jTextFieldTem.getText().equals("") && !jTextAreaDiagnos.getText().equals("")) {
+                        if (!jTextFieldCI.getText().equals("") || !jTextFieldNombreM.getText().equals("")) {
+                            java.util.Date fecha = new Date();
+                            Hospitalizacion hos = new Hospitalizacion();
+                            hos.setMascota(mas);
+                            hos.setVereterinario(jTextFieldVeterinario.getText());
+                            hos.setIngreso(fecha);
+                            hos.setMotivo(jTextAreaMotivo.getText());
+                            hos.setTemp(Integer.parseInt(jTextFieldTem.getText()));
+                            hos.setDiagnostico(jTextAreaDiagnos.getText());
+                            hos.setSangrado(jComboBoxSangrado.getSelectedItem().toString());
+                            hos.setHinchazon(jComboBoxHincha.getSelectedItem().toString());
+                            hos.setIntoxicacion(jComboBoxintox.getSelectedItem().toString());
+                            hos.setProbleResp(jComboBoxRespira.getSelectedItem().toString());
+                            hos.setConbulcion(jComboBoxConvulcion.getSelectedItem().toString());
+                            hos.setEstado("Hospitalizado");
+
+                            hosDB.nuevaHospitalizacion(hos);
+
+                            JOptionPane.showMessageDialog(null, "Hospitalizacion Guardada");
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Falta el cliente o mascota");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Llene todos los datos");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El nombre el veterinario es obligatorio");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Es nesesario un cliente");
         }
     }
 
@@ -75,44 +154,20 @@ public class frmHospitalizacion extends javax.swing.JDialog {
 
     }
 
-    private void tipodeEntrada() {
-//        if (porLista == true) {
-//            bloquearCampos();
-//            jLabelTitulo.setText("VER HOSPITALIZACION");
-//            llenarDatos(datosHos);
-//        }
-    }
-
-//    private void llenarDatos(Hospitalizacion datos) {
-////        jTextFieldNombreM.setText(datos.getMascota().getNombre());
-////        jTextFieldCI.setText(datos.getMascota().getPersona().getCedula());
-////        jTextFieldSexM.setText(datos.getMascota().getSexo());
-////        jTextFieldVeterinario.setText(datos.getVereterinario());
-////        jTextAreaMotivo.setText(datos.getMotivo());
-////        jComboBoxSangrado.setSelectedItem(datos.getSangrado());
-////        jComboBoxHincha.setSelectedItem(datos.getInchazon());
-////        jComboBoxintox.setSelectedItem(datos.getIntoxicacion());
-////        jComboBoxRespira.setSelectedItem(datos.getProbleResp());
-////        jComboBoxConvulcion.setSelectedItem(datos.getConbulcion());
-////        jTextFieldTem.setText(Integer.toString(datos.getTemp()));
-////        jTextAreaDiagnos.setText(datos.getDiagnostico());
-//    }
-
-    private void limpiarDatos() {
-        jTextFieldVeterinario.setText("");
-        jTextAreaMotivo.setText("");
-        jTextFieldTem.setText("");
-        jTextAreaDiagnos.setText("");
-    }
-
-    private void buscarPersona() {
-//        for (int i = 0; i < listPersonas.size(); i++) {
-//            if (listPersonas.get(i).getCedula().equals(jTextFieldCedu.getText())) {
-//                cont++;
-//            }
-//        }
-    }
-
+    /*private void llenarDatos() {
+        jTextFieldNombreM.setText(datos.getMascota().getNombre());
+        jTextFieldCI.setText(datos.getMascota().getPersona().getCedula());
+        jTextFieldSexM.setText(datos.getMascota().getSexo());
+        jTextFieldVeterinario.setText(datos.getVereterinario());
+        jTextAreaMotivo.setText(datos.getMotivo());
+        jComboBoxSangrado.setSelectedItem(datos.getSangrado());
+        jComboBoxHincha.setSelectedItem(datos.getInchazon());
+        jComboBoxintox.setSelectedItem(datos.getIntoxicacion());
+        jComboBoxRespira.setSelectedItem(datos.getProbleResp());
+        jComboBoxConvulcion.setSelectedItem(datos.getConbulcion());
+        jTextFieldTem.setText(Integer.toString(datos.getTemp()));
+        jTextAreaDiagnos.setText(datos.getDiagnostico());
+    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,13 +201,13 @@ public class frmHospitalizacion extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDiagnos = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabelDue = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jTextFieldVeterinario = new javax.swing.JTextField();
         jLabelTitulo = new javax.swing.JLabel();
         jTextFieldNombreM = new javax.swing.JTextField();
         jTextFieldCedu = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jButtonGuardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
@@ -283,9 +338,9 @@ public class frmHospitalizacion extends javax.swing.JDialog {
         jLabel18.setText("Nombre de la Mascota:");
         getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel19.setText("Dueño de la Mascota:");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 117, 140, 20));
+        jLabelDue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelDue.setText("Dueño de la Mascota:");
+        getContentPane().add(jLabelDue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 117, 140, 20));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("Veterinario:");
@@ -304,14 +359,14 @@ public class frmHospitalizacion extends javax.swing.JDialog {
         getContentPane().add(jTextFieldNombreM, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 260, 30));
         getContentPane().add(jTextFieldCedu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 260, 30));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Guardar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGuardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 720, 90, 30));
+        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 720, 90, 30));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Atras");
@@ -350,89 +405,33 @@ public class frmHospitalizacion extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        if (veri == false) {
+            frmListaHospitalización frmlis = new frmListaHospitalización(new javax.swing.JFrame(), false);
+            this.setVisible(false);
+            frmlis.setVisible(true);
+        }else{
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-//        if (listaMascotas == null) {
-//            listaMascotas = new MascotaDB();
-//            listaMascotas.crearLista();
-//        }
-//        listPersonas = new ArrayList<>();
-//        Rol r = new Rol("Administrador");
-//        Cuenta c = new Cuenta("CTA1", true);
-//        Persona p1 = new Persona("PSN01", "CARLOS", "ORDOÑES", "GMAIL", "01", "2572220", "MEXICO", r, c);
-//        Persona p2 = new Persona("PSN01", "LUIS", "PEÑA", "GMAIL", "02", "2572220", "MEXICO", r, c);
-//        listPersonas.add(p1);
-//        listPersonas.add(p2);
-//        listaMascotas.getListaMascota().clear();
-//        listaMascotas.agregarMacota("m002", "lucy", 10, "perro", "doverman", "Mediano", "Macho", "Gris", p2);
-//        listaMascotas.agregarMacota("m002", "per", 10, "gato", "doverman", "Grande", "Hembra", "Gris", p2);
-//        listaMascotas.agregarMacota("m002", "lili", 10, "perro", "doverman", "Pequeño", "Macho", "Gris", p2);
-//        listaMascotas.agregarMacota("m002", "sesi", 10, "gato", "doverman", "Mediano", "Hembra", "Gris", p1);
-//        listaMascotas.agregarMacota("m002", "corvi", 10, "perro", "doverman", "Mediano", "Macho", "Gris", p1);
-//
-//        if (esNumerico(jTextFieldCedu.getText()) == true) {
-//            buscarPersona();
-//            if (cont != 0) {//si se encotro la cedula
-//                jTextFieldCI.setText(jTextFieldCedu.getText());
-//                lista = listaMascotas.buscarMascotas(jTextFieldCedu.getText());
-//                String pre = "";
-//                for (int i = 0; i < lista.size(); i++) {
-//                    pre += (i + 1) + ". " + "Nombre: " + lista.get(i).getNombre() + "\n"
-//                            + "Raza: " + lista.get(i).getRaza() + "\n"
-//                            + "Sexo: " + lista.get(i).getSexo() + "\n\n";
-//                }
-//                op = Integer.parseInt(JOptionPane.showInputDialog(null, "****Mascotas****\n" + pre));
-//                try {
-//                    mascota = lista.get(op - 1);
-//                    jTextFieldNombreM.setText(mascota.getNombre());
-//                    jTextFieldSexM.setText(mascota.getSexo());
-//
-//                } catch (Exception ex) {
-//                    JOptionPane.showMessageDialog(null, "Opcion no valida");
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Persona no encontrada");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
-//        }
+
+        buscarCliente(jTextFieldCedu.getText());
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jTextFieldVeterinarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldVeterinarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldVeterinarioActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-//        if (!jTextFieldCedu.getText().equals("")) {
-//            if (!jTextFieldVeterinario.getText().equals("")) {
-//                if (!jTextAreaMotivo.getText().equals("") && !jTextAreaMotivo.getText().equals("") && !jTextFieldTem.getText().equals("")
-//                        && !jTextAreaDiagnos.getText().equals("")) {
-//                    if (esNumerico(jTextFieldTem.getText()) == true) {
-//                        java.util.Date fecha = new Date();
-//                        ch.registrarHospitalizacion(0, 0, jTextAreaDiagnos.getText(), jTextAreaMotivo.getText(),
-//                                Integer.parseInt(jTextFieldTem.getText()), jComboBoxSangrado.getSelectedItem().toString(),
-//                                jComboBoxConvulcion.getSelectedItem().toString(), jComboBoxintox.getSelectedItem().toString(),
-//                                jComboBoxRespira.getSelectedItem().toString(), jComboBoxHincha.getSelectedItem().toString(), fecha,
-//                                null, jTextFieldVeterinario.getText(), "Hospitalizado", mascota);
-//                        JOptionPane.showMessageDialog(null, "Hospitalizacion Guardada");
-//                        limpiarDatos();
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Ingrese una temperatura valida");
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Llene todos los datos");
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "El nombre el veterinario es obligatorio");
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Es nesesario escribir un cliente");
-//        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Esta seguro que desea guardar", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
+        if (op == 0) {
+            registrarHosp();
+        }
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jComboBoxintoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxintoxActionPerformed
         // TODO add your handling code here:
@@ -475,7 +474,7 @@ public class frmHospitalizacion extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                frmHospitalizacion dialog = new frmHospitalizacion(new javax.swing.JFrame(), true, false );
+                frmHospitalizacion dialog = new frmHospitalizacion(new javax.swing.JFrame(), true, false, new Hospitalizacion());
                 //new Hospitalizacion()
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -490,8 +489,8 @@ public class frmHospitalizacion extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JComboBox<String> jComboBoxConvulcion;
     private javax.swing.JComboBox<String> jComboBoxHincha;
     private javax.swing.JComboBox<String> jComboBoxRespira;
@@ -507,12 +506,12 @@ public class frmHospitalizacion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelDue;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

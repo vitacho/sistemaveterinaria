@@ -49,25 +49,11 @@ public class frmConsulta extends javax.swing.JDialog {
     }
 
     private void buscarCliente(String cedula) {
-        if (validar.esNumerico(jTextFieldDueno.getText()) == true) {
-            List<Persona> listaP = null;
-            List<Mascota> listaM = null;
-            String presentar = "";
+        if (validar.esNumerico(cedula) == true) {
 
-            cedula = jTextFieldDueno.getText();
-            listaP = perDB.buscarPersonaCed(cedula);
-            listaM = listaP.get(0).getMascota();
-
-            for (int i = 0; i < listaM.size(); i++) {
-                presentar += i + 1 + " Nombre: " + listaM.get(i).getNombre() + "\n"
-                        + " Raza: " + listaM.get(i).getRaza() + "\n"
-                        + " Sexo: " + listaM.get(i).getSexo() + "\n\n";
-            }
-
-            int op = Integer.parseInt(JOptionPane.showInputDialog("Elija una mascota:\n" + presentar));
-
-            mas = listaM.get(op - 1);
-
+            mas = validar.buscarMascota(cedula, perDB);
+            
+            jTextFieldCI.setText(mas.getPersona().getCedula());
             jTextFieldNombreMascota.setText(mas.getNombre());
             jTextFieldSexMas.setText(mas.getSexo());
 
@@ -77,10 +63,10 @@ public class frmConsulta extends javax.swing.JDialog {
     }
 
     private void registrarConsulta() {
-        if (!jTextFieldDueno.getText().equals("")) {
+        if (!jTextFieldCI.getText().equals("")) {
             if (!jTextFieldVeterinario.getText().equals("")) {
-                if (validar.esNumerico(jTextFieldDueno.getText()) == true || validar.esNumerico(jTextFieldPresion.getText()) == true
-                        || validar.esNumerico(jTextFieldTemp.getText()) == true || validar.esNumerico(jTextFieldPeso.getText()) == true) {
+                if (validar.esNumerico(jTextFieldDueno.getText()) == true && validar.esNumerico(jTextFieldPresion.getText()) == true
+                        && validar.esNumerico(jTextFieldTemp.getText()) == true && validar.esNumerico(jTextFieldPeso.getText()) == true) {
                     if (!jTextAreaMotivo.getText().equals("") && !jTextFieldPresion.getText().equals("") && !jTextFieldTemp.getText().equals("")
                             && !jTextFieldPeso.getText().equals("") && !jTextAreaDiag.getText().equals("")) {
                         if (!jTextFieldCI.getText().equals("") || !jTextFieldNombreMascota.getText().equals("")) {
@@ -118,7 +104,7 @@ public class frmConsulta extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "El nombre el veterinario es obligatorio");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Es nesesario escribir un cliente");
+            JOptionPane.showMessageDialog(null, "Es nesesario un cliente");
         }
     }
 
