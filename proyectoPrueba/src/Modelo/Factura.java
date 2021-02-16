@@ -30,6 +30,9 @@ public class Factura implements Serializable {
     private Date fecha;
     private double iva;
     private Persona persona;
+    private double total;
+    private double descuento;
+    private double subtotal;
     private List<Detallefactura> detallefactura = new ArrayList<Detallefactura>();
 
   
@@ -76,6 +79,31 @@ public class Factura implements Serializable {
         this.persona = persona;
     }
 
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+    
+    
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
    public List<Detallefactura> getDetallefactura() {
         return detallefactura;

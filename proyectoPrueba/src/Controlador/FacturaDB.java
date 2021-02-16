@@ -17,26 +17,30 @@ import utilidades.HibernateUtil;
  * @author DELL
  */
 public class FacturaDB {
+
     private Session st;
-    
+
     public FacturaDB() {
         sessionHibernate();
     }
-    public void sessionHibernate (){
-        st =HibernateUtil.getSessionFactory().openSession();
+
+    public void sessionHibernate() {
+        st = HibernateUtil.getSessionFactory().openSession();
     }
-    public void nuevaFactura(Factura factura){
+
+    public void nuevaFactura(Factura factura) {
         try {
             st.beginTransaction();
             st.save(factura);
             st.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Eror a guadra factura"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Eror a guadra factura" + e.getMessage());
         }
-    
+
     }
+
     //traemos el ultmo id de la factura ingresada en la base
-   public Factura traerFactura(int idFactura) {
+    public Factura traerFactura(int idFactura) {
         Factura fac = null;
         try {
             fac = (Factura) st.load(Factura.class, idFactura);
@@ -48,29 +52,30 @@ public class FacturaDB {
 
     public List<Factura> caragarFacturas(List<Factura> lis) {
         try {
-            lis = (List<Factura>) st.createQuery("From Factura").list();
+            lis = (List<Factura>) st.createQuery("From Factura order by id_factura").list();
         } catch (Exception e) {
         }
         return lis;
     }
-    public Factura traenumfact(String nrofact){
+
+    public Factura traenumfact(String nrofact) {
         Factura fact = null;
-        
+
         try {
-            Query query= st.createQuery("from Factura fact Where fact.nro_factura = ?");
+            Query query = st.createQuery("from Factura fact Where fact.nro_factura = ?");
             query.setParameter(0, nrofact); // admin, secretaria, veterinario, cliente
-            
+
             try {
-                fact=(Factura)query.uniqueResult();
-                
+                fact = (Factura) query.uniqueResult();
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error al traer el rol"+e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al traer el factura" + e.getMessage());
             }
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al traer el rol"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al traer el factura" + e.getMessage());
         }
-        
+
         return fact;
     }
 }
