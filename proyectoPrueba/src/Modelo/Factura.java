@@ -26,7 +26,7 @@ import javax.persistence.OneToMany;
 public class Factura implements Serializable {
 
     private int id_factura;
-    private int nro_factura;
+    private String nro_factura;
     private Date fecha;
     private double iva;
     private Persona persona;
@@ -43,11 +43,11 @@ public class Factura implements Serializable {
         this.id_factura = id_factura;
     }
 
-    public int getNro_factura() {
+    public String getNro_factura() {
         return nro_factura;
     }
 
-    public void setNro_factura(int nro_factura) {
+    public void setNro_factura(String nro_factura) {
         this.nro_factura = nro_factura;
     }
 

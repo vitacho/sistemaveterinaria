@@ -31,6 +31,7 @@ public class Persona implements Serializable {
     
     private Rol rol;
     private List<Mascota> mascota = new ArrayList<Mascota>();
+     private List<Factura> factura = new ArrayList<Factura>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -110,6 +111,13 @@ public class Persona implements Serializable {
         this.mascota = mascota;
     }
     
-    
+     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    public List<Factura> getFactura() {
+        return factura;
+    }
+
+    public void setFactura(List<Factura> factura) {
+        this.factura = factura;
+    }
     
 }
