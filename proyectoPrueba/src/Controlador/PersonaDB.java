@@ -135,6 +135,20 @@ public class PersonaDB {
         return p;
     }
     
-    
+     public  List<Persona> traerPorNombre(String nombre) {
+        List<Persona> p = new  ArrayList<>();
+        List<Persona> list = new ArrayList<>();
+        try {
+            list = (List<Persona>) st.createQuery("From Persona where nombre = '"+nombre+"'").list();
+            for (Persona persona : list) {
+                if(persona.getNombre().equalsIgnoreCase(nombre)){
+                    p.add(persona);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer persona con nombre " + e.getMessage());
+        }
+        return p;
+    }
     
 }

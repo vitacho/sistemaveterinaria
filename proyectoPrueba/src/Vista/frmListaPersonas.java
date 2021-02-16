@@ -78,7 +78,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
 
         jLTitulo.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLTitulo.setText("LISTA DE PERSONAS");
-        getContentPane().add(jLTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 380, -1));
+        getContentPane().add(jLTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 380, -1));
 
         jTablePersonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,7 +108,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
                 jTextIngresarBusquedaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextIngresarBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 310, 30));
+        getContentPane().add(jTextIngresarBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 310, 30));
 
         jButtonBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonBuscar.setText("Buscar");
@@ -117,11 +117,11 @@ public class frmListaPersonas extends javax.swing.JDialog {
                 jButtonBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, 90, 30));
+        getContentPane().add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 100, 90, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Número de Cédula");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, 30));
+        jLabel4.setText("Nombre");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, 30));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         fondo.setText("jLabel1");
@@ -153,10 +153,10 @@ public class frmListaPersonas extends javax.swing.JDialog {
     public void buscarPersona(){
         if(!jTextIngresarBusqueda.getText().equals("")){
             if(esCliente==true){
-                List<Persona> lista = personaDB.buscarPersonaCed(jTextIngresarBusqueda.getText());
+                List<Persona> lista = personaDB.traerPorNombre(jTextIngresarBusqueda.getText());
                 boolean encontrado=false;
                 for (Persona persona : lista) {
-                    if(persona.getCedula().equals(jTextIngresarBusqueda.getText()))encontrado=true;
+                    if(persona.getNombre().equalsIgnoreCase(jTextIngresarBusqueda.getText()))encontrado=true;
                 }
                 if(encontrado==true){
                     llenarTabla(lista);
@@ -164,10 +164,10 @@ public class frmListaPersonas extends javax.swing.JDialog {
                      JOptionPane.showMessageDialog(null, "Cliente no encontrado");
                 }
             }else{
-                List<Persona> lista = personaDB.buscarPersonaCed(jTextIngresarBusqueda.getText());
+                List<Persona> lista = personaDB.traerPorNombre(jTextIngresarBusqueda.getText());
                 boolean encontrado=false;
                 for (Persona persona : lista) {
-                    if(persona.getCedula().equals(jTextIngresarBusqueda.getText())
+                    if(persona.getNombre().equalsIgnoreCase(jTextIngresarBusqueda.getText())
                        &&!persona.getRol().getNombre_rol().equals("Cliente")){
                         encontrado=true;
                     }
@@ -219,7 +219,8 @@ public class frmListaPersonas extends javax.swing.JDialog {
     }
     
     public void inicializar(){
-        jTextIngresarBusqueda.setToolTipText("Ingrese la cedula de la persona");
+        jTextIngresarBusqueda.setToolTipText("Ingrese el nombre de la persona");
+        jButtonModificar.setToolTipText("Seleccione la persona de la tabla");
         if(esCliente==true){
              llenarTabla(personaDB.listarPersonas());
              jLTitulo.setText("LISTA CLIENTES");
