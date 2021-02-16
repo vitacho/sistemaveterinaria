@@ -11,6 +11,7 @@ package Vista;
 //import Modelo.Mascota;
 import Controlador.ConsultaDB;
 import Controlador.PersonaDB;
+import Controlador.RecetaDB;
 import Controlador.Validaciones;
 import Modelo.Consulta;
 import Modelo.Mascota;
@@ -34,6 +35,8 @@ public class frmListaConsulta extends javax.swing.JDialog {
     ConsultaDB conDB = new ConsultaDB();
     PersonaDB perDB = new PersonaDB();
      DefaultTableModel modelConsulta;
+     RecetaDB recetaDB=new  RecetaDB();
+             
 
     /**
      * Creates new form frmListaConsulta
@@ -263,12 +266,14 @@ public class frmListaConsulta extends javax.swing.JDialog {
          int seleccionar = TableConsultas.getSelectedRow();
         int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
         Consulta con = conDB.traeConsulta(idConsulta);
-        
+//          serv = servicioDB.traeNombreServicio(txtNombre.getText());
+//con= conDB.traeConsulta(idConsulta);
         int selectRow = TableConsultas.getSelectedRow();
         try {
             if (selectRow == -1) {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA DE LA TABLA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
             } else {
+                
                 modelConsulta = (DefaultTableModel) TableConsultas.getModel();
                 String id = TableConsultas.getValueAt(selectRow, 0).toString();
                 String mascota = TableConsultas.getValueAt(selectRow, 1).toString();
@@ -279,8 +284,11 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 frmReceta.txtCi.setText(ci);
                 frmReceta.txtCliente.setText(nombre); 
                 frmReceta.txtIDConsulta.setText(id);
-//                frmListaConsulta lc = new frmListaConsulta(rec, rootPaneCheckingEnabled);
-//                lc.setVisible(false);
+                
+//                recetaDB.nuevaReceta(rec);
+                
+                frmListaConsulta lc = new frmListaConsulta(rec, rootPaneCheckingEnabled);
+                lc.setVisible(false);
                 rec.setVisible(true);
                 dispose();
             }

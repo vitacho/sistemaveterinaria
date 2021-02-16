@@ -80,7 +80,7 @@ public class ServicioDB {
        public Servicio traeNombreServicio (String nombre) {
         Servicio ser = null; 
         try {
-            Query query = st.createQuery("from servicio se Where se.nombre_serv = ?");
+            Query query = st.createQuery("from Servicio se Where se.nombre_serv = ?");
             query.setParameter(0, nombre);
             try {
                 ser = (Servicio) query.uniqueResult();
@@ -103,6 +103,14 @@ public class ServicioDB {
         }
         
         return serv;
+    }
+     public List<Servicio> buscarServicio(String nombre, List<Servicio> lis) {
+        try {
+            lis = (List<Servicio>) st.createQuery("From Servicio where nombre_serv LIKE '%" + nombre + "%'").list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS DATOS DEL SERVICIO "+e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+        return lis;
     }
 
 

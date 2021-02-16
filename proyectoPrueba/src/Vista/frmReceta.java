@@ -6,10 +6,14 @@
 package Vista;
 
 //import Controlador.RecetaDB;
+import Controlador.ConsultaDB;
+import Controlador.PersonaDB;
 import Controlador.RecetaDB;
 import Controlador.Validaciones;
 import Modelo.Consulta;
+import Modelo.Mascota;
 import Modelo.Receta;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,24 +28,42 @@ public class frmReceta extends javax.swing.JFrame {
     /**
      * Creates new form frmReceta
      */
-    
     RecetaDB recetaDB = new RecetaDB();
+    ConsultaDB consultaDB = new ConsultaDB();
     Consulta mas = null;
-    
-   DefaultTableModel model1 = new DefaultTableModel();
-    DefaultTableModel model2 = new DefaultTableModel();
+    Consulta c = new Consulta();
+    private Consulta consultita;
+//
+    DefaultTableModel model;
+    Validaciones validar = new Validaciones();
+    ConsultaDB conDB = new ConsultaDB();
+    PersonaDB perDB = new PersonaDB();
     DefaultTableModel modelConsulta;
-    Validaciones val = new Validaciones();
-    public frmReceta() {
-        initComponents();  
-//        txtNro.setText(val.ObtenerCodString(obtenerCodigoReceta()));
-        inicio();
-        
+
+    public Consulta getConsultita() {
+        return consultita;
     }
-        private void inicio() {
+
+    public void setConsultita(Consulta consultita) {
+        this.consultita = consultita;
+    }
+
+    DefaultTableModel model1 = new DefaultTableModel();
+    DefaultTableModel model2 = new DefaultTableModel();
+    //DefaultTableModel modelConsulta;
+    Validaciones val = new Validaciones();
+
+    public frmReceta() {
+        initComponents();
+        txtNro.setText(val.ObtenerCodString(obtenerCodigoReceta()));
+        inicio();
+
+    }
+
+    private void inicio() {
         //TableModelConsulta();      
 //        btnNuevo.setEnabled(true);
-        btnImprimir.setText("Imprimir");       
+        btnImprimir.setText("Imprimir");
         btnCancelar.setEnabled(true);
 
 //        Activa_DesactivaCampos(false);
@@ -57,6 +79,23 @@ public class frmReceta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog2 = new javax.swing.JDialog();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TableConsultas = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        jTextFieldBuscar = new javax.swing.JTextField();
+        jButtonbuscarConsulta = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextAreaMotivo = new javax.swing.JTextArea();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextAreaDiagnostico = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        btnRecetar = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -80,6 +119,99 @@ public class frmReceta extends javax.swing.JFrame {
         btnBuscarConsulta = new javax.swing.JButton();
         txtIDConsulta = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+
+        jDialog2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        TableConsultas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "MASCOTA", "PRESIÓN", "TEMPERATURA", "PESO", "CÉDULA", "DUEÑO", "VETERINARIO", "FECHA"
+            }
+        ));
+        TableConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableConsultasMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(TableConsultas);
+
+        jDialog2.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 1060, 220));
+
+        jLabel10.setFont(new java.awt.Font("Constantia", 1, 36)); // NOI18N
+        jLabel10.setText("LISTA DE CONSULTAS ");
+        jDialog2.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
+
+        jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscarActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(jTextFieldBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 310, 30));
+
+        jButtonbuscarConsulta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonbuscarConsulta.setText("Buscar por CI");
+        jButtonbuscarConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonbuscarConsultaActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(jButtonbuscarConsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 90, -1, 30));
+
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Motivo de la consulta");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jTextAreaMotivo.setColumns(20);
+        jTextAreaMotivo.setRows(5);
+        jScrollPane4.setViewportView(jTextAreaMotivo);
+
+        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 910, 120));
+
+        jDialog2.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 1160, 150));
+
+        jPanel5.setOpaque(false);
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Diagnóstico");
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        jTextAreaDiagnostico.setColumns(20);
+        jTextAreaDiagnostico.setLineWrap(true);
+        jTextAreaDiagnostico.setRows(5);
+        jTextAreaDiagnostico.setWrapStyleWord(true);
+        jScrollPane5.setViewportView(jTextAreaDiagnostico);
+
+        jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 910, 120));
+
+        jDialog2.getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 1140, 160));
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Atrás");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 680, 90, 30));
+
+        btnRecetar.setText("Recetar");
+        btnRecetar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecetarActionPerformed(evt);
+            }
+        });
+        jDialog2.getContentPane().add(btnRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 220, -1, -1));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
+        jLabel11.setText("jLabel2");
+        jDialog2.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -151,6 +283,11 @@ public class frmReceta extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 110, 30));
 
         btnImprimir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -175,6 +312,11 @@ public class frmReceta extends javax.swing.JFrame {
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 110, 30));
         getContentPane().add(jDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
 
@@ -238,30 +380,108 @@ public class frmReceta extends javax.swing.JFrame {
 //        inicio();
 //
 //    }
-       private void guardar1() {
-         Receta rec = null;
 
-        if ( jDate.getCalendar() == null) {
+    private void guardar1() {
+        Consulta c = new Consulta();
+
+        if (jDate.getCalendar() == null) {
             JOptionPane.showMessageDialog(null, "LLENAR CAMPOS REQUERIDOS", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-         
+
             jDate.setCalendar(null);
 
         } else {
-            if (btnImprimir.getText().equals("Imprimir")) {        
-                    rec = new Receta();                 
-                    rec.setConsulta(mas);
-                    rec.setNum_receta(txtNro.getText());
-                    rec.setFecha_receta(jDate.getCalendar());
-                    rec.setIndicac_receta(txtAindicaciones.getText());
-                    rec.setMedicam_receta(txtAmedicamentos.getText());                  
-                    rec.setEstado("A");                 
-                    recetaDB.nuevaReceta(rec);    
+            if (btnImprimir.getText().equals("Imprimir")) {
+//                int selectRow = TablaCita.getSelectedRow();
+//        int idCita = Integer.parseInt(model1.getValueAt(selectRow, 0).toString());
+//        Cita cit = citaDB.traeCitaID(idCita);
+
+//                    rec.setConsulta();
+//        serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));
+//                    rec.setConsulta((txtIDConsulta.getText()) );   
+                c = consultaDB.traeConsultadID(Integer.parseInt(txtIDConsulta.getText()));
+                int id = c.getId();
+                Receta m = new Receta();
+                m.setNum_receta(txtNro.getText());
+                m.setFecha_receta(jDate.getCalendar());
+                m.setIndicac_receta(txtAindicaciones.getText());
+                m.setMedicam_receta(txtAmedicamentos.getText());
+                m.setEstado("A");
+                m.setConsulta(c);
+//                c.getListaConsultas().add(m);
+//                Consulta mas = null;
+                recetaDB.nuevaReceta(m);
                 JOptionPane.showMessageDialog(null, "RECETA REGISTRADA ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            } 
+            }
             inicio();
         }
     }
-   
+
+    //metodos para frm consult
+    private void iniciar() {
+        jTextAreaMotivo.setEditable(false);
+        jTextAreaDiagnostico.setEditable(false);
+        llenarTabla();
+    }
+
+    private void llenarTabla() {
+        tableModel();
+        List<Consulta> lista = null;
+        lista = conDB.cargarConsulta(lista);
+        for (Consulta consulta : lista) {
+            model.addRow(new Object[]{consulta.getId(), consulta.getMascota().getNombre(),
+                consulta.getPresion(), consulta.getTemp(), consulta.getPeso(), consulta.getMascota().getPersona().getCedula(),
+                consulta.getMascota().getPersona().getNombre(), consulta.getVeterinario(), consulta.getFecha()});
+        }
+    }
+
+    private void tableModel() {
+
+        TableConsultas.getColumnModel().getColumn(0).setMaxWidth(0);
+        TableConsultas.getColumnModel().getColumn(0).setMinWidth(0);
+        TableConsultas.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        TableConsultas.getColumnModel().getColumn(1).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(2).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(3).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(4).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(5).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(6).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(7).setPreferredWidth(300);
+        TableConsultas.getColumnModel().getColumn(8).setPreferredWidth(300);
+
+        model = (DefaultTableModel) TableConsultas.getModel();
+        model.setNumRows(0);
+    }
+
+    private void buscarConsulta(String cedula) {
+        if (validar.esNumerico(jTextFieldBuscar.getText()) == true) {
+            model.setNumRows(0);
+            List<Consulta> busca = new ArrayList<>();
+            List<Consulta> lista = null;
+            lista = conDB.cargarConsulta(lista);
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getMascota().getPersona().getCedula().equals(cedula)) {
+                    busca.add(lista.get(i));
+                }
+            }
+
+            if (busca.size() > 0) {
+                for (Consulta cons : busca) {
+                    model.addRow(new Object[]{cons.getId(), cons.getMascota().getNombre(),
+                        cons.getPresion(), cons.getTemp(), cons.getPeso(), cons.getMascota().getPersona().getCedula(),
+                        cons.getMascota().getPersona().getNombre(), cons.getVeterinario(), cons.getFecha()});
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                llenarTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+        }
+    }
+
+    //
     private boolean ValidarCampos() {
         boolean lleno = true;
         if (txtAindicaciones.getText().equals("") || txtAmedicamentos.getText().equals("")) {
@@ -270,6 +490,21 @@ public class frmReceta extends javax.swing.JFrame {
             lleno = true;
         }
         return lleno;
+    }
+    int num_resp = 0;
+
+    public int obtenerCodigoReceta() {
+        num_resp = 0;
+        List<Receta> lista = null;
+        lista = recetaDB.cargarCodigoReceta(lista);
+        for (Iterator<Receta> it = lista.iterator(); it.hasNext();) {
+            Receta cit = it.next();
+            num_resp = Integer.parseInt(cit.getNum_receta()) + 1;
+        }
+        if (num_resp == 0) {
+            num_resp = 1;
+        }
+        return num_resp;
     }
 //    
 //    int num_resp = 0;
@@ -286,9 +521,8 @@ public class frmReceta extends javax.swing.JFrame {
 //        }
 //        return num_resp;
 //    }
-         
-         
-    
+
+
     private void txtCiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCiActionPerformed
@@ -308,14 +542,85 @@ public class frmReceta extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
 //guardar1();    }//GEN-LAST:event_btnImprimirActionPerformed
 guardar1();//registra bien lo de receta pero falta consulta  
-  }
+    }
 
     private void btnBuscarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarConsultaActionPerformed
-       frmListaConsulta con = new frmListaConsulta(this, rootPaneCheckingEnabled);
-       con.setVisible(true);
-       // this.dispose();
+        llenarTabla();
+        jDialog2.setSize(1200, 800);
+        jDialog2.setLocationRelativeTo(null);
+        jDialog2.setVisible(true);
+
+        // this.dispose();
+
     }//GEN-LAST:event_btnBuscarConsultaActionPerformed
-     
+
+    private void TableConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableConsultasMouseClicked
+        // TODO add your handling code here:
+
+        int seleccionar = TableConsultas.getSelectedRow();
+        int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
+        Consulta con = conDB.traeConsulta(idConsulta);
+        jTextAreaMotivo.setText(con.getMotivo());
+        jTextAreaDiagnostico.setText(con.getDiagnostico());
+    }//GEN-LAST:event_TableConsultasMouseClicked
+
+    private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldBuscarActionPerformed
+
+    private void jButtonbuscarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarConsultaActionPerformed
+        if (jTextFieldBuscar.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "LLENAR CAMPO REQUERIDO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            buscarConsulta(jTextFieldBuscar.getText());
+        }
+    }//GEN-LAST:event_jButtonbuscarConsultaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecetarActionPerformed
+        int seleccionar = TableConsultas.getSelectedRow();
+        int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
+        Consulta con = conDB.traeConsulta(idConsulta);
+        //          serv = servicioDB.traeNombreServicio(txtNombre.getText());
+        //con= conDB.traeConsulta(idConsulta);
+        int selectRow = TableConsultas.getSelectedRow();
+        try {
+            if (selectRow == -1) {
+                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA DE LA TABLA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+
+                modelConsulta = (DefaultTableModel) TableConsultas.getModel();
+                String id = TableConsultas.getValueAt(selectRow, 0).toString();
+                String mascota = TableConsultas.getValueAt(selectRow, 1).toString();
+                String ci = TableConsultas.getValueAt(selectRow, 5).toString();
+                String nombre = TableConsultas.getValueAt(selectRow, 6).toString();
+
+                txtMascota.setText(mascota);
+                txtCi.setText(ci);
+                txtCliente.setText(nombre);
+                txtIDConsulta.setText(id);
+//                jDialog2.setModal(false);
+                jDialog2.setVisible(false);
+
+                //                recetaDB.nuevaReceta(rec);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR LA CITA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnRecetarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        inicio();    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -352,12 +657,21 @@ guardar1();//registra bien lo de receta pero falta consulta
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TableConsultas;
     private javax.swing.JButton btnBuscarConsulta;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnImprimir;
+    private javax.swing.JButton btnRecetar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonbuscarConsulta;
     private com.toedter.calendar.JDateChooser jDate;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -366,8 +680,16 @@ guardar1();//registra bien lo de receta pero falta consulta
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTextArea jTextAreaDiagnostico;
+    private javax.swing.JTextArea jTextAreaMotivo;
+    private javax.swing.JTextField jTextFieldBuscar;
     private javax.swing.JTextArea txtAindicaciones;
     private javax.swing.JTextArea txtAmedicamentos;
     public static javax.swing.JTextField txtCi;

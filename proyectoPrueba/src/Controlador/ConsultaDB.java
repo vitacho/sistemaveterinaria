@@ -60,6 +60,15 @@ public class ConsultaDB {
 
         return lis;
     }
+        public Consulta traeConsultadID(int id) {
+        Consulta m = null;
+        try {
+            m = (Consulta ) st.load(Consulta.class, id);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL TRAER LA CONSULTA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+        return m;
+    }
     
     
 }

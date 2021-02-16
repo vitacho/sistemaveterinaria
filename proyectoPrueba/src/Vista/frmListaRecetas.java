@@ -5,17 +5,88 @@
  */
 package Vista;
 
+import Controlador.RecetaDB;
+import Modelo.Consulta;
+import Modelo.Mascota;
+import Modelo.Receta;
+import Modelo.Servicio;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author DELL
  */
 public class frmListaRecetas extends javax.swing.JFrame {
 
+    DefaultTableModel model = new DefaultTableModel();
     /**
      * Creates new form frmListaRecetas
      */
+    RecetaDB recetaBD = new RecetaDB();
+
     public frmListaRecetas() {
         initComponents();
+       
+        iniciar();
+
+    }
+
+    private void iniciar() {
+        tablaModel();
+        llenarTablaListaReceta("A");
+    }
+
+    private void llenarTablaListaReceta(String estado) {
+        tablaModel();
+        List<Receta> listaRec = null;
+//        List<Mascota> listaM = null;
+        listaRec = recetaBD.cargaRecetaTabla(estado, listaRec);
+
+        for (Receta lista : listaRec) {
+            model.addRow(new Object[]{
+                lista.getId_receta(), lista.getNum_receta(),
+                retornaFechaString(lista.getFecha_receta(), 0),
+             
+                
+                lista.getConsulta().getMascota().getPersona().getCedula(),
+                lista.getConsulta().getMascota().getPersona().getNombre()+", "+lista.getConsulta().getMascota().getPersona().getApellido(),
+                lista.getConsulta().getMascota().getNombre()
+ 
+            });
+        }
+    }
+
+    private String retornaFechaString(Calendar fecha, int dias) {
+        String retorno = null;
+        fecha.add(Calendar.DAY_OF_YEAR, dias);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        if (fecha != null) {
+            retorno = sdf.format(fecha.getTime());
+        }
+        return retorno;
+    }
+
+    private void tablaModel() {
+        // metodo sirve para llamar a los campos que se hayan guardado en la base de datos
+//              tablaServicios.getColumnModel().getColumn(0).setMaxWidth(0);
+//        tablaServicios.getColumnModel().getColumn(0).setMinWidth(0);
+//        tablaServicios.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        tablaListaRecetas.getColumnModel().getColumn(0).setMaxWidth(0);
+        tablaListaRecetas.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaListaRecetas.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        tablaListaRecetas.getColumnModel().getColumn(1).setMaxWidth(350);
+        tablaListaRecetas.getColumnModel().getColumn(2).setMaxWidth(300);
+        tablaListaRecetas.getColumnModel().getColumn(3).setMaxWidth(350);
+        tablaListaRecetas.getColumnModel().getColumn(4).setMaxWidth(300);
+        tablaListaRecetas.getColumnModel().getColumn(5).setMaxWidth(300);
+        model = (DefaultTableModel) tablaListaRecetas.getModel();
+        model.setNumRows(0);
     }
 
     /**
@@ -59,15 +130,40 @@ public class frmListaRecetas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NUMERO", "FECHA", "CÉDULA", "CLIENTE", "MASCOTA", "VETERINARIO"
+                "ID", "NUMERO", "FECHA", "CÉDULA", "CLIENTE", "MASCOTA"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaListaRecetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaListaRecetasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaListaRecetas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 830, 280));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Atrás");
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 90, 30));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -93,6 +189,13 @@ public class frmListaRecetas extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tablaListaRecetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaListaRecetasMouseClicked
+          
+    }//GEN-LAST:event_tablaListaRecetasMouseClicked
 
     /**
      * @param args the command line arguments

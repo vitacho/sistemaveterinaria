@@ -46,8 +46,8 @@ public class frmServicio extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -74,17 +74,22 @@ public class frmServicio extends javax.swing.JDialog {
         jLabel6.setText(" SERVICIOS  ");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 310, 30));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 310, 30));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Buscar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 70, 90, 30));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBuscar.setText("Buscar por Nombre");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 180, 30));
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setOpaque(false);
@@ -154,7 +159,22 @@ public class frmServicio extends javax.swing.JDialog {
             new String [] {
                 "ID", "NOMBRE", "COSTO"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaServicios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaServiciosMouseClicked(evt);
@@ -200,9 +220,9 @@ public class frmServicio extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoActionPerformed
         // TODO add your handling code here:
@@ -212,12 +232,16 @@ public class frmServicio extends javax.swing.JDialog {
         int selectRow = tablaServicios.getSelectedRow();
         int idServ = Integer.parseInt(model.getValueAt(selectRow, 0).toString());
         Servicio serv = servicioDB.traeServicio(idServ);
-         txtId.setText(String.valueOf(serv.getId_serv()));
+        txtId.setText(String.valueOf(serv.getId_serv()));
         txtNombre.setText(serv.getNombre_serv());
         txtDescripcion.setText(serv.getDesc_serv());
-//        txtCosto.setText();
-//         serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));
-      
+        //falta    
+//        String miString = "";
+//        miString.valueOf(txtCosto.getText());
+      txtCosto.setText(String.valueOf(txtCosto.getText()));
+//String str = String.valueOf(txtCosto.getText());
+//         serv.setPrecio_serv();
+
 
         Bloquear(true);    }//GEN-LAST:event_tablaServiciosMouseClicked
 
@@ -246,6 +270,35 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
  desactivar();    }//GEN-LAST:event_btnDesactivarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txtBuscar.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "LLENAR CAMPO REQUERIDO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            buscaServicio(txtBuscar.getText());
+//            chkDesactivados.setSelected(false);
+        }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+    private void buscaServicio(String nombre) {
+        model.setNumRows(0);
+
+        List<Servicio> lis = null;
+        lis = servicioDB.buscarServicio(nombre, lis);
+
+        if (lis.size() > 0) {
+            for (Servicio lista : lis) {
+                model.addRow(new Object[]{
+                    lista.getId_serv(), lista.getNombre_serv(), lista.getPrecio_serv()
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "SERVICIO NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            txtBuscar.requestFocus();
+            llenarTablaServico("A");
+        }
+    }
+
     private void Editar() {
         activa_Desac_Panel(true);
         btnNuevo.setEnabled(false);
@@ -315,12 +368,12 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDesactivar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
@@ -330,8 +383,8 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaServicios;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCosto;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JLabel txtId;
@@ -400,6 +453,8 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
                     serv.setDesc_serv(txtDescripcion.getText());
                     serv.setEstado_serv("A");
                     serv.setCantidad_serv(1);
+//                    txtCosto.setText(String.valueOf(txtCosto.getText()));
+
                     serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));
                     servicioDB.nuevoServicio(serv);
                     inicio();
@@ -452,24 +507,25 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
         }
         return lleno;
     }
-      private void desactivar(){
-        
-       //int seleccionar = Tabla1.getSelectedRow();
-        int si = JOptionPane.showConfirmDialog(this, "esta seguro de eliminar al servicio","Desactivar" ,JOptionPane.YES_NO_OPTION);
-        
-        if(si == JOptionPane.NO_OPTION){
+
+    private void desactivar() {
+
+        //int seleccionar = Tabla1.getSelectedRow();
+        int si = JOptionPane.showConfirmDialog(this, "esta seguro de eliminar al servicio", "Desactivar", JOptionPane.YES_NO_OPTION);
+
+        if (si == JOptionPane.NO_OPTION) {
             JOptionPane.showMessageDialog(null, "no se ha podido eliminar el servicio", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-              int seleccionar = tablaServicios.getSelectedRow();
-              
-             int id = Integer.parseInt(String.valueOf(model.getValueAt(seleccionar, 0))); 
-             Servicio serv = servicioDB.traeServicioId(id);
-             serv.setEstado_serv("P");
-             servicioDB.actualizaServicio(serv);
-             
-              JOptionPane.showMessageDialog(null, "SERVICIO DESACTIVADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-              inicio();
-              
+        } else {
+            int seleccionar = tablaServicios.getSelectedRow();
+
+            int id = Integer.parseInt(String.valueOf(model.getValueAt(seleccionar, 0)));
+            Servicio serv = servicioDB.traeServicioId(id);
+            serv.setEstado_serv("P");
+            servicioDB.actualizaServicio(serv);
+
+            JOptionPane.showMessageDialog(null, "SERVICIO DESACTIVADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            inicio();
+
         }
     }
 }
