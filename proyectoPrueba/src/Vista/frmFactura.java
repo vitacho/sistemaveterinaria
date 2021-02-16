@@ -42,8 +42,8 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     DetallefacturaDB detalledb = new DetallefacturaDB();
     int cont = 0;
     double total_fact;
-    double desctcuento_total=0;
-    double subtot=0;
+    double desctcuento_total = 0;
+    double subtot = 0;
 
     /**
      * parte para la integracion de ls servicios solo
@@ -270,7 +270,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         double desct_total;
 
         //total menos el decuento
-        
         if (!txtdecuento.getText().equals("0")) {
             desctcuento_total = Double.parseDouble(txtdecuento.getText());
             desct = Double.parseDouble(txtdecuento.getText());
@@ -279,9 +278,9 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             total = desct_total;
             subtototal = total / ((100 + iva) / 100);
             total = subtototal * (iva / 100);
-            total_fact=total + subtototal;   
+            total_fact = total + subtototal;
             txtsubtotal.setText(String.format("%.2f", subtototal));
-            subtot=subtototal;
+            subtot = subtototal;
             txttotal.setText(String.format("%.2f", total + subtototal));
         } else {
             desctcuento_total = 0.0;
@@ -289,9 +288,9 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             subtototal = total / ((100 + iva) / 100);
             total = subtototal * (iva / 100);
             txtsubtotal.setText(String.format("%.2f", subtototal));
-            subtot=subtototal;
+            subtot = subtototal;
             txttotal.setText(String.format("%.2f", total + subtototal));
-            total_fact=total + subtototal;
+            total_fact = total + subtototal;
         }
 
     }
@@ -310,6 +309,25 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         model = (DefaultTableModel) tabladetalle.getModel();
         model.setNumRows(0);
         cont = 0;
+    }
+
+    private void buscaServicio(String nombre) {
+        model.setNumRows(0);
+
+        List<Servicio> lis = null;
+        lis = servicioDB.buscarServicio(nombre, lis);
+
+        if (lis.size() > 0) {
+            for (Servicio lista : lis) {
+                model.addRow(new Object[]{
+                    lista.getId_serv(), lista.getNombre_serv(),lista.getDesc_serv(), lista.getPrecio_serv()
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "SERVICIO NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            txtBuscar.requestFocus();
+            llenarTablaServico("A");
+        }
     }
 
     /**
@@ -337,7 +355,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         Agregar_servicio = new javax.swing.JButton();
         Cancelarservicio = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtbuscarser = new javax.swing.JTextField();
         buscar_ser = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         cantidaagregar = new javax.swing.JTextField();
@@ -499,7 +517,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -512,12 +530,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             }
         });
         jScrollPane3.setViewportView(tablaServicios);
-        if (tablaServicios.getColumnModel().getColumnCount() > 0) {
-            tablaServicios.getColumnModel().getColumn(0).setHeaderValue("Codigo");
-            tablaServicios.getColumnModel().getColumn(1).setHeaderValue("Nombre");
-            tablaServicios.getColumnModel().getColumn(2).setHeaderValue("Descripción");
-            tablaServicios.getColumnModel().getColumn(3).setHeaderValue("Precio");
-        }
 
         Agregar_servicio.setText("Agregar ");
         Agregar_servicio.addActionListener(new java.awt.event.ActionListener() {
@@ -535,18 +547,23 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
         jLabel1.setText("Buscar");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtbuscarser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtbuscarserActionPerformed(evt);
             }
         });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtbuscarser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                txtbuscarserKeyTyped(evt);
             }
         });
 
         buscar_ser.setText("Buscar");
+        buscar_ser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscar_serActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Cantidad");
 
@@ -584,7 +601,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                 .addGap(195, 195, 195)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtbuscarser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(buscar_ser)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -595,7 +612,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtbuscarser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscar_ser))
                 .addGap(22, 22, 22)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
@@ -912,7 +929,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(432, 432, 432)
                                     .addComponent(jButtonimprimir)
                                     .addGap(18, 18, 18)
                                     .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1082,9 +1098,9 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         Servicio serv = servicioDB.traeServicio(idServ);
     }//GEN-LAST:event_tablaServiciosMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtbuscarserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbuscarserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtbuscarserActionPerformed
 
     private void CancelarservicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarservicioActionPerformed
         buscarservicio.setModal(false);
@@ -1131,9 +1147,9 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         }
     }//GEN-LAST:event_Agregar_servicioActionPerformed
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void txtbuscarserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarserKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_txtbuscarserKeyTyped
 
     private void cantidaagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidaagregarActionPerformed
         // TODO add your handling code here:
@@ -1184,6 +1200,15 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         this.dispose();
 
     }//GEN-LAST:event_jButtonatrasActionPerformed
+
+    private void buscar_serActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_serActionPerformed
+        if (txtbuscarser.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "LLENAR EL NOMBRE ", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            buscaServicio(txtbuscarser.getText());
+//            chkDesactivados.setSelected(false);
+        }
+    }//GEN-LAST:event_buscar_serActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1297,12 +1322,12 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jlabeldireccion;
     private javax.swing.JTable tablaServicios;
     private javax.swing.JTable tabladetalle;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtNro;
+    private javax.swing.JTextField txtbuscarser;
     private javax.swing.JLabel txtcedula;
     private javax.swing.JLabel txtcorreo;
     private javax.swing.JTextField txtdecuento;
