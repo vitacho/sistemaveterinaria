@@ -75,32 +75,28 @@ public class frmListaHospitalización extends javax.swing.JDialog {
     }
 
     private void buscarHosp(String busqueda) {
-        if (validar.esNumerico(jTextFieldBuscar.getText()) == true) {
-            model.setNumRows(0);
-            List<Hospitalizacion> busca = new ArrayList<>();
-            List<Hospitalizacion> lista = null;
-            lista = hosDB.cargarHospitalizacion(lista);
-            for (int i = 0; i < lista.size(); i++) {
-                if (lista.get(i).getMascota().getPersona().getCedula().equals(busqueda)) {
-                    busca.add(lista.get(i));
-                } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)) {
-                    busca.add(lista.get(i));
-                }
+        model.setNumRows(0);
+        List<Hospitalizacion> busca = new ArrayList<>();
+        List<Hospitalizacion> lista = null;
+        lista = hosDB.cargarHospitalizacion(lista);
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getMascota().getPersona().getCedula().equals(busqueda)) {
+                busca.add(lista.get(i));
+            } else if (lista.get(i).getMascota().getPersona().getNombre().equalsIgnoreCase(busqueda)) {
+                busca.add(lista.get(i));
+            }
+        }
+
+        if (busca.size() > 0) {
+            for (Hospitalizacion hosp : busca) {
+                model.addRow(new Object[]{hosp.getId(), hosp.getMascota().getNombre(),
+                    hosp.getMascota().getPersona().getCedula(), hosp.getMascota().getPersona().getNombre(), hosp.getVereterinario(),
+                    hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
             }
 
-            if (busca.size() > 0) {
-                for (Hospitalizacion hosp : busca) {
-                    model.addRow(new Object[]{hosp.getId(), hosp.getMascota().getNombre(),
-                        hosp.getMascota().getPersona().getCedula(), hosp.getMascota().getPersona().getNombre(), hosp.getVereterinario(),
-                        hosp.getEstado(), hosp.getIngreso(), hosp.getSalida()});
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                llenarTabla();
-            }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingrese solo numeros");
+            JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            llenarTabla();
         }
     }
 
