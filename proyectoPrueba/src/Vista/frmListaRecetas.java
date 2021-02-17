@@ -45,11 +45,13 @@ public class frmListaRecetas extends javax.swing.JFrame {
         List<Receta> listaRec = null;
 //        List<Mascota> listaM = null;
         listaRec = recetaBD.cargaRecetaTabla(estado, listaRec);
+         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+
 
         for (Receta lista : listaRec) {
             model.addRow(new Object[]{
                 lista.getId_receta(), lista.getNum_receta(),
-                retornaFechaString(lista.getFecha_receta(), 0),
+                formatofecha.format(lista.getFecha_receta()),
              
                 
                 lista.getConsulta().getMascota().getPersona().getCedula(),
@@ -104,14 +106,13 @@ public class frmListaRecetas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaListaRecetas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        btnVerReceta = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBuscarCi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnBuscarCi.setText("Buscar por CI");
+        btnBuscarCi.setText("Buscar por Nro");
         btnBuscarCi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCiActionPerformed(evt);
@@ -171,15 +172,6 @@ public class frmListaRecetas extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 90, 30));
 
-        btnVerReceta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnVerReceta.setText("Ver Receta");
-        btnVerReceta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerRecetaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnVerReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, 110, 30));
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -190,46 +182,6 @@ public class frmListaRecetas extends javax.swing.JFrame {
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
-
-    private void btnVerRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerRecetaActionPerformed
-       int seleccionar = tablaListaRecetas.getSelectedRow();
-        int idReceta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
-        Receta con = recetaBD.traeRecetaID(idReceta);
-
-        int selectRow = tablaListaRecetas.getSelectedRow();
-        try {
-            if (selectRow == -1) {
-                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA DE LA TABLA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-
-                model = (DefaultTableModel) tablaListaRecetas.getModel();
-                String id = tablaListaRecetas.getValueAt(selectRow, 0).toString();
-                String num = tablaListaRecetas.getValueAt(selectRow, 1).toString();
-                String fecha = tablaListaRecetas.getValueAt(selectRow, 2).toString();
-                String ci = tablaListaRecetas.getValueAt(selectRow, 5).toString();
-                String nombre = tablaListaRecetas.getValueAt(selectRow, 6).toString();
-                String mascota = tablaListaRecetas.getValueAt(selectRow, 1).toString();
-                frmReceta rec = new frmReceta();
-                frmReceta.txtIDConsulta.setText(id);
-                frmReceta.txtMascota.setText(mascota);
-                frmReceta.txtCi.setText(ci);
-                frmReceta.txtCliente.setText(nombre);
-                 frmReceta.txtNro.setText(num);
-//                 retornaFechaString(lista.getFecha_receta(), 0),(lista.getFecha_receta(), 0),
-//                  retornaFechaString(lista.getFecha_receta(), 0),
-
-
-                 
-//                recetaDB.nuevaReceta(rec);
-               
-                rec.setVisible(false);
-               
-                dispose();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR LA CITA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnVerRecetaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();    }//GEN-LAST:event_jButton1ActionPerformed
@@ -242,7 +194,7 @@ public class frmListaRecetas extends javax.swing.JFrame {
      if (txtBuscar.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "LLENAR CAMPO REQUERIDO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         } else {
-//            busca(txtBuscar.getText());
+         buscaReceta(txtBuscar.getText());
 //            chkDesactivados.setSelected(false);
         }
     }//GEN-LAST:event_btnBuscarCiActionPerformed
@@ -284,7 +236,6 @@ public class frmListaRecetas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCi;
-    private javax.swing.JButton btnVerReceta;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -292,4 +243,26 @@ public class frmListaRecetas extends javax.swing.JFrame {
     private javax.swing.JTable tablaListaRecetas;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
+    private void buscaReceta(String num) {
+        model.setNumRows(0);
+   SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+        List<Receta> lis = null;
+        lis = recetaBD.buscarReceta(num, lis);
+
+        if (lis.size() > 0) {
+            for (Receta lista : lis) {
+                model.addRow(new Object[]{
+                    lista.getId_receta(), lista.getNum_receta(),
+                formatofecha.format(lista.getFecha_receta()),           
+                lista.getConsulta().getMascota().getPersona().getCedula(),
+                lista.getConsulta().getMascota().getPersona().getNombre()+", "+lista.getConsulta().getMascota().getPersona().getApellido(),
+                lista.getConsulta().getMascota().getNombre()
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "SERVICIO NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            txtBuscar.requestFocus();
+            llenarTablaListaReceta("A");
+        }
+    }
 }

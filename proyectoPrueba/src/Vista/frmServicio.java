@@ -9,7 +9,7 @@ package Vista;
 import Controlador.ServicioDB;
 import Controlador.Validaciones;
 import Modelo.Servicio;
-import static Vista.frmReceta.txtIDConsulta;
+//import static Vista.frmReceta.txtIDConsulta;
 //import Modelo.Servicio;
 //import controlador.validaciones;
 import java.util.List;
@@ -241,7 +241,8 @@ public class frmServicio extends javax.swing.JDialog {
         //falta    
 //        String miString = "";
 //        miString.valueOf(txtCosto.getText());
-      txtCosto.setText(String.valueOf(txtCosto.getText()));
+         String precio = String.valueOf(serv.getPrecio_serv());
+         txtCosto.setText(precio);
 //String str = String.valueOf(txtCosto.getText());
 //         serv.setPrecio_serv();
 
@@ -456,7 +457,7 @@ guardar();    }//GEN-LAST:event_btnGuardarActionPerformed
                     serv.setDesc_serv(txtDescripcion.getText());
                     serv.setEstado_serv("A");
                     serv.setCantidad_serv(1);
-//                    txtCosto.setText(String.valueOf(txtCosto.getText()));
+                    txtCosto.setText(String.valueOf(txtCosto.getText()));
 
                     serv.setPrecio_serv(Double.parseDouble(txtCosto.getText()));
                     servicioDB.nuevoServicio(serv);

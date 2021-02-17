@@ -143,6 +143,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuSalir1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnHospitalizacion.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N

@@ -9,6 +9,7 @@ import Modelo.Receta;
 import Modelo.Servicio;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utilidades.HibernateUtil;
 
@@ -67,6 +68,9 @@ public class RecetaDB {
         }
         return rec;
     }
+       
+       
+       
       public List<Receta> cargarCodigoReceta (List<Receta> list) {
         try {
             list = (List<Receta>) st.createQuery("From Receta order by num_receta").list();
@@ -77,6 +81,33 @@ public class RecetaDB {
 
     }
 
-
+public List<Receta> buscarReceta(String num, List<Receta> lis) {
+        try {
+            lis = (List<Receta>) st.createQuery("From Receta where num_receta LIKE '%" + num + "%'").list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS DATOS DEL SERVICIO "+e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+        return lis;
+    }
+   public Receta traenumReceta(String nroRec){
+        Receta fact = null;
+        
+        try {
+            Query query= st.createQuery("from Receta r Where r.num_receta = ?");
+            query.setParameter(0, nroRec); // admin, secretaria, veterinario, cliente
+            
+            try {
+                fact=(Receta)query.uniqueResult();
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al traer la receta"+e.getMessage());
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al traer la receta"+e.getMessage());
+        }
+        
+        return fact;
+    }
     
 }

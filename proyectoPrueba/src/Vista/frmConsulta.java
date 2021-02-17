@@ -83,13 +83,13 @@ public class frmConsulta extends javax.swing.JDialog {
                             con.setDiagnostico(jTextAreaDiag.getText());
                             conDB.nuevaConsulta(con);
 
-                            frmReceta rec = new frmReceta();
-                            frmReceta.txtCliente.setText(jTextFieldNombreMascota.getText());
-                            frmReceta.txtCi.setText(jTextFieldCI.getText());
-                            frmReceta.txtMascota.setText(jTextFieldNombreMascota.getText());
-                            JOptionPane.showMessageDialog(null, "Consulta Guardada");
-                            rec.setVisible(true);
-                            this.dispose();
+//                            frmReceta rec = new frmReceta();
+//                            frmReceta.txtCliente.setText(jTextFieldNombreMascota.getText());
+//                            frmReceta.txtCi.setText(jTextFieldCI.getText());
+//                            frmReceta.txtMascota.setText(jTextFieldNombreMascota.getText());
+//                            JOptionPane.showMessageDialog(null, "Consulta Guardada");
+//                            rec.setVisible(true);
+//                            this.dispose();
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Falta el cliente o mascota");
@@ -285,6 +285,11 @@ public class frmConsulta extends javax.swing.JDialog {
 
         jButtonRecetar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonRecetar.setText("Recetar");
+        jButtonRecetar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRecetarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 630, 98, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -360,6 +365,12 @@ public class frmConsulta extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCancelActionPerformed
+
+    private void jButtonRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecetarActionPerformed
+     frmListaRecetas rec = new frmListaRecetas();
+       rec.setVisible(true);
+     
+    }//GEN-LAST:event_jButtonRecetarActionPerformed
 
     /**
      * @param args the command line arguments

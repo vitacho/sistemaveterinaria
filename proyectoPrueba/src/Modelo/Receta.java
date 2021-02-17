@@ -7,6 +7,7 @@ package Modelo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ import javax.persistence.OneToMany;
 public class Receta {
 
     private int id_receta;
-    private Calendar fecha_receta;
+    private Date fecha_receta;
     private String medicam_receta;
     private String indicac_receta;
     private String estado;
@@ -41,13 +42,15 @@ public class Receta {
         this.id_receta = id_receta;
     }
 
-    public Calendar getFecha_receta() {
+    public Date getFecha_receta() {
         return fecha_receta;
     }
 
-    public void setFecha_receta(Calendar fecha_receta) {
+    public void setFecha_receta(Date fecha_receta) {
         this.fecha_receta = fecha_receta;
     }
+
+
 
     public String getMedicam_receta() {
         return medicam_receta;

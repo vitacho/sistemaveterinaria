@@ -282,7 +282,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 String nombre = TableConsultas.getValueAt(selectRow, 6).toString();
                 frmReceta rec = new frmReceta();
                 frmReceta.txtMascota.setText(mascota);
-                frmReceta.txtCi.setText(ci);
+                frmReceta.jDate.setText(ci);
                 frmReceta.txtCliente.setText(nombre);
                 frmReceta.txtIDConsulta.setText(id);
 
@@ -323,6 +323,8 @@ public class frmListaConsulta extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmListaConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
