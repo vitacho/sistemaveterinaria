@@ -56,6 +56,7 @@ public class frmListaPersonas extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1958, 1080));
         setPreferredSize(new java.awt.Dimension(1145, 639));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButtonAtras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

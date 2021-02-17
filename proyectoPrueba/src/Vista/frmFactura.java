@@ -393,6 +393,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         txtidpersona = new javax.swing.JLabel();
         txtNro = new javax.swing.JLabel();
 
+        buscarcliente.setResizable(false);
         buscarcliente.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -506,6 +507,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         buscarcliente.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 260));
 
         buscarservicio.setPreferredSize(new java.awt.Dimension(710, 260));
+        buscarservicio.setResizable(false);
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setPreferredSize(new java.awt.Dimension(710, 300));
@@ -644,6 +646,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

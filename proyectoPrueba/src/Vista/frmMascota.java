@@ -84,6 +84,7 @@ public class frmMascota extends javax.swing.JDialog {
         setTitle("REGISTRAR MASCOTA");
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setPreferredSize(new java.awt.Dimension(1366, 768));
+        setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

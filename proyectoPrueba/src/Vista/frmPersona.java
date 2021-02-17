@@ -87,6 +87,7 @@ public class frmPersona extends javax.swing.JDialog {
         setMaximumSize(new java.awt.Dimension(1366, 768));
         setMinimumSize(new java.awt.Dimension(1150, 639));
         setPreferredSize(new java.awt.Dimension(1150, 639));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jBAtras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
