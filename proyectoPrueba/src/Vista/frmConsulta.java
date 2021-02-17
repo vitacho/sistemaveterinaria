@@ -83,13 +83,8 @@ public class frmConsulta extends javax.swing.JDialog {
                             con.setDiagnostico(jTextAreaDiag.getText());
                             conDB.nuevaConsulta(con);
 
-//                            frmReceta rec = new frmReceta();
-//                            frmReceta.txtCliente.setText(jTextFieldNombreMascota.getText());
-//                            frmReceta.txtCi.setText(jTextFieldCI.getText());
-//                            frmReceta.txtMascota.setText(jTextFieldNombreMascota.getText());
-//                            JOptionPane.showMessageDialog(null, "Consulta Guardada");
-//                            rec.setVisible(true);
-//                            this.dispose();
+
+                            JOptionPane.showMessageDialog(null, "Consulta Guardada");
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Falta el cliente o mascota");
@@ -137,7 +132,6 @@ public class frmConsulta extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         jButtonGuardar = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
-        jButtonRecetar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jTextFieldNombreMascota = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -283,15 +277,6 @@ public class frmConsulta extends javax.swing.JDialog {
         });
         getContentPane().add(jButtonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 630, -1, -1));
 
-        jButtonRecetar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonRecetar.setText("Recetar");
-        jButtonRecetar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRecetarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButtonRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 630, 98, -1));
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Veterinario:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, 20));
@@ -332,9 +317,10 @@ public class frmConsulta extends javax.swing.JDialog {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1110, 720));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarActionPerformed
@@ -365,12 +351,6 @@ public class frmConsulta extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCancelActionPerformed
-
-    private void jButtonRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecetarActionPerformed
-     frmListaRecetas rec = new frmListaRecetas();
-       rec.setVisible(true);
-     
-    }//GEN-LAST:event_jButtonRecetarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -418,7 +398,6 @@ public class frmConsulta extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JButton jButtonRecetar;
     private javax.swing.JButton jButtonbuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -235,7 +235,7 @@ public class frmMascota extends javax.swing.JDialog {
         });
         jPanel1.add(jButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 170, 90, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 1080, 200));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 1080, 200));
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -278,8 +278,7 @@ public class frmMascota extends javax.swing.JDialog {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, -1, 30));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
-        jLabelFondo.setText("jLabel2");
-        getContentPane().add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1410, 770));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -472,7 +471,7 @@ public class frmMascota extends javax.swing.JDialog {
         }
     }
     public void inicializar(){
-       jTextBuscarCedula.setToolTipText("Ingrese la cedula del dueño de la mascota. ");
+       jTextBuscarCedula.setToolTipText("Ingrese la nombre del dueño de la mascota. ");
        jButtonModificar.setToolTipText("Seleccione la mascota de la tabla antes de modificar.");
        jTextEdad.setToolTipText("Ingrese la edad en meses.");
        bloquearJtext();

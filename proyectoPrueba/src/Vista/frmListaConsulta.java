@@ -150,7 +150,15 @@ public class frmListaConsulta extends javax.swing.JDialog {
             new String [] {
                 "ID", "MASCOTA", "PRESIÓN", "TEMPERATURA", "PESO", "CÉDULA", "DUEÑO", "VETERINARIO", "FECHA"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         TableConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TableConsultasMouseClicked(evt);
@@ -158,18 +166,18 @@ public class frmListaConsulta extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(TableConsultas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 1060, 220));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 1060, 220));
 
         jLabel1.setFont(new java.awt.Font("Constantia", 1, 36)); // NOI18N
         jLabel1.setText("LISTA DE CONSULTAS ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
         jTextFieldBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextFieldBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 310, 30));
+        getContentPane().add(jTextFieldBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 310, 30));
 
         jButtonbuscarConsulta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonbuscarConsulta.setText("Buscar por CI");
@@ -178,7 +186,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 jButtonbuscarConsultaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonbuscarConsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 90, -1, 30));
+        getContentPane().add(jButtonbuscarConsulta, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, -1, 30));
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -191,9 +199,9 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jTextAreaMotivo.setRows(5);
         jScrollPane2.setViewportView(jTextAreaMotivo);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 910, 120));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 910, 100));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 1160, 150));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 1160, 120));
 
         jPanel5.setOpaque(false);
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -208,9 +216,9 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jTextAreaDiagnostico.setWrapStyleWord(true);
         jScrollPane3.setViewportView(jTextAreaDiagnostico);
 
-        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 910, 120));
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 910, 100));
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 1140, 160));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 1140, 130));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Atrás");
@@ -219,7 +227,7 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 680, 90, 30));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 610, 90, 30));
 
         btnRecetar.setText("Recetar");
         btnRecetar.addActionListener(new java.awt.event.ActionListener() {
@@ -227,13 +235,14 @@ public class frmListaConsulta extends javax.swing.JDialog {
                 btnRecetarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 220, -1, -1));
+        getContentPane().add(btnRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 220, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 720));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarActionPerformed

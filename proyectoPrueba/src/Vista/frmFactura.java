@@ -160,7 +160,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         jButtonbuscarservicio.setVisible(bl);
         buttoneliminar.setVisible(bl);
         jButtonimprimir.setVisible(bl);
-        jButtoncancelar.setVisible(bl);
+//        jButtoncancelar.setVisible(bl);
         jButtonatras.setVisible(bl);
 
     }
@@ -381,7 +381,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         buttoneliminar = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
         jButtonatras = new javax.swing.JButton();
-        jButtoncancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -506,7 +505,10 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
         buscarcliente.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 260));
 
+        buscarservicio.setPreferredSize(new java.awt.Dimension(710, 260));
+
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setPreferredSize(new java.awt.Dimension(710, 300));
 
         tablaServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -638,7 +640,7 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
         );
         buscarservicioLayout.setVerticalGroup(
             buscarservicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -818,13 +820,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
             }
         });
 
-        jButtoncancelar.setText("Cancelar");
-        jButtoncancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtoncancelarActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -908,8 +903,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
 
         txtidpersona.setText("ID");
 
-        txtNro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -924,19 +917,17 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                             .addComponent(txtNro, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(132, 132, 132)
                             .addComponent(txtidpersona, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(33, 33, 33)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButtonimprimir)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButtoncancelar))))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(61, 61, 61)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(33, 33, 33)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButtonimprimir)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -960,14 +951,14 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonimprimir)
-                    .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtoncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonatras, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 51, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 930, 690));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonbuscarservicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarservicioActionPerformed
@@ -999,6 +990,8 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
                 //mostramos otra vez los que se escondio
                 escoderAparecer(true);
                 eliminar();
+                txtsubtotal.setText("0");
+                txtdecuento.setText("0");
                 //neviamos los datos de la factura a jpanel para imprimirlo
             }
         }
@@ -1191,10 +1184,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
          */
     }//GEN-LAST:event_txtivaKeyTyped
 
-    private void jButtoncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoncancelarActionPerformed
-        eliminar();
-    }//GEN-LAST:event_jButtoncancelarActionPerformed
-
     private void jButtonatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonatrasActionPerformed
         this.setModal(false);
         this.dispose();
@@ -1299,7 +1288,6 @@ public class frmFactura extends javax.swing.JDialog implements Printable {
     private javax.swing.JButton jButtonatras;
     private javax.swing.JButton jButtonbuscarcliente;
     private javax.swing.JButton jButtonbuscarservicio;
-    private javax.swing.JButton jButtoncancelar;
     private javax.swing.JButton jButtonimprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;

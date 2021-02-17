@@ -72,13 +72,13 @@ public class frmPersona extends javax.swing.JDialog {
         jLabel27 = new javax.swing.JLabel();
         jComboRol = new javax.swing.JComboBox<>();
         jLabel28 = new javax.swing.JLabel();
-        jTextValPasword = new javax.swing.JTextField();
         jComboEstado = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextPasword = new javax.swing.JTextField();
         jTexUsuario = new javax.swing.JTextField();
+        jTextPasword = new javax.swing.JPasswordField();
+        jTextValPasword = new javax.swing.JPasswordField();
         jBGuardar = new javax.swing.JButton();
         jLTitulo = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
@@ -139,7 +139,19 @@ public class frmPersona extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Teléfono");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 178, -1, 20));
+
+        jTextTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextTelefonoKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 200, 30));
+
+        jTexCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTexCedulaKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTexCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 21, 200, 30));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -182,7 +194,6 @@ public class frmPersona extends javax.swing.JDialog {
         jLabel28.setForeground(new java.awt.Color(255, 0, 0));
         jLabel28.setText("*");
         jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 20, -1));
-        jPanel2.add(jTextValPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, 30));
 
         jComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activada", "Desactivada" }));
         jComboEstado.setMaximumSize(new java.awt.Dimension(1366, 768));
@@ -200,7 +211,6 @@ public class frmPersona extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Usuario");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 60, 20));
-        jPanel2.add(jTextPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, 30));
 
         jTexUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +218,8 @@ public class frmPersona extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jTexUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 190, 30));
+        jPanel2.add(jTextPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 190, 30));
+        jPanel2.add(jTextValPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 190, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 390, 280));
 
@@ -254,13 +266,21 @@ public class frmPersona extends javax.swing.JDialog {
     private void jTexUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTexUsuarioActionPerformed
+
+    private void jTexCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTexCedulaKeyTyped
+       validar.valNumReal(evt, jTexCedula, 10);
+    }//GEN-LAST:event_jTexCedulaKeyTyped
+
+    private void jTextTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextTelefonoKeyTyped
+       validar.valNumReal(evt, jTextTelefono, 10);
+    }//GEN-LAST:event_jTextTelefonoKeyTyped
     
     public void registrarCuenta(){
         String cedula = jTexCedula.getText().trim();
         if(!jTexApellido.getText().equals("")&&!jTexCedula.getText().equals("")&&!jTextCorreo.getText().equals("")
            &&!jTextDireccion.getText().equals("")&&!jTextNombre.getText().equals("")&&!jTextTelefono.getText().equals("")
            &&!jTextPasword.getText().equals("")&&!jTextValPasword.getText().equals("")&&!jTexUsuario.getText().equals("")){
-            //if(validar.validarCedula(cedula)){
+            if(validar.validarCedula(cedula)){
                 Persona per = null; // la entidad persona
                  per = perDB.traeClientesCedula(jTexCedula.getText()); // metodo para validar la cedula al ingresar
                 if(per==null){//si la cedula no existe
@@ -312,10 +332,10 @@ public class frmPersona extends javax.swing.JDialog {
                      JOptionPane.showMessageDialog(null, "Cedula repetida");
                         jTexCedula.setText("");
                 }   
-            /*}else {
+            }else {
                 JOptionPane.showMessageDialog(null, "Cedula no valida");
                 jTexCedula.setText("");
-            }*/
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Llene todos los campos");
         }
@@ -563,8 +583,8 @@ public class frmPersona extends javax.swing.JDialog {
     private javax.swing.JTextField jTextCorreo;
     private javax.swing.JTextField jTextDireccion;
     private javax.swing.JTextField jTextNombre;
-    private javax.swing.JTextField jTextPasword;
+    private javax.swing.JPasswordField jTextPasword;
     private javax.swing.JTextField jTextTelefono;
-    private javax.swing.JTextField jTextValPasword;
+    private javax.swing.JPasswordField jTextValPasword;
     // End of variables declaration//GEN-END:variables
 }

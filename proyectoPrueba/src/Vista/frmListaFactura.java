@@ -35,6 +35,7 @@ public class frmListaFactura extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         tablefactura();
+        txtidcedula.setVisible(false);
     }
 
     private void tablefactura() {
@@ -54,14 +55,18 @@ public class frmListaFactura extends javax.swing.JDialog {
         tablefactura();
         pr = prDB.traeClientesId(Integer.parseInt(txtidcedula.getText()));
         List<Factura> listaFact = pr.getFactura();
-        String fech;
-        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
-        for (Factura lista : listaFact) {
-            model.addRow(new Object[]{
-                lista.getId_factura(), lista.getNro_factura(), pr.getNombre(), pr.getCedula(), formatofecha.format(lista.getFecha()), lista.getTotal()
+        if (listaFact.size() == 0) {
+            JOptionPane.showMessageDialog(null, "No hay facturas en ese clientes");
+        } else {
+            String fech;
+            SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+            for (Factura lista : listaFact) {
+                model.addRow(new Object[]{
+                    lista.getId_factura(), lista.getNro_factura(), pr.getNombre(), pr.getCedula(), formatofecha.format(lista.getFecha()), lista.getTotal()
 //                lista.getFecha(),
 //                lista.getId_serv(), lista.getNombre_serv(), lista.getDesc_serv(), lista.getPrecio_serv()
-            });
+                });
+            }
         }
     }
 
@@ -219,6 +224,7 @@ public class frmListaFactura extends javax.swing.JDialog {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 620));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaActionPerformed
@@ -226,7 +232,7 @@ public class frmListaFactura extends javax.swing.JDialog {
     }//GEN-LAST:event_txtcedulaActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        this.dispose();
 
     }//GEN-LAST:event_jButton4ActionPerformed
 

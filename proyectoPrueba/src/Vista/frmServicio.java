@@ -75,7 +75,7 @@ public class frmServicio extends javax.swing.JDialog {
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel6.setText(" SERVICIOS  ");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, -1));
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +83,7 @@ public class frmServicio extends javax.swing.JDialog {
                 txtBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 310, 30));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 310, 30));
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar por Nombre");
@@ -92,7 +92,7 @@ public class frmServicio extends javax.swing.JDialog {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 180, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 180, 30));
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setOpaque(false);
@@ -117,7 +117,7 @@ public class frmServicio extends javax.swing.JDialog {
         txtDescripcion.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txtDescripcion);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 108, 420, 151));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 420, 151));
 
         txtCosto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +126,7 @@ public class frmServicio extends javax.swing.JDialog {
         });
         jPanel1.add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 70, 133, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, -1, -1));
 
         btnEditar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -135,7 +135,7 @@ public class frmServicio extends javax.swing.JDialog {
                 btnEditarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 630, 98, -1));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, 98, 30));
 
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton6.setText("Salir");
@@ -144,7 +144,7 @@ public class frmServicio extends javax.swing.JDialog {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 630, 88, -1));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 590, 88, 30));
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -153,7 +153,7 @@ public class frmServicio extends javax.swing.JDialog {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 630, 98, -1));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 98, 30));
 
         tablaServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -185,15 +185,16 @@ public class frmServicio extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tablaServicios);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 470, 130));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 470, 130));
 
+        btnNuevo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 630, -1, -1));
+        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 590, -1, 30));
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -202,10 +203,10 @@ public class frmServicio extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 630, 98, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 590, 98, 30));
 
         txtId.setText("txtId");
-        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, -1, -1));
 
         btnDesactivar.setText("Desactivar");
         btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
@@ -213,14 +214,15 @@ public class frmServicio extends javax.swing.JDialog {
                 btnDesactivarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDesactivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 630, -1, -1));
+        getContentPane().add(btnDesactivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 590, 90, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed

@@ -301,7 +301,7 @@ public class frmHospitalizacion extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 1050, -1));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 1050, -1));
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -318,32 +318,32 @@ public class frmHospitalizacion extends javax.swing.JDialog {
 
         jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 940, 110));
 
-        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 550, 1070, 150));
+        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 510, 1070, 150));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("Nombre de la Mascota:");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         jLabelDue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelDue.setText("Dueño de la Mascota:");
-        getContentPane().add(jLabelDue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 117, 140, 20));
+        getContentPane().add(jLabelDue, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 140, 20));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("Veterinario:");
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
 
         jTextFieldVeterinario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldVeterinarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextFieldVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, 260, 30));
+        getContentPane().add(jTextFieldVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 260, 30));
 
         jLabelTitulo.setFont(new java.awt.Font("Constantia", 1, 36)); // NOI18N
         jLabelTitulo.setText("REGISTRAR HOSPITALIZACIÓN");
-        getContentPane().add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 754, -1));
-        getContentPane().add(jTextFieldNombreM, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 260, 30));
-        getContentPane().add(jTextFieldCedu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 260, 30));
+        getContentPane().add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 754, -1));
+        getContentPane().add(jTextFieldNombreM, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 260, 30));
+        getContentPane().add(jTextFieldCedu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 260, 30));
 
         jButtonGuardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonGuardar.setText("Guardar");
@@ -352,7 +352,7 @@ public class frmHospitalizacion extends javax.swing.JDialog {
                 jButtonGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 720, 90, 30));
+        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 660, 90, 30));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Atras");
@@ -361,7 +361,7 @@ public class frmHospitalizacion extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 720, 90, 30));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 90, 30));
 
         jButtonBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/search.png"))); // NOI18N
@@ -370,23 +370,23 @@ public class frmHospitalizacion extends javax.swing.JDialog {
                 jButtonBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, -1));
+        getContentPane().add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 70, -1, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setText("Sexo de la mascota:");
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 170, -1, 20));
-        getContentPane().add(jTextFieldCI, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, 300, 30));
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, -1, 20));
+        getContentPane().add(jTextFieldCI, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, 300, 30));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setText("CI:");
-        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 120, 90, -1));
-        getContentPane().add(jTextFieldSexM, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 160, 300, 30));
+        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 90, -1));
+        getContentPane().add(jTextFieldSexM, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 300, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1970, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 710));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

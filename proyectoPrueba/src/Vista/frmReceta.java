@@ -303,10 +303,10 @@ public class frmReceta extends javax.swing.JFrame {
         getContentPane().add(txtCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 200, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
-        jLabel8.setText("jLabel8");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 520));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
   private void Bloquear(boolean flag) {
 

@@ -7,6 +7,7 @@ package Vista;
 
 //import Modelo.Hospitalizacion;
 import Modelo.Cuenta;
+import Modelo.Hospitalizacion;
 
 /**
  *
@@ -381,17 +382,21 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckListaCuentasActionPerformed
 
     private void jCheckListaFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckListaFacturasActionPerformed
-        // TODO add your handling code here:
+       frmListaFactura lista = new frmListaFactura(this, true);
+       lista.setLocationRelativeTo(null);
+       lista.setVisible(true);
     }//GEN-LAST:event_jCheckListaFacturasActionPerformed
 
     private void btnHospitalizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHospitalizacionActionPerformed
         // TODO add your handling code here:
-//        frmHospitalizacion fh = new frmHospitalizacion(this, false, false, new Hospitalizacion());
-//        fh.setVisible(true);
+        frmHospitalizacion fh = new frmHospitalizacion(this, true, false, new Hospitalizacion());
+        fh.setVisible(true);
     }//GEN-LAST:event_btnHospitalizacionActionPerformed
 
     private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacionActionPerformed
-        // TODO add your handling code here:
+       frmFactura factura = new frmFactura(this,true);
+       factura.setLocationRelativeTo(null);
+       factura.setVisible(true);
     }//GEN-LAST:event_btnFacturacionActionPerformed
 
     private void jCheckRegistrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRegistrarCuentaActionPerformed
@@ -408,7 +413,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
         // TODO add your handling code here:
-        frmConsulta vc = new frmConsulta(this, false);
+        frmConsulta vc = new frmConsulta(this, true);
         vc.setVisible(true);
         //this.setVisible(false);
     }//GEN-LAST:event_btnConsultasActionPerformed

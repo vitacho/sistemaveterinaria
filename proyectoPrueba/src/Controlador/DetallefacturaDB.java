@@ -51,7 +51,7 @@ public class DetallefacturaDB {
         try {
             det = (Detallefactura) st.load(Detallefactura.class, idDetalleFactura);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los datos de la factura " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos de Detalle factura " + e.getMessage());
         }
         return det;
     }
