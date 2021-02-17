@@ -44,7 +44,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             jMenuBar1.setEnabled(true);
             jMenuServicios.setEnabled(true);
             jCheckRegistrarServicios.setEnabled(true);
-         
+          jRegistrarReceta.setEnabled(true);
             jCheckListaHospita.setEnabled(true);
             jCheckListaConsultas.setEnabled(true);
             jMenuClientes.setEnabled(true);
@@ -66,7 +66,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             jMenuBar1.setEnabled(true);
             jMenuServicios.setEnabled(true);
             jCheckRegistrarServicios.setEnabled(false);
-          
+          jRegistrarReceta.setEnabled(false);
             jCheckListaHospita.setEnabled(false);
             jCheckListaConsultas.setEnabled(false);
             jMenuClientes.setEnabled(true);
@@ -83,7 +83,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             btnConsultas.setEnabled(false);
             btnHospitalizacion.setEnabled(false);
         }
-                        if (tipo == 4) { //secretaria
+                        if (tipo == 4) { //veterinario
 
             jMenuAdministrarCuentas.setEnabled(false);
             jCheckListaCuentas.setEnabled(false);
@@ -91,7 +91,8 @@ public class frmPrincipal extends javax.swing.JFrame {
             jMenuBar1.setEnabled(true);
             jMenuServicios.setEnabled(false);
             jCheckRegistrarServicios.setEnabled(false);
-          
+    
+           jRegistrarReceta.setEnabled(true);
             jCheckListaHospita.setEnabled(true);
             jCheckListaConsultas.setEnabled(true);
             jMenuClientes.setEnabled(false);
@@ -100,7 +101,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             jCheckMascotas.setEnabled(false);
             jMenuFacturas.setEnabled(false);
             jCheckListaFacturas.setEnabled(false);
-            jMenuRecetas.setEnabled(false);
+            jMenuRecetas.setEnabled(true);
             jMenuListaPrincipal.setEnabled(true);
             jMenuSalir.setEnabled(true);
             jCheckCerrarSesion.setEnabled(true);    
@@ -139,6 +140,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jCheckListaFacturas = new javax.swing.JCheckBoxMenuItem();
         jMenuRecetas = new javax.swing.JMenu();
         jMenuListaPrincipal = new javax.swing.JMenuItem();
+        jRegistrarReceta = new javax.swing.JMenuItem();
         jMenuSalir = new javax.swing.JMenu();
         jCheckCerrarSesion = new javax.swing.JCheckBoxMenuItem();
         jMenuSalir1 = new javax.swing.JMenuItem();
@@ -305,6 +307,15 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
         jMenuRecetas.add(jMenuListaPrincipal);
 
+        jRegistrarReceta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/receta.png"))); // NOI18N
+        jRegistrarReceta.setText("Registrar receta");
+        jRegistrarReceta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRegistrarRecetaActionPerformed(evt);
+            }
+        });
+        jMenuRecetas.add(jRegistrarReceta);
+
         jMenuBar1.add(jMenuRecetas);
 
         jMenuSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/x.png"))); // NOI18N
@@ -428,6 +439,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuSalir1ActionPerformed
 
+    private void jRegistrarRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegistrarRecetaActionPerformed
+       frmReceta fr = new frmReceta();
+      fr.setVisible(true);
+    }//GEN-LAST:event_jRegistrarRecetaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +504,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuSalir;
     private javax.swing.JMenuItem jMenuSalir1;
     private javax.swing.JMenu jMenuServicios;
+    private javax.swing.JMenuItem jRegistrarReceta;
     // End of variables declaration//GEN-END:variables
 
     private frmListaRecetas frmListaRecetas(frmPrincipal aThis, boolean b) {

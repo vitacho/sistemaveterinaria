@@ -137,7 +137,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextAreaDiagnostico = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        btnRecetar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -229,14 +228,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 610, 90, 30));
 
-        btnRecetar.setText("Recetar");
-        btnRecetar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRecetarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnRecetar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 220, -1, -1));
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 720));
@@ -272,40 +263,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
         jTextAreaDiagnostico.setText(con.getDiagnostico());
 
     }//GEN-LAST:event_TableConsultasMouseClicked
-
-    private void btnRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecetarActionPerformed
-        int seleccionar = TableConsultas.getSelectedRow();
-        int idConsulta = Integer.parseInt(model.getValueAt(seleccionar, 0).toString());
-        Consulta con = conDB.traeConsulta(idConsulta);
-
-        int selectRow = TableConsultas.getSelectedRow();
-        try {
-            if (selectRow == -1) {
-                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA DE LA TABLA", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-
-                modelConsulta = (DefaultTableModel) TableConsultas.getModel();
-                String id = TableConsultas.getValueAt(selectRow, 0).toString();
-                String mascota = TableConsultas.getValueAt(selectRow, 1).toString();
-                String ci = TableConsultas.getValueAt(selectRow, 5).toString();
-                String nombre = TableConsultas.getValueAt(selectRow, 6).toString();
-                frmReceta rec = new frmReceta();
-                frmReceta.txtMascota.setText(mascota);
-                frmReceta.jDate.setText(ci);
-                frmReceta.txtCliente.setText(nombre);
-                frmReceta.txtIDConsulta.setText(id);
-
-//                recetaDB.nuevaReceta(rec);
-                frmListaConsulta lc = new frmListaConsulta(rec, rootPaneCheckingEnabled);
-                lc.setVisible(false);
-                rec.setVisible(true);
-                dispose();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR LA CITA " + e.getMessage(), "Mensaje", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_btnRecetarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,7 +311,6 @@ public class frmListaConsulta extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableConsultas;
-    private javax.swing.JButton btnRecetar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonbuscarConsulta;
     private javax.swing.JLabel jLabel1;
