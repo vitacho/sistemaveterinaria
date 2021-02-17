@@ -154,20 +154,6 @@ public class frmHospitalizacion extends javax.swing.JDialog {
 
     }
 
-    /*private void llenarDatos() {
-        jTextFieldNombreM.setText(datos.getMascota().getNombre());
-        jTextFieldCI.setText(datos.getMascota().getPersona().getCedula());
-        jTextFieldSexM.setText(datos.getMascota().getSexo());
-        jTextFieldVeterinario.setText(datos.getVereterinario());
-        jTextAreaMotivo.setText(datos.getMotivo());
-        jComboBoxSangrado.setSelectedItem(datos.getSangrado());
-        jComboBoxHincha.setSelectedItem(datos.getInchazon());
-        jComboBoxintox.setSelectedItem(datos.getIntoxicacion());
-        jComboBoxRespira.setSelectedItem(datos.getProbleResp());
-        jComboBoxConvulcion.setSelectedItem(datos.getConbulcion());
-        jTextFieldTem.setText(Integer.toString(datos.getTemp()));
-        jTextAreaDiagnos.setText(datos.getDiagnostico());
-    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -427,7 +413,7 @@ public class frmHospitalizacion extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        int op = JOptionPane.showConfirmDialog(null, "Esta seguro que desea guardar", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
+        int op = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea guardar?", "Selecciona una opcion", JOptionPane.YES_NO_OPTION);
         if (op == 0) {
             registrarHosp();
         }

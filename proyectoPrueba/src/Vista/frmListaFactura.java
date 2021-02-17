@@ -5,7 +5,16 @@
  */
 package Vista;
 
+import Controlador.FacturaDB;
+import Controlador.PersonaDB;
 import Controlador.Validaciones;
+import Modelo.Factura;
+import Modelo.Persona;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +23,10 @@ import Controlador.Validaciones;
 public class frmListaFactura extends javax.swing.JDialog {
 
     Validaciones vali = new Validaciones();
+    DefaultTableModel model = new DefaultTableModel();
+    Persona pr = new Persona();
+    PersonaDB prDB = new PersonaDB();
+    FacturaDB fatDb = new FacturaDB();
 
     /**
      * Creates new form ListaServicio
@@ -21,6 +34,65 @@ public class frmListaFactura extends javax.swing.JDialog {
     public frmListaFactura(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tablefactura();
+    }
+
+    private void tablefactura() {
+        tabladetalle.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabladetalle.getColumnModel().getColumn(0).setMinWidth(0);
+        tabladetalle.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tabladetalle.getColumnModel().getColumn(1).setMaxWidth(300);
+        tabladetalle.getColumnModel().getColumn(2).setMaxWidth(300);
+        tabladetalle.getColumnModel().getColumn(3).setMaxWidth(300);
+        tabladetalle.getColumnModel().getColumn(4).setMaxWidth(300);
+        tabladetalle.getColumnModel().getColumn(5).setMaxWidth(300);
+        model = (DefaultTableModel) tabladetalle.getModel();
+        model.setNumRows(0);
+    }
+
+    private void llenarTablaServico() {
+        tablefactura();
+        pr = prDB.traeClientesId(Integer.parseInt(txtidcedula.getText()));
+        List<Factura> listaFact = pr.getFactura();
+        String fech;
+        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+        for (Factura lista : listaFact) {
+            model.addRow(new Object[]{
+                lista.getId_factura(), lista.getNro_factura(), pr.getNombre(), pr.getCedula(), formatofecha.format(lista.getFecha()), lista.getTotal()
+//                lista.getFecha(),
+//                lista.getId_serv(), lista.getNombre_serv(), lista.getDesc_serv(), lista.getPrecio_serv()
+            });
+        }
+    }
+
+    private void tablemodeldetalle() {
+        tabladetalle.getColumnModel().getColumn(0).setMaxWidth(75);
+        tabladetalle.getColumnModel().getColumn(1).setMaxWidth(75);
+        tabladetalle.getColumnModel().getColumn(2).setMaxWidth(300);
+        tabladetalle.getColumnModel().getColumn(3).setMaxWidth(1100);
+        tabladetalle.getColumnModel().getColumn(4).setMaxWidth(250);
+        tabladetalle.getColumnModel().getColumn(5).setMaxWidth(100);
+        model = (DefaultTableModel) tabladetalle.getModel();
+        model.setNumRows(0);
+
+    }
+
+    private void BuscarCliente() {
+        String cedula = "";
+        List<Persona> listaP = null;
+        cedula = txtcedula.getText();
+
+        listaP = prDB.buscarPersonaCed(cedula);
+
+        if (listaP.size() > 0) {
+            for (Persona perLis : listaP) {
+                txtidcedula.setText(String.valueOf(perLis.getId_persona()));
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "CLIENTE NO ENCONTRADO", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+
+        }
     }
 
     /**
@@ -37,18 +109,20 @@ public class frmListaFactura extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtcedula = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablacuentas = new javax.swing.JTable();
+        tabladetalle = new javax.swing.JTable();
         visualizar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jbuscar = new javax.swing.JButton();
+        txtidcedula = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(752, 620));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel6.setText("LISTA FACTURA");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setOpaque(false);
@@ -57,7 +131,7 @@ public class frmListaFactura extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Cédula");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
 
         txtcedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,33 +143,46 @@ public class frmListaFactura extends javax.swing.JDialog {
                 txtcedulaKeyTyped(evt);
             }
         });
-        getContentPane().add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 270, -1));
+        getContentPane().add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 270, -1));
 
-        tablacuentas.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 12)); // NOI18N
-        tablacuentas.setModel(new javax.swing.table.DefaultTableModel(
+        tabladetalle.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 12)); // NOI18N
+        tabladetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nro de factura", "Cliente", "Cedula", "Fecha", "Total"
+                "Id", "Nro de factura", "Cliente", "Cedula", "Fecha", "Total"
             }
-        ));
-        jScrollPane1.setViewportView(tablacuentas);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 720, 260));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabladetalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabladetalleMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabladetalle);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 720, 260));
 
         visualizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         visualizar.setText("Visualizar factura");
@@ -122,12 +209,14 @@ public class frmListaFactura extends javax.swing.JDialog {
                 jbuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, -1, -1));
+        getContentPane().add(jbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 60, -1, -1));
+
+        txtidcedula.setText("jLabel2");
+        getContentPane().add(txtidcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 60, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/FONDOP1.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -142,7 +231,15 @@ public class frmListaFactura extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuscarActionPerformed
-        vali.validadorDeCedula(txtcedula.getText(), txtcedula);
+        if (!txtcedula.getText().equalsIgnoreCase("")) {
+            if (vali.validadorDeCedula(txtcedula.getText(), txtcedula)) {
+                BuscarCliente();
+                llenarTablaServico();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Llene el campo de la busqueda");
+        }
+
     }//GEN-LAST:event_jbuscarActionPerformed
 
     private void txtcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcedulaKeyTyped
@@ -150,9 +247,32 @@ public class frmListaFactura extends javax.swing.JDialog {
     }//GEN-LAST:event_txtcedulaKeyTyped
 
     private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
-        frmVisualizarFactura factura = new frmVisualizarFactura(new javax.swing.JDialog(), true);
-        factura.setVisible(true);
+        int seleccionar = tabladetalle.getSelectedRow();
+        try {
+            if (seleccionar == -1) {
+                JOptionPane.showMessageDialog(null, "Debe selecionar una factura", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+            int idfactura = Integer.parseInt(model.getValueAt(seleccionar, 0).toString()); // esto esta tomando el id de la tabla
+            //tramos la factura que esta selecionada con el id
+            Factura ft = fatDb.traerFactura(idfactura);
+            //tremos la perosona 
+            pr = prDB.traeClientesId(Integer.parseInt(txtidcedula.getText()));
+            frmVisualizarFactura factura = new frmVisualizarFactura(new javax.swing.JDialog(), true);
+            factura.setPr(prDB.traeClientesId(Integer.parseInt(txtidcedula.getText())));
+            factura.setFact(fatDb.traerFactura(idfactura));
+            factura.cargardatos();
+            factura.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println("eroia");
+        }
+
+
     }//GEN-LAST:event_visualizarActionPerformed
+
+    private void tabladetalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabladetalleMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabladetalleMouseClicked
 
     /**
      * @param args the command line arguments
@@ -183,6 +303,18 @@ public class frmListaFactura extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -207,8 +339,9 @@ public class frmListaFactura extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbuscar;
-    private javax.swing.JTable tablacuentas;
+    private javax.swing.JTable tabladetalle;
     private javax.swing.JTextField txtcedula;
+    private javax.swing.JLabel txtidcedula;
     private javax.swing.JButton visualizar;
     // End of variables declaration//GEN-END:variables
 }
