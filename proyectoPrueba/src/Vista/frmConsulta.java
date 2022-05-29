@@ -27,9 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class frmConsulta extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmConsulta
-     */
+   
     ConsultaDB conDB = new ConsultaDB();
     Validaciones validar = new Validaciones();
     PersonaDB perDB = new PersonaDB();
